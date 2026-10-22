@@ -140,7 +140,7 @@
                 </header>
                 <sheet>
                     <div class="alert alert-info mb-3" role="alert" invisible="not next_step">
-                        <i class="fa fa-info-circle me-1"/><field name="next_step" nolabel="1" class="d-inline"/>
+                        <i class="fa fa-info-circle me-1" role="img" title="Information" aria-label="Information"/><field name="next_step" nolabel="1" class="d-inline"/>
                     </div>
                     <h1><field name="name" readonly="1"/></h1>
                     <group>

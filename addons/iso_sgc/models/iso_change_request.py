@@ -108,23 +108,22 @@ class IsoChangeRequest(models.Model):
     @api.depends("state", "final_state", "final_approver_id", "review_ids.state", "review_ids.applies", "review_ids.user_id")
     def _compute_next_step(self):
         for r in self:
-            t = self.env._
             if r.state == "draft":
-                r.next_step = t("Complete the proposal, tick the areas that must review it, set the deadline and send it to review.")
+                r.next_step = self.env._("Complete the proposal, tick the areas that must review it, set the deadline and send it to review.")
             elif r.state == "pending_review":
                 waiting = [
                     f"{v.area_id.name} ({v.user_id.name})" for v in r.review_ids.filtered(lambda v: v.applies and v.state == "pending")
                 ]
-                r.next_step = t("Waiting for the review of: %s.", ", ".join(waiting))
+                r.next_step = self.env._("Waiting for the review of: %s.", ", ".join(waiting))
             elif r.state == "pending_approval":
                 if r.final_state == "pending":
-                    r.next_step = t("Waiting for the final decision of %s.", r.final_approver_id.name)
+                    r.next_step = self.env._("Waiting for the final decision of %s.", r.final_approver_id.name)
                 else:
-                    r.next_step = t("All reviews are approved. %s has to choose the final approver.", r.creator_id.name)
+                    r.next_step = self.env._("All reviews are approved. %s has to choose the final approver.", r.creator_id.name)
             elif r.state == "approved":
-                r.next_step = t("Approved. The decision was communicated to everyone involved.")
+                r.next_step = self.env._("Approved. The decision was communicated to everyone involved.")
             else:
-                r.next_step = t("Rejected.")
+                r.next_step = self.env._("Rejected.")
 
     # ---------------------------------------------------------------- helpers
     def _is_iso_admin(self):
@@ -371,7 +370,7 @@ class IsoChangeReview(models.Model):
     unanswered_count = fields.Integer(compute="_compute_progress")
     action_missing_count = fields.Integer(compute="_compute_progress")
 
-    _sql_constraints = [("area_unique", "unique(request_id, area_id)", "One review per area.")]
+    _area_unique = models.Constraint("unique(request_id, area_id)", "One review per area.")
 
     @api.depends("request_id.name", "area_id.name")
     def _compute_display_name(self):

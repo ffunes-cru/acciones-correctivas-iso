@@ -1,0 +1,2960 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* iso_sgc
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-22 18:42+0000\n"
+"PO-Revision-Date: 2026-10-22 18:42+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "%s completed the task \"%s\"."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "%s detected during the internal audit (%s) - Detail: %s"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding.py:0
+msgid "%s has to add the actions."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding.py:0
+msgid "%s has to record the cause analysis."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding.py:0
+msgid "%s has to verify that each finished action was effective."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar_wizard.py:0
+msgid "%s, you were assigned %s tasks in %s:"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_form
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_form
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_form
+msgid ""
+"<i class=\"fa fa-info-circle me-1\" role=\"img\" title=\"Information\" aria-"
+"label=\"Information\"/>"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_kanban
+msgid "<span class=\"text-muted small\">Pending on</span>"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "A comment / audit conclusion is required to finish the task."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "A confirmed item is linked to a finding and can no longer be edited."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "A confirmed item is linked to a finding and cannot be deleted."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "A finished internal audit can only be modified by administrators."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "A finished internal audit can only be reopened by administrators."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "A finished task cannot be reassigned or rescheduled."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid "APPROVED"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review_line__finding_id
+msgid "Action"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__action_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_approval__action_date
+msgid "Action Date"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__action_missing_count
+msgid "Action Missing Count"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__message_needaction
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__message_needaction
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__message_needaction
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__message_needaction
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__message_needaction
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding_action.py:0
+msgid "Action assigned to %s: %s"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.actions.act_window,name:iso_sgc.action_iso_actions_calendar
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_actions_calendar
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_action_calendar
+msgid "Action deadlines"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding_action.py:0
+msgid "Action for %s"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Action linked to change request %s. Area: %s. Question: %s"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid ""
+"Action linked to special release %s: deviation of %s. Deviation detail: %s"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__action_ids
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_action_pivot
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_form
+msgid "Actions"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.actions.act_window,name:iso_sgc.action_iso_actions_analysis
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_report_actions
+msgid "Actions analysis"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding.py:0
+msgid "Actions can only be added while the finding is pending action."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_activity_template__active
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process__active
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_area__active
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_question__active
+msgid "Active"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__activity_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__activity_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__activity_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__activity_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__activity
+msgid "Activity"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__activity_exception_decoration
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__activity_exception_decoration
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__activity_exception_decoration
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__activity_exception_decoration
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__activity_state
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__activity_state
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__activity_state
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__activity_state
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__activity_type_icon
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__activity_type_icon
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__activity_type_icon
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__activity_type_icon
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid ""
+"Adapt the conclusion template (replace the [bracketed] placeholders) before "
+"finishing."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.actions.act_window,name:iso_sgc.action_iso_special_release_action_wizard
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_action_wizard_form
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_form
+msgid "Add action"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_special_release_action_wizard
+msgid "Add an action to a special release"
+msgstr ""
+
+#. module: iso_sgc
+#: model:res.groups,name:iso_sgc.group_iso_admin
+msgid "Administrator"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "All reviews are approved. %s has to choose the final approver."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "All sector reviews are approved. Assign the final approver for %s."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding_action.py:0
+msgid "An action must belong to a finding."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding.py:0
+msgid "An analyst"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__analysis_deadline
+msgid "Analysis Deadline"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__analysis_summary
+msgid "Analysis Summary"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__analysis_user_id
+msgid "Analysis responsible"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_activity_template__frequency__annual
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_calendar_task__frequency__annual
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_calendar_wizard_activity__frequency__annual
+msgid "Annual"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar_wizard.py:0
+msgid "Annual planning %s"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar_wizard.py:0
+msgid "Annual planning %s published with %s tasks."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_calendars
+msgid "Annual plannings"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Answer \"Applies\" for every question before approving."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Answer \"Requires action\" for every applicable question before approving."
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_review_form
+msgid ""
+"Answer every question. For each <b>Applies: Yes</b> say whether it <b>requires an action</b>; then create\n"
+"                        the action with the button on its row. You can approve once everything is answered."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__applies
+msgid "Applicable"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review_line__applies
+msgid "Applies"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard__global_auditor_id
+msgid "Apply this auditor to all audits"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard__global_responsible_id
+msgid "Apply this responsible to all routine activities"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__approval_ids
+msgid "Approvals"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_form
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_review_form
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_approval_form
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_form
+msgid "Approve"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_request__final_state__approved
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_request__state__approved
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_review__state__approved
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_special_release__state__approved
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_special_release_approval__state__approved
+msgid "Approved"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid "Approved by all areas; Posventa confirmed."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Approved. The decision was communicated to everyone involved."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_approval__user_id
+msgid "Approver"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release_approval.py:0
+msgid "Approvers can only be changed by the creator, in draft."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_question__area_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__area_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_approval__area
+msgid "Area"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,help:iso_sgc.field_iso_special_release_approval__excluded
+msgid "Area not involved in this release (not allowed for Commercial)."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Areas and reviewers can only be set by the creator, in draft."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar_wizard.py:0
+msgid "Assign a responsible to every routine activity."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar_wizard.py:0
+msgid "Assign an auditor to every quarter of every internal-audit process."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Assign the final approver of %s"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__message_attachment_count
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__message_attachment_count
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__message_attachment_count
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__message_attachment_count
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__message_attachment_count
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__line_ids
+msgid "Audit findings"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.actions.act_window,name:iso_sgc.action_iso_audit_process
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_config_processes
+msgid "Audit processes"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__audited_personnel
+msgid "Audited Personnel"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__audit_process_id
+msgid "Audited process"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_audit__user_id
+msgid "Auditor"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__calendar_id
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_search
+msgid "Calendar"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.actions.act_window,name:iso_sgc.action_iso_calendar
+msgid "Calendars"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_line__can_confirm
+msgid "Can Confirm"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__can_confirm_posventa
+msgid "Can Confirm Posventa"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__can_decide
+msgid "Can Decide"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__can_decide_final
+msgid "Can Decide Final"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__can_edit
+msgid "Can Edit"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__can_edit_definition
+msgid "Can Edit Definition"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_approval__can_evaluate
+msgid "Can Evaluate"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review_line__can_link
+msgid "Can Link"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__can_review
+msgid "Can Review"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__can_send_final
+msgid "Can Send Final"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__can_sign
+msgid "Can Sign"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_share_wizard_form
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_wizard_form
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_line_action_wizard_form
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_action_form
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_action_wizard_form
+msgid "Cancel"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_finding__state__cancelled
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_finding_action__state__cancelled
+msgid "Cancelled"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__category
+msgid "Category"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_form
+msgid "Cause analysis"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding.py:0
+msgid "Cause analysis for %s"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__change_request_id
+msgid "Change request"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Change request %s was REJECTED during the sector review."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.actions.act_window,name:iso_sgc.action_iso_change_area
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_config_change_areas
+msgid "Change request areas"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.actions.act_window,name:iso_sgc.action_iso_change_request
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_change_requests
+msgid "Change requests"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_wizard_form
+msgid "Choose a user to fill every activity…"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_wizard_form
+msgid "Choose a user to fill every audit…"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process__clauses
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__process_clauses
+msgid "Clauses"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__client_dealer
+msgid "Client / dealer"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__client_impact
+msgid "Client impact / risks"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding.py:0
+msgid "Closed: all actions were effective."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding.py:0
+msgid "Closed: an action was not effective or nothing was carried out."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding.py:0
+msgid "Closed: an action was rejected."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_area__code
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__code
+msgid "Code"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,help:iso_sgc.field_iso_calendar_share_wizard__extra_emails
+msgid ""
+"Comma-separated addresses of people without a user: they get the "
+"notification only, no access."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__comments
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__comments
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_approval__comments
+msgid "Comments"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_form
+msgid "Comments / audit conclusion"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release_approval.py:0
+msgid "Comments are required when rejecting."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_special_release_approval__area__comercial
+msgid "Commercial"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_form
+msgid "Communication"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__communication_date
+msgid "Communication Date"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__communication_notes
+msgid "Communication Notes"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__communication_sent
+msgid "Communication Sent"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__company_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__company_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard__company_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__company_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__company_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__company_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__company_id
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_search
+msgid "Company"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_form
+msgid "Comparison"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid ""
+"Complete the proposal, tick the areas that must review it, set the deadline "
+"and send it to review."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_finding__state__completed
+msgid "Completed"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_config
+msgid "Configuration"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_form
+msgid "Confirm receipt (Posventa)"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid "Confirm receipt: %s"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__contingency_actions
+msgid "Contingency Actions"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_finding__category__corrective
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_search
+msgid "Corrective"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_request__mission__costs
+msgid "Costs"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_calendar_wizard
+msgid "Create ISO annual planning"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.actions.act_window,name:iso_sgc.action_iso_change_line_action_wizard
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_line_action_wizard_form
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_review_form
+msgid "Create action"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.actions.act_window,name:iso_sgc.action_iso_calendar_wizard
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_new_planning
+msgid "Create annual planning"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_wizard_form
+msgid "Create planning"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_change_line_action_wizard
+msgid "Create the action required by a change request question"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_activity_template__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_line__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process_deliverable__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_share_wizard__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_activity__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_audit__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_area__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_line_action_wizard__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_question__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review_line__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_action_wizard__create_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_approval__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_activity_template__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_line__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process_deliverable__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_share_wizard__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_activity__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_audit__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_area__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_line_action_wizard__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_question__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review_line__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_action_wizard__create_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_approval__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__creator_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__creator_id
+msgid "Creator"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__criteria
+msgid "Criteria"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__current_situation
+msgid "Current Situation"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_audit__date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__date
+msgid "Date"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_line__date_deadline
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__date_deadline
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_line_action_wizard__date_deadline
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__date_deadline
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__date_deadline
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_action_wizard__date_deadline
+msgid "Deadline"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.actions.act_window,name:iso_sgc.action_iso_deadline_calendar
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_deadline_calendar
+msgid "Deadline calendar"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,help:iso_sgc.field_res_company__iso_audit_scope
+msgid "Default scope text of the internal audit reports of this company."
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_review_form
+msgid "Delete the linked action?"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process__deliverable_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__process_deliverable_ids
+msgid "Deliverables"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_form
+msgid "Describe the finding…"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process_deliverable__description
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__description
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard__description
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_line_action_wizard__description
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__description
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_action_wizard__description
+msgid "Description"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_wizard_form
+msgid "Description (optional)"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__deviation_description
+msgid "Deviation Description"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_activity_template__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_line__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process_deliverable__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_share_wizard__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_activity__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_audit__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_area__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_line_action_wizard__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_question__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review_line__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_action_wizard__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_approval__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_res_company__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,help:iso_sgc.field_iso_change_review__applies
+msgid "Does this area have to review the change?"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_calendar_task__state__done
+msgid "Done"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__done_count
+msgid "Done Count"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_request__state__draft
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_special_release__state__draft
+msgid "Draft"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.constraint,message:iso_sgc.constraint_iso_special_release_approval_area_unique
+msgid "Each area signs only once per release."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_finding_action__verification_state__ok
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_action_form
+msgid "Effective"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_special_release_approval__area__ingenieria
+msgid "Engineering"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.actions.act_window,help:iso_sgc.action_iso_my_agenda
+msgid ""
+"Every analysis, action, signature, review and planned task assigned to you "
+"shows up here with its deadline."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process_deliverable__evidence
+msgid "Evidence"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_approval__excluded
+msgid "Excluded"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_form
+msgid "Execution"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__execution_date
+msgid "Execution Date"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__date_completed
+msgid "Execution date"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_share_wizard__extra_emails
+msgid "Extra Emails"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "Fill in the process that generates the deviation."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__final_comments
+msgid "Final Comments"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__final_date
+msgid "Final Date"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__final_state
+msgid "Final State"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_request__state__pending_approval
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_form
+msgid "Final approval"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__final_deadline
+msgid "Final approval deadline"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Final approval of %s"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__final_approver_id
+msgid "Final approver"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Final decision on %s (%s): %s. Final approver: %s.<br/>Comments: %s"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid ""
+"Final resolution of special release %s: %s. The signature circuit is "
+"complete."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_line__finding_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__finding_id
+msgid "Finding"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__finding_date
+msgid "Finding Date"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.actions.act_window,name:iso_sgc.action_iso_finding
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_findings
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_findings_section
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_graph
+msgid "Findings"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.actions.act_window,name:iso_sgc.action_iso_findings_analysis
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_report_findings
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_pivot
+msgid "Findings analysis"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_form
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_action_form
+msgid "Finish"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_finding_action__state__finished
+msgid "Finished"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_special_release__release_type__finished_product
+msgid "Finished product"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__message_follower_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__message_follower_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__message_follower_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__message_follower_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__message_follower_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__message_partner_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__message_partner_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__message_partner_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__message_partner_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__message_partner_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,help:iso_sgc.field_iso_calendar_task__activity_type_icon
+#: model:ir.model.fields,help:iso_sgc.field_iso_change_request__activity_type_icon
+#: model:ir.model.fields,help:iso_sgc.field_iso_finding__activity_type_icon
+#: model:ir.model.fields,help:iso_sgc.field_iso_finding_action__activity_type_icon
+#: model:ir.model.fields,help:iso_sgc.field_iso_special_release__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_activity_template__frequency
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__frequency
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_activity__frequency
+msgid "Frequency"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__has_message
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__has_message
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__has_message
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__has_message
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__has_message
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_activity_template__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_line__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process_deliverable__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_share_wizard__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_activity__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_audit__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_area__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_line_action_wizard__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_question__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review_line__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_action_wizard__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_approval__id
+#: model:ir.model.fields,field_description:iso_sgc.field_res_company__id
+msgid "ID"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_root
+#: model:res.groups.privilege,name:iso_sgc.res_groups_privilege_iso
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_company_form_iso
+msgid "ISO SGC"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_calendar
+msgid "ISO annual planning"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_audit_line
+msgid "ISO audit finding line"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_audit_process
+msgid "ISO audit process"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_audit_process_deliverable
+msgid "ISO audit process deliverable"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_res_company__iso_audit_scope
+msgid "ISO audit scope"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_calendar_task
+msgid "ISO calendar task"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_change_request
+msgid "ISO change request"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_change_area
+msgid "ISO change request area"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_change_question
+msgid "ISO change request question"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_change_review_line
+msgid "ISO change request questionnaire line"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_change_review
+msgid "ISO change request sector review"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_finding
+msgid "ISO finding"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_finding_action
+msgid "ISO finding action"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar_wizard.py:0
+msgid "ISO planning %s %s"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_activity_template
+msgid "ISO routine activity template"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_special_release
+msgid "ISO special release"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_special_release_approval
+msgid "ISO special release signature"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__activity_exception_icon
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__activity_exception_icon
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__activity_exception_icon
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__activity_exception_icon
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,help:iso_sgc.field_iso_calendar_task__activity_exception_icon
+#: model:ir.model.fields,help:iso_sgc.field_iso_change_request__activity_exception_icon
+#: model:ir.model.fields,help:iso_sgc.field_iso_finding__activity_exception_icon
+#: model:ir.model.fields,help:iso_sgc.field_iso_finding_action__activity_exception_icon
+#: model:ir.model.fields,help:iso_sgc.field_iso_special_release__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,help:iso_sgc.field_iso_calendar__message_needaction
+#: model:ir.model.fields,help:iso_sgc.field_iso_calendar_task__message_needaction
+#: model:ir.model.fields,help:iso_sgc.field_iso_change_request__message_needaction
+#: model:ir.model.fields,help:iso_sgc.field_iso_finding__message_needaction
+#: model:ir.model.fields,help:iso_sgc.field_iso_finding_action__message_needaction
+#: model:ir.model.fields,help:iso_sgc.field_iso_special_release__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,help:iso_sgc.field_iso_calendar__message_has_error
+#: model:ir.model.fields,help:iso_sgc.field_iso_calendar_task__message_has_error
+#: model:ir.model.fields,help:iso_sgc.field_iso_change_request__message_has_error
+#: model:ir.model.fields,help:iso_sgc.field_iso_finding__message_has_error
+#: model:ir.model.fields,help:iso_sgc.field_iso_finding_action__message_has_error
+#: model:ir.model.fields,help:iso_sgc.field_iso_special_release__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__impact_analysis
+msgid "Impact Analysis"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__implementation_comment
+msgid "Implementation Comment"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_action_form
+msgid "Implementation report"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_finding__category__improvement
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_kanban
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_search
+msgid "Improvement"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "Improvement opportunities detected during the internal audit (%s)"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_audit_line__kind__opportunity
+msgid "Improvement opportunity"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_calendar_task__state__in_progress
+msgid "In progress"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_form
+msgid "Insert conclusion template"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__label
+msgid "Instance"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__is_audit
+msgid "Internal audit"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar_wizard.py:0
+msgid "Internal audit report shared: %s."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard__audit_line_ids
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_search
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_wizard_form
+msgid "Internal audits"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar_wizard.py:0
+msgid "Invalid email address: %s"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release_approval.py:0
+msgid "Invalid evaluation."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding_action.py:0
+msgid "Invalid outcome."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release_approval.py:0
+msgid "Invalid status."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__message_is_follower
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__message_is_follower
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__message_is_follower
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__message_is_follower
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__message_is_follower
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__is_overdue
+msgid "Is Overdue"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__is_verified
+msgid "Is Verified"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_line__kind
+msgid "Kind"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_activity_template__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_line__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process_deliverable__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_share_wizard__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_activity__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_audit__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_area__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_line_action_wizard__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_question__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review_line__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_action_wizard__write_uid
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_approval__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_activity_template__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_line__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process_deliverable__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_share_wizard__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_activity__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_audit__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_area__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_line_action_wizard__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_question__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review_line__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_action_wizard__write_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_approval__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_line_action_wizard__line_id
+msgid "Line"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__linked_finding_ids
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_form
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_form
+msgid "Linked actions"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid ""
+"Linked actions can only be added by the creator while the release is in "
+"draft."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__linked_finding_ids
+msgid "Linked findings"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__machine_model
+msgid "Machine Model"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "Major nonconformities"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_audit_line__kind__major
+msgid "Major nonconformity"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Mark at least one area as applicable."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__material_description
+msgid "Material Description"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_share_wizard__message
+msgid "Message"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__message_has_error
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__message_has_error
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__message_has_error
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__message_has_error
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__message_has_error
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__message_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__message_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__message_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__message_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__message_ids
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_search
+msgid "Mine"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "Minor nonconformities"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_audit_line__kind__minor
+msgid "Minor nonconformity"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__mission
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_search
+msgid "Mission"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_activity_template__frequency__monthly
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_calendar_task__frequency__monthly
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_calendar_wizard_activity__frequency__monthly
+msgid "Monthly"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__my_activity_date_deadline
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__my_activity_date_deadline
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__my_activity_date_deadline
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__my_activity_date_deadline
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.actions.act_window,name:iso_sgc.action_iso_finding_action
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_my_actions
+msgid "My actions"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.actions.act_window,name:iso_sgc.action_iso_my_agenda
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_my_agenda
+msgid "My agenda"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.actions.act_window,name:iso_sgc.action_iso_calendar_task_mine
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_my_tasks
+msgid "My planned tasks"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_search
+msgid "My releases"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_search
+msgid "My requests"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_review_line__applies__na
+msgid "N/A"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_activity_template__name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process__name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard__name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_activity__name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_area__name
+msgid "Name"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__activity_date_deadline
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__activity_date_deadline
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__activity_date_deadline
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__activity_date_deadline
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__activity_summary
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__activity_summary
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__activity_summary
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__activity_summary
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__activity_type_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__activity_type_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__activity_type_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__activity_type_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_review_line__applies__no
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_review_line__requires_action__no
+msgid "No"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "No comments."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_finding_action__verification_state__nok
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_action_form
+msgid "Not effective"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_search
+msgid "Not finished"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_calendar_task__state__not_started
+msgid "Not started"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_finding_action__verification_state__unverified
+msgid "Not verified"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.actions.act_window,help:iso_sgc.action_iso_my_agenda
+msgid "Nothing is waiting for you"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid "Nothing to confirm."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Notification sent to %s people: %s"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__name
+msgid "Number"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__message_needaction_counter
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__message_needaction_counter
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__message_needaction_counter
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__message_needaction_counter
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__message_needaction_counter
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__message_has_error_counter
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__message_has_error_counter
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__message_has_error_counter
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__message_has_error_counter
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__message_has_error_counter
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,help:iso_sgc.field_iso_calendar__message_needaction_counter
+#: model:ir.model.fields,help:iso_sgc.field_iso_calendar_task__message_needaction_counter
+#: model:ir.model.fields,help:iso_sgc.field_iso_change_request__message_needaction_counter
+#: model:ir.model.fields,help:iso_sgc.field_iso_finding__message_needaction_counter
+#: model:ir.model.fields,help:iso_sgc.field_iso_finding_action__message_needaction_counter
+#: model:ir.model.fields,help:iso_sgc.field_iso_special_release__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,help:iso_sgc.field_iso_calendar__message_has_error_counter
+#: model:ir.model.fields,help:iso_sgc.field_iso_calendar_task__message_has_error_counter
+#: model:ir.model.fields,help:iso_sgc.field_iso_change_request__message_has_error_counter
+#: model:ir.model.fields,help:iso_sgc.field_iso_finding__message_has_error_counter
+#: model:ir.model.fields,help:iso_sgc.field_iso_finding_action__message_has_error_counter
+#: model:ir.model.fields,help:iso_sgc.field_iso_special_release__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__of_number
+msgid "OF number"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process__objective
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__process_objective
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__objective
+msgid "Objective"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,help:iso_sgc.field_iso_audit_process__clauses
+#: model:ir.model.fields,help:iso_sgc.field_iso_calendar_task__process_clauses
+msgid "One clause per line; leading spaces are kept (sub-clauses)."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,help:iso_sgc.field_iso_audit_process_deliverable__evidence
+msgid "One piece of evidence per line."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.constraint,message:iso_sgc.constraint_iso_change_review_area_unique
+msgid "One review per area."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid "Only a draft can be sent for approval."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Only a draft can be sent to review."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "Only a finished task can be reopened."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "Only a task that has not started can be started."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release_approval.py:0
+msgid "Only administrators can amend a signature."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "Only administrators can change the planning of a task."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar_wizard.py:0
+msgid "Only administrators can create the annual planning."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding_action.py:0
+msgid "Only finished, unverified actions can be verified."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid ""
+"Only questions answered \"Applies: Yes\" and \"Requires action: Yes\" take "
+"an action."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Only the assigned final approver can decide."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid ""
+"Only the assigned reviewer can answer the questionnaire, while the review is"
+" open."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Only the assigned reviewer can comment while the review is open."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid ""
+"Only the assigned reviewer can create actions, while the review is open."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Only the assigned reviewer can decide this review."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Only the creator can assign the final approver."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid "Only the creator can edit a special release, and only in draft."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Only the creator can edit this change request."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid "Only the creator can send this release for approval."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Only the creator can send this request to review."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Only the creator or an administrator can remove linked actions."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding_action.py:0
+msgid "Only the finding owner can verify actions."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding_action.py:0
+msgid "Only the responsible can report this action."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "Only the responsible or an administrator can do this."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Only the reviewer of an open review can be reassigned."
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_search
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_form
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_search
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_search
+msgid "Open"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_special_release_approval__area__operaciones
+msgid "Operations"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_form
+msgid "Opportunities and nonconformities"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__origin
+msgid "Origin"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,help:iso_sgc.field_iso_calendar_task__activity
+msgid "Original activity name (without the instance label)."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_line__process
+msgid "Originating process"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_request__mission__other
+msgid "Other"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_search
+msgid "Overdue"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__overdue_count
+msgid "Overdue Count"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_activity_search
+msgid "Overdue or due within 30 days"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__owner_id
+msgid "Owner"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_request__final_state__pending
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_review__state__pending
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_finding_action__state__pending
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_special_release_approval__state__pending
+msgid "Pending"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__pending_review_count
+msgid "Pending Review Count"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_finding__state__pending_action
+msgid "Pending action"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_finding__state__pending_analysis
+msgid "Pending analysis"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_special_release__state__pending_approval
+msgid "Pending approval"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__pending_user_ids
+msgid "Pending on"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_search
+msgid "Pending on me"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_finding__state__pending_verification
+msgid "Pending verification"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid ""
+"Pick an approver for each area and the Posventa person, add any actions, "
+"then send for approval."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_planning_section
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_calendar
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_form
+msgid "Planning"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_calendar_wizard_audit
+msgid "Planning wizard: audit instance"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_calendar_wizard_activity
+msgid "Planning wizard: routine activity"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__posventa_user_id
+msgid "Posventa (notified)"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__posventa_confirmed
+msgid "Posventa Confirmed"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__posventa_confirmed_date
+msgid "Posventa Confirmed Date"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid "Posventa confirmation (%s)"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process_deliverable__process_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_audit__process_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__process
+msgid "Process"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_form
+msgid "Process checklist"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_request__mission__productivity
+msgid "Productivity"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__description
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_form
+msgid "Proposal"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__proposed_situation
+msgid "Proposed Situation"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__purchase_order_number
+msgid "Purchase Order Number"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_request__mission__quality
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_special_release_approval__area__calidad
+msgid "Quality"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_audit__quarter
+msgid "Quarter"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_activity_template__frequency__quarterly
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_calendar_task__frequency__quarterly
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_calendar_wizard_activity__frequency__quarterly
+msgid "Quarterly"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_question__name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review_line__name
+msgid "Question"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__line_ids
+msgid "Questionnaire"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_area__question_ids
+msgid "Questions"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid "REJECTED"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_form
+msgid "Raise finding"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_special_release__release_type__raw_material
+msgid "Raw material"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_form
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_review_form
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_action_form
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_approval_form
+msgid "Reject"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_request__final_state__rejected
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_request__state__rejected
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_review__state__rejected
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_finding__state__rejected
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_finding_action__state__rejected
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_special_release__state__rejected
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_special_release_approval__state__rejected
+msgid "Rejected"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid "Rejected."
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_form
+msgid "Reject…"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_action_wizard__release_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_approval__release_id
+msgid "Release"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__release_type
+msgid "Release Type"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_approval__release_state
+msgid "Release status"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_review_form
+msgid "Remove action"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Remove the linked action before changing this answer."
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_form
+msgid "Reopen"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_reports
+msgid "Reports"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__request_id
+msgid "Request"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__request_state
+msgid "Request status"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,help:iso_sgc.field_iso_audit_line__process
+msgid "Required for nonconformities."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review_line__requires_action
+msgid "Requires action"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_approval_form
+msgid "Reset (admin)"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_line__user_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__user_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_activity__user_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_line_action_wizard__user_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__user_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_action_wizard__user_id
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_search
+msgid "Responsible"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__activity_user_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__activity_user_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__activity_user_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__activity_user_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review_line__review_id
+msgid "Review"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Review %s for %s"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__review_deadline
+msgid "Review deadline"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_form
+msgid "Review my area"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__user_id
+msgid "Reviewer"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Reviews can only be changed through the workflow buttons."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.actions.act_window,name:iso_sgc.action_iso_activity_template
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard__activity_line_ids
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_config_activities
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_wizard_form
+msgid "Routine activities"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_request__mission__safety
+msgid "Safety and environment"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__sales_note_number
+msgid "Sales Note Number"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_form
+msgid "Save analysis"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__scope
+msgid "Scope"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_form
+msgid "Scope and criteria"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_request__state__pending_review
+msgid "Sector review"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__review_ids
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_form
+msgid "Sector reviews"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "Select a deadline."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "Select a responsible."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar_wizard.py:0
+msgid "Select at least one recipient."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid "Select the approvers for the active areas: %s."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Select the final approver."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Select the reviewer of: %s."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid "Select who is notified in Posventa before sending."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_activity_template__frequency__semester
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_calendar_task__frequency__semester
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_calendar_wizard_activity__frequency__semester
+msgid "Semester"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_form
+msgid "Send for approval"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_form
+msgid "Send to final approval"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_form
+msgid "Send to review"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_activity_template__sequence
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process__sequence
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process_deliverable__sequence
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_area__sequence
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_question__sequence
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review_line__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_approval_form
+msgid "Set approved (admin)"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_approval_form
+msgid "Set rejected (admin)"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Set the final approval deadline."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Set the review deadline."
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_share_wizard_form
+msgid "Share"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_calendar_share_wizard
+msgid "Share an ISO audit"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.actions.act_window,name:iso_sgc.action_iso_calendar_share_wizard
+msgid "Share audit"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_form
+msgid "Share report"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__shared_user_ids
+msgid "Shared with"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid "Signature required (%s): %s"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_form
+msgid "Signatures"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release_approval.py:0
+msgid "Signatures can only be changed through the workflow buttons."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid ""
+"Some questions require an action that has not been created yet. Create each "
+"one before approving."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__special_release_id
+msgid "Special release"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.actions.act_window,name:iso_sgc.action_iso_special_release
+#: model:ir.ui.menu,name:iso_sgc.menu_iso_special_releases
+msgid "Special releases"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_form
+msgid "Start"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__state
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__state
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__state
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__state
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__state
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__state
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_approval__state
+msgid "State"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_calendar_task_search
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_search
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_search
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_search
+msgid "Status"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,help:iso_sgc.field_iso_calendar_task__activity_state
+#: model:ir.model.fields,help:iso_sgc.field_iso_change_request__activity_state
+#: model:ir.model.fields,help:iso_sgc.field_iso_finding__activity_state
+#: model:ir.model.fields,help:iso_sgc.field_iso_finding_action__activity_state
+#: model:ir.model.fields,help:iso_sgc.field_iso_special_release__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__strengths
+msgid "Strengths"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_calendar_wizard_audit__quarter__t1
+msgid "T1"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,help:iso_sgc.field_iso_calendar_task__label
+msgid "T1…T4, Semestre 1, Enero, Ad-hoc…"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_calendar_wizard_audit__quarter__t2
+msgid "T2"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_calendar_wizard_audit__quarter__t3
+msgid "T3"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_calendar_wizard_audit__quarter__t4
+msgid "T4"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_line__task_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_share_wizard__task_id
+msgid "Task"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__task_count
+msgid "Task Count"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "Task reassigned to %s. Deadline: %s."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__task_ids
+msgid "Tasks"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_line__text
+msgid "Text"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release_approval.py:0
+msgid "The Commercial area cannot be excluded."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid "The action description is required."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding.py:0
+msgid "The analysis summary is required."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "The audited personnel is required to finish an internal audit."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding_action.py:0
+msgid "The deadline of an action cannot be in the past."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "The definition can only be edited while the request is in draft."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding.py:0
+msgid "The description cannot exceed %s characters."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "The final approver can only be set at the final approval stage."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding.py:0
+msgid "The finding is not pending analysis."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding_action.py:0
+msgid "The implementation report is required."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding.py:0
+msgid "The planner"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "The questionnaire structure cannot be changed."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "The request is not waiting for a final approver."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "The task is already finished."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding_action.py:0
+msgid "This action was already reported."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "This item is already linked to a finding."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "This question already has a linked action."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "This request is not waiting for the final decision."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "This review is not open."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release_approval.py:0
+msgid "This signature cannot be evaluated now."
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_form
+msgid ""
+"Tick the areas that must review this change and choose who reviews each. "
+"Areas left unticked are approved automatically."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_audit_process_deliverable__name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__title
+msgid "Title"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__type
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_search
+msgid "Type"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding.py:0
+msgid "Type and process are required for corrective findings."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,help:iso_sgc.field_iso_calendar_task__activity_exception_decoration
+#: model:ir.model.fields,help:iso_sgc.field_iso_change_request__activity_exception_decoration
+#: model:ir.model.fields,help:iso_sgc.field_iso_finding__activity_exception_decoration
+#: model:ir.model.fields,help:iso_sgc.field_iso_finding_action__activity_exception_decoration
+#: model:ir.model.fields,help:iso_sgc.field_iso_special_release__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_review__unanswered_count
+msgid "Unanswered Count"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release_approval.py:0
+msgid "Use the approver fields while the release is in draft."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "Use the workflow buttons to change the status."
+msgstr ""
+
+#. module: iso_sgc
+#: model:res.groups,name:iso_sgc.group_iso_user
+msgid "User"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_share_wizard__user_ids
+msgid "Users"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__vendor
+msgid "Vendor"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_finding_action_form
+msgid "Verification"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__verification_comment
+msgid "Verification Comment"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__verification_date
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__verification_date
+msgid "Verification Date"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding_action__verification_state
+msgid "Verification State"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding.py:0
+msgid "Verify effectiveness of %s"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_search
+msgid "Waiting for my final decision"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_search
+msgid "Waiting for my review"
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_search
+msgid "Waiting for my signature"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding.py:0
+msgid "Waiting for the actions of: %s."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Waiting for the final decision of %s."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "Waiting for the review of: %s."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid "Waiting for: %s."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_change_request__next_step
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_finding__next_step
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__next_step
+msgid "What's next"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_activity__wizard_id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard_audit__wizard_id
+msgid "Wizard"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+#: code:addons/iso_sgc/models/iso_finding.py:0
+#: code:addons/iso_sgc/models/iso_finding_action.py:0
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid "Workflow fields can only be changed through the workflow buttons."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_calendar.py:0
+msgid "Write a description before linking the finding."
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar__year
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard__year
+msgid "Year"
+msgstr ""
+
+#. module: iso_sgc
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_review_line__applies__yes
+#: model:ir.model.fields.selection,name:iso_sgc.selection__iso_change_review_line__requires_action__yes
+msgid "Yes"
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding.py:0
+msgid "You are not allowed to add actions to this finding."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding.py:0
+msgid "You are not allowed to save the analysis of this finding."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release_approval.py:0
+msgid "You are not the assigned approver for this area, nor an administrator."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid "You are not the designated Posventa person nor an administrator."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_change_request.py:0
+msgid "You have no open review on this request."
+msgstr ""
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_special_release.py:0
+msgid "You have no pending signature on this release."
+msgstr ""
+
+#. module: iso_sgc
+#: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_change_request_form
+msgid "e.g. New welding jig on the Fertec line"
+msgstr ""

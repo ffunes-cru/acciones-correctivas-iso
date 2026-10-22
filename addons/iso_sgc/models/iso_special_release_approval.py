@@ -30,7 +30,7 @@ class IsoSpecialReleaseApproval(models.Model):
     release_state = fields.Selection(related="release_id.state", string="Release status")
     can_evaluate = fields.Boolean(compute="_compute_can_evaluate")
 
-    _sql_constraints = [("area_unique", "unique(release_id, area)", "Each area signs only once per release.")]
+    _area_unique = models.Constraint("unique(release_id, area)", "Each area signs only once per release.")
 
     @api.depends("release_id.name", "area")
     def _compute_display_name(self):
@@ -41,7 +41,8 @@ class IsoSpecialReleaseApproval(models.Model):
         return self.env.user.has_group("iso_sgc.group_iso_admin")
 
     def _area_label(self):
-        return dict(AREAS).get(self.area, self.area)
+        """Area name in the user's language (the module-level AREAS list is the untranslated source)."""
+        return dict(self._fields["area"]._description_selection(self.env)).get(self.area, self.area)
 
     @api.constrains("area", "excluded")
     def _check_commercial_not_excluded(self):

@@ -16,7 +16,7 @@ cd "$ODOO_DIR"
 # A random free port, so a running Odoo (e.g. your dev instance on 8069) does not collide.
 PORT="$(python3 -c 'import socket;s=socket.socket();s.bind(("127.0.0.1",0));print(s.getsockname()[1])')"
 .venv/bin/python odoo-bin -d "$DB" --addons-path="$ADDONS" --data-dir="$DATA" \
-  -i iso_sgc --test-tags=iso_sgc --stop-after-init --without-demo=all \
+  -i iso_sgc --test-tags=iso_sgc --stop-after-init --without-demo \
   --http-interface=127.0.0.1 --http-port="$PORT" --log-level=test >"$LOG" 2>&1 &
 PID=$!
 # Stop as soon as the result line is printed (or the process ends / 15 min pass).
@@ -38,4 +38,7 @@ if ! grep -q " 0 failed, 0 error(s)" "$LOG"; then
   echo "--- last log lines ---"; tail -15 "$LOG"
   echo "TESTS FAILED"; exit 1
 fi
+# Warnings coming from our own code (deprecated APIs, view lint, duplicated labels...) are failures too.
+WARN="$(grep -E " (WARNING|ERROR|CRITICAL) " "$LOG" | grep -E "iso_sgc|iso\.|View error context|ir_ui_view" | head -10 || true)"
+if [ -n "$WARN" ]; then echo "--- warnings from iso_sgc ---"; echo "$WARN"; echo "TESTS FAILED (warnings)"; exit 1; fi
 echo "TESTS OK"

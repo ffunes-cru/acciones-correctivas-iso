@@ -7,3 +7,4 @@ from . import test_calendar
 from . import test_change_request
 from . import test_ui
 from . import test_screens
+from . import test_translation

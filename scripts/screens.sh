@@ -11,7 +11,7 @@ PORT="$(python3 -c 'import socket;s=socket.socket();s.bind(("127.0.0.1",0));prin
 cd "$ODOO_DIR"
 export ISO_SCREENS=1
 .venv/bin/python odoo-bin -d "$DB" --addons-path="$ODOO_DIR/addons,$ODOO_DIR/odoo/addons,$HERE/addons" --data-dir="$DATA" \
-  -i iso_sgc --test-tags=iso_screens --screenshots="$OUT" --stop-after-init --without-demo=all \
+  -i iso_sgc --test-tags=iso_screens --screenshots="$OUT" --stop-after-init --without-demo \
   --http-interface=127.0.0.1 --http-port="$PORT" --log-level=test >"$LOG" 2>&1 &
 PID=$!
 for _ in $(seq 1 900); do

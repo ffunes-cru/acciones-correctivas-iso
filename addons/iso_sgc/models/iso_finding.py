@@ -113,23 +113,22 @@ class IsoFinding(models.Model):
     @api.depends("state", "category", "owner_id", "analysis_user_id", "action_ids.state", "action_ids.user_id")
     def _compute_next_step(self):
         for f in self:
-            t = self.env._
             if f.state == "pending_analysis":
-                f.next_step = t("%s has to record the cause analysis.", f.analysis_user_id.name or t("An analyst"))
+                f.next_step = self.env._("%s has to record the cause analysis.", f.analysis_user_id.name or self.env._("An analyst"))
             elif f.state == "pending_action":
                 pending = f.action_ids.filtered(lambda a: a.state == "pending")
                 if pending:
-                    f.next_step = t("Waiting for the actions of: %s.", ", ".join(pending.user_id.mapped("name")))
+                    f.next_step = self.env._("Waiting for the actions of: %s.", ", ".join(pending.user_id.mapped("name")))
                 else:
-                    f.next_step = t("%s has to add the actions.", f._planner().name or t("The planner"))
+                    f.next_step = self.env._("%s has to add the actions.", f._planner().name or self.env._("The planner"))
             elif f.state == "pending_verification":
-                f.next_step = t("%s has to verify that each finished action was effective.", f.owner_id.name)
+                f.next_step = self.env._("%s has to verify that each finished action was effective.", f.owner_id.name)
             elif f.state == "completed":
-                f.next_step = t("Closed: all actions were effective.")
+                f.next_step = self.env._("Closed: all actions were effective.")
             elif f.state == "cancelled":
-                f.next_step = t("Closed: an action was not effective or nothing was carried out.")
+                f.next_step = self.env._("Closed: an action was not effective or nothing was carried out.")
             else:
-                f.next_step = t("Closed: an action was rejected.")
+                f.next_step = self.env._("Closed: an action was rejected.")
 
     # ---------------------------------------------------------------- constraints
     @api.constrains("description")

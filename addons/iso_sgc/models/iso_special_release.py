@@ -101,21 +101,20 @@ class IsoSpecialRelease(models.Model):
     @api.depends("state", "posventa_confirmed", "posventa_user_id", "approval_ids.state", "approval_ids.excluded", "approval_ids.user_id")
     def _compute_next_step(self):
         for r in self:
-            t = self.env._
             if r.state == "draft":
-                r.next_step = t("Pick an approver for each area and the Posventa person, add any actions, then send for approval.")
+                r.next_step = self.env._("Pick an approver for each area and the Posventa person, add any actions, then send for approval.")
             elif r.state == "pending_approval":
                 waiting = [
                     f"{a._area_label()} ({a.user_id.name})"
                     for a in r.approval_ids.filtered(lambda a: not a.excluded and a.state == "pending")
                 ]
                 if not r.posventa_confirmed:
-                    waiting.append(t("Posventa confirmation (%s)", r.posventa_user_id.name))
-                r.next_step = t("Waiting for: %s.", ", ".join(waiting))
+                    waiting.append(self.env._("Posventa confirmation (%s)", r.posventa_user_id.name))
+                r.next_step = self.env._("Waiting for: %s.", ", ".join(waiting))
             elif r.state == "approved":
-                r.next_step = t("Approved by all areas; Posventa confirmed.")
+                r.next_step = self.env._("Approved by all areas; Posventa confirmed.")
             else:
-                r.next_step = t("Rejected.")
+                r.next_step = self.env._("Rejected.")
 
     # ---------------------------------------------------------------- helpers
     def _is_iso_admin(self):

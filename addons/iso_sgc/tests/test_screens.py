@@ -21,13 +21,18 @@ from odoo.tests.common import ChromeBrowser
 @tagged("post_install", "-at_install", "iso_screens")
 @unittest.skipUnless(os.environ.get("ISO_SCREENS"), "opt-in: run scripts/screens.sh")
 class TestScreens(HttpCase):
+    LANG = os.environ.get("ISO_LANG", "en_US")  # e.g. ISO_LANG=es_AR scripts/screens.sh
+
     def _mk(self, login, group):
         return self.env["res.users"].with_context(no_reset_password=True).create(
             {"name": login.capitalize(), "login": login, "password": login, "email": f"{login}@example.com",
-             "group_ids": [(6, 0, group.ids)]}
+             "group_ids": [(6, 0, group.ids)], "lang": self.LANG}
         )
 
     def _data(self):
+        if self.LANG != "en_US":
+            self.env["res.lang"]._activate_lang(self.LANG)
+            self.env["ir.module.module"]._load_module_terms(["iso_sgc"], [self.LANG], overwrite=True)
         ug, ag = self.env.ref("iso_sgc.group_iso_user"), self.env.ref("iso_sgc.group_iso_admin")
         self.admin = self._mk("isoadmin", ag)
         self.analyst, self.owner, self.resp, self.approver = (
