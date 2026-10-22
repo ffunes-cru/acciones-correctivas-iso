@@ -215,4 +215,4 @@ class TestUI(TransactionCase):
 
     def test_year_is_shown_without_a_thousands_separator(self):
         for xmlid in ("iso_sgc.view_iso_calendar_wizard_form", "iso_sgc.view_iso_calendar_form"):
-            self.assertIn("'format': false", self.env.ref(xmlid).arch, xmlid)
+            self.assertIn("'enable_formatting': false", self.env.ref(xmlid).arch, xmlid)

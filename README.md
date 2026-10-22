@@ -12,7 +12,8 @@ ISO audit calendar, deadline reminders. Being rebuilt as an **Odoo 19 Community*
 |---|---|
 | `addons/iso_sgc/` | The Odoo module (models, security, views, tests) |
 | `scripts/test-odoo.sh` | Runs the module's tests on a throw-away database |
-| `docs/` | Plan, behaviour inventory (the test spec), licensing |
+| `scripts/screens.sh` | Takes screenshots of the main screens (headless Chrome via Odoo's test browser) |
+| `docs/` | Plan, behaviour inventory (the test spec), UI notes, calendar analysis, licensing |
 | `Dockerfile`, `compose.yaml` | Dev image: Odoo 19 + the addon + PostgreSQL |
 | `domain/` | Legacy TypeScript rules + tests, kept only as a spec for the modules not yet ported |
 | legacy: `src/`, `server.ts`, `api/` | Old app, reference only |

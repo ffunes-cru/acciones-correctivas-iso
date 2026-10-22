@@ -69,7 +69,7 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name"/>
-                <field name="year" options="{'format': false}"/>
+                <field name="year" options="{'enable_formatting': false}"/>
                 <field name="company_id" groups="base.group_multi_company"/>
                 <field name="task_count"/>
                 <field name="done_count"/>
@@ -87,7 +87,7 @@
                         <group>
                             <field name="name" groups="iso_sgc.group_iso_admin"/>
                             <field name="name" groups="!iso_sgc.group_iso_admin" readonly="1"/>
-                            <field name="year" readonly="id" options="{'format': false}"/>
+                            <field name="year" readonly="id" options="{'enable_formatting': false}"/>
                             <field name="company_id" groups="base.group_multi_company" readonly="id"/>
                         </group>
                         <group>
@@ -251,13 +251,13 @@
             <form>
                 <group>
                     <group>
-                        <field name="year" options="{'format': false}"/>
+                        <field name="year" options="{'enable_formatting': false}"/>
                         <field name="company_id" groups="base.group_multi_company"/>
                         <field name="name"/>
                     </group>
                     <group>
-                        <field name="global_auditor_id"/>
-                        <field name="global_responsible_id"/>
+                        <field name="global_auditor_id" placeholder="Choose a user to fill every audit…"/>
+                        <field name="global_responsible_id" placeholder="Choose a user to fill every activity…"/>
                     </group>
                 </group>
                 <field name="description" placeholder="Description (optional)"/>

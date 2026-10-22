@@ -29,8 +29,9 @@ GitHub-Actions cron.
 | M1 Findings + corrective actions (workflow, rules, chatter, activities, security, views) | **Done** |
 | Reminder schedule (`tools/reminders.py`) | Done, tested; cron job not yet wired |
 | M2 Special releases (4 area approvals + Posventa confirmation, linked actions, admin amendments, delete cascade) | **Done** (M1+M2+security tested) |
-| M3 Change requests (8 area reviews + questionnaires, linked actions, final approval, communication) | **Done** (**115 Odoo tests green** overall) |
+| M3 Change requests (8 area reviews + questionnaires, linked actions, final approval, communication) | **Done** (**131 Odoo tests green** overall) |
 | M4 ISO calendar + tasks (wizard, tasks, audit lines → findings, sharing, visibility, locking, admin replanning) | **Done** (**91 Odoo tests green**). PDFs/report email are M5 |
+| UI pass (agenda, banners, kanban/calendar/pivot, one-click actions) | **Done**, see `docs/UI.md`; screenshot rig in `scripts/screens.sh` |
 | M5 Reports: audit template/report as QWeb PDFs, XLSX exports, Sheets export (D3/D4) | Todo |
 | M6 Reminders cron + notification history | Todo |
 | M7 Firestore → Odoo data migration | Todo |
