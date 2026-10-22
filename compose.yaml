@@ -19,21 +19,18 @@ services:
       SECRET: ${DIRECTUS_SECRET:?set DIRECTUS_SECRET}
       ADMIN_EMAIL: ${ADMIN_EMAIL:?set ADMIN_EMAIL}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:?set ADMIN_PASSWORD}
-      PUBLIC_URL: ${PUBLIC_URL:-http://localhost:8055}
+      # Must be an absolute URL (Directus 12 licensing binds to it; relative values are rejected).
+      PUBLIC_URL: ${PUBLIC_URL:?set PUBLIC_URL (absolute, e.g. https://calidad.example.local)}
       # Mail (replaces the Google Apps Script webhook)
       EMAIL_TRANSPORT: smtp
       EMAIL_FROM: ${EMAIL_FROM:-calidad@example.com}
       EMAIL_SMTP_HOST: ${EMAIL_SMTP_HOST:-}
       EMAIL_SMTP_PORT: ${EMAIL_SMTP_PORT:-25}
-      # Active Directory login (phase 2). Uncomment and fill; see docs/PLAN.md.
-      # AUTH_PROVIDERS: ad
-      # AUTH_AD_DRIVER: ldap
-      # AUTH_AD_CLIENT_URL: ldaps://dc.example.local
-      # AUTH_AD_BIND_DN: ${LDAP_BIND_DN}
-      # AUTH_AD_BIND_PASSWORD: ${LDAP_BIND_PASSWORD}
-      # AUTH_AD_USER_DN: DC=example,DC=local
-      # AUTH_AD_USER_ATTRIBUTE: sAMAccountName
-      # AUTH_AD_MAIL_ATTRIBUTE: mail
+      # Local users + passwords (decision D2). Password reset goes through the SMTP settings above.
+      # Google Sheets export (decision D3), service account, server side only:
+      GOOGLE_SERVICE_ACCOUNT_EMAIL: ${GOOGLE_SERVICE_ACCOUNT_EMAIL:-}
+      GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY: ${GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY:-}
+      GOOGLE_SHEETS_SPREADSHEET_ID: ${GOOGLE_SHEETS_SPREADSHEET_ID:-}
     volumes:
       - uploads:/directus/uploads
     healthcheck:

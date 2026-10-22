@@ -4,8 +4,10 @@
 #   docker build --target directus -t acciones-iso-directus .
 #   docker build --target web      -t acciones-iso-web .
 #
-# Pin DIRECTUS_VERSION to an exact release (or digest) before production; "11" floats.
-ARG DIRECTUS_VERSION=11
+# Directus is pinned to an exact release AND its multi-arch manifest digest (see docs/UPGRADES.md).
+# Never use a floating tag. Bump both together via the upgrade procedure.
+ARG DIRECTUS_VERSION=12.5.0
+ARG DIRECTUS_DIGEST=sha256:7de5d6898b955dab1672619aed590035dcade4f8d7396d913e55543e114d1331
 ARG NODE_VERSION=22
 
 # ---- Directus + our extensions (hooks that enforce the domain rules) ----
@@ -21,7 +23,7 @@ RUN set -e; \
       (cd "$d" && npm ci && npm run build); \
     done
 
-FROM directus/directus:${DIRECTUS_VERSION} AS directus
+FROM directus/directus:${DIRECTUS_VERSION}@${DIRECTUS_DIGEST} AS directus
 USER root
 RUN mkdir -p /directus/extensions && chown node:node /directus/extensions
 USER node

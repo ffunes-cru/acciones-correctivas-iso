@@ -1,15 +1,25 @@
 # Licensing notes (not legal advice; confirm with the company's counsel)
 
-- **This repository's code** is licensed **LGPL-3.0-or-later** (`LICENSE`, plus `COPYING` = GPL-3.0 text that LGPL-3.0
-  incorporates by reference), as decided by the project owner.
-- **Directus is not linked into our code.** The UI and extensions talk to it over HTTP, and extensions use its public
-  extension API. Directus is licensed under the **Business Source License 1.1**, not the GPL, so there is no GPL
-  inheritance to worry about, but there *is* a usage condition (see `PLAN.md` D1). The BSL conversion to an
-  open-source licence happens after a delay set by the licensor; check the current LICENSE in the Directus repo.
-- **Provenance of the legacy code:** it was written by an employee and the GitHub repository is private. Before the
-  licence header is applied to inherited files, confirm that the company owns the copyright (employment/work-for-hire).
-  Until then the `main` baseline commit carries no licence and should be treated as proprietary.
-- LGPL on an internal-only tool has no distribution trigger. It matters only if the code is ever given to a third party
-  (e.g. a subsidiary that is a separate legal entity — worth checking given the multi-company list: TMC, Fertec,
-  Metallo, Leaf, Fabril).
-- Third-party dependencies keep their own licences; `xlsx@0.18.5` (legacy) is being dropped.
+## This repository
+**Proprietary, internal use only** (`LICENSE`; `"license": "UNLICENSED"` in package manifests), decision D6.
+The company owns the code. It can be relicensed later (an earlier draft chose LGPL-3.0; nothing in the stack requires it).
+Do not push the images or source to public registries/repos.
+
+## Directus (the main third-party component)
+- Version pinned: 12.5.0 (see `docs/UPGRADES.md`). Licence: **MSCL-1.0-GPL** (Monospace Sustainable Core License).
+- Internal use is a stated *Permitted Purpose*; the only excluded use is a **Competing Use** (offering Directus itself to
+  parties that compete with Directus's commercial offering). Our use is not that.
+- **License-key limitations:** we must not circumvent or disable licence-key-gated functionality. Directus gates features
+  and limits by tier (Core / Open Innovation Grant / paid). Details, numbers and the open questions are in
+  `docs/PLAN.md` §6 D1. Whether the company needs a paid key is the main open licensing item.
+- **Redistribution:** copies/derivatives of Directus carry MSCL terms and may not be sold or sub-licensed with extra
+  charges. Our images are internal only. Our extensions use Directus's public extension API and are separate works we
+  own; keep them out of any public distribution.
+- **Future licence:** each Directus version becomes GPL-3.0 four years after release, a long-term safety net if the
+  vendor changes terms: the pinned version stays usable.
+- Verify against the LICENSE file shipped in the pinned image and the pricing/OIG pages before production.
+
+## Other
+- npm dependencies keep their own (mostly MIT) licences; run a licence report (`npx license-checker`) before go-live.
+- Multi-company group (TMC, Fertec, Metallo, Leaf, Fabril): Directus's grant is assessed per *legal entity* of
+  Studio users. Ask whether all five are one legal entity or separate ones when the licence question is answered.

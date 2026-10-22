@@ -12,7 +12,7 @@ ISO audit calendar, deadline reminders.
 | `domain/` | Pure business rules + unit tests (the part we really maintain) |
 | `extensions/` | Directus hooks/endpoints (thin; import `domain/`) |
 | `ui/` | New UI (phase 3) |
-| `docs/` | Plan, behaviour inventory, licensing notes |
+| `docs/` | Plan, behaviour inventory, licensing notes, Directus upgrade policy |
 | `Dockerfile`, `compose.yaml`, `docker/` | Images: `directus` (with extensions) and `web` (nginx + UI) |
 | legacy: `src/`, `server.ts`, `api/`, `firestore.rules` | Old app, reference only |
 
@@ -30,4 +30,4 @@ cd domain && npm ci && npm test
 ```
 
 ## Licence
-LGPL-3.0-or-later. See [`docs/LICENSING.md`](docs/LICENSING.md).
+Proprietary, internal use only. See [`LICENSE`](LICENSE) and [`docs/LICENSING.md`](docs/LICENSING.md).

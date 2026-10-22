@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "license": "LGPL-3.0-or-later",
+  "license": "UNLICENSED",
   "description": "Pure business rules for the ISO corrective-actions app. No I/O, no framework: used by Directus hooks (enforcement) and the UI (affordances).",
   "main": "src/index.ts",
   "scripts": {
