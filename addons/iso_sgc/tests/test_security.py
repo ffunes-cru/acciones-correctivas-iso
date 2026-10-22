@@ -21,7 +21,7 @@ class TestSecurityInSharedInstance(TransactionCase):
                     "company_id": companies[0].id,
                     "company_ids": [(6, 0, [c.id for c in companies])],
                     "group_ids": [(6, 0, groups.ids)],
-                }
+                },
             )
 
         cls.user_a = mk("user_a", cls.company_a, user_g)
@@ -34,7 +34,7 @@ class TestSecurityInSharedInstance(TransactionCase):
             {
                 "company_id": company.id, "origin": "x", "type": "t", "process": "p",
                 "description": "d", "owner_id": self.user_both.id,
-            }
+            },
         )
 
     def test_company_isolation_finding(self):
@@ -42,7 +42,7 @@ class TestSecurityInSharedInstance(TransactionCase):
         seen_a = self.env["iso.finding"].with_user(self.user_a).search([("id", "in", (fa | fb).ids)])
         seen_b = self.env["iso.finding"].with_user(self.user_b).search([("id", "in", (fa | fb).ids)])
         seen_both = self.env["iso.finding"].with_user(self.user_both).with_context(
-            allowed_company_ids=(self.company_a | self.company_b).ids
+            allowed_company_ids=(self.company_a | self.company_b).ids,
         ).search([("id", "in", (fa | fb).ids)])
         self.assertEqual(seen_a, fa)
         self.assertEqual(seen_b, fb)
@@ -55,7 +55,7 @@ class TestSecurityInSharedInstance(TransactionCase):
             {
                 "company_id": self.company_b.id, "release_type": "raw_material",
                 "deviation_description": "d", "client_impact": "i", "creator_id": self.user_b.id,
-            }
+            },
         )
         self.assertFalse(self.env["iso.special.release"].with_user(self.user_a).search([("id", "=", r.id)]))
         self.assertTrue(self.env["iso.special.release"].with_user(self.user_b).search([("id", "=", r.id)]))
@@ -75,7 +75,7 @@ class TestSecurityInSharedInstance(TransactionCase):
     def test_odoo_system_admins_are_iso_admins(self):
         sysadmin = self.env["res.users"].with_context(no_reset_password=True).create(
             {"name": "sys", "login": "sys", "email": "sys@example.com",
-             "group_ids": [(6, 0, self.env.ref("base.group_system").ids)]}
+             "group_ids": [(6, 0, self.env.ref("base.group_system").ids)]},
         )
         self.assertTrue(sysadmin.has_group("iso_sgc.group_iso_admin"))
         self.assertFalse(self.user_a.has_group("iso_sgc.group_iso_admin"))

@@ -1,7 +1,9 @@
+from markupsafe import Markup
+
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, UserError, ValidationError
 
-from ..tools.approvals import change_request_status_after_review
+from odoo.addons.iso_sgc.tools.approvals import change_request_status_after_review
 
 MISSIONS = [
     ("safety", "Safety and environment"),
@@ -53,7 +55,7 @@ class IsoChangeRequest(models.Model):
 
     _name = "iso.change.request"
     _description = "ISO change request"
-    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _inherit = ["mail.thread", "mail.activity.mixin", "iso.workflow.mixin"]
     _order = "id desc"
     _mail_post_access = "read"
 
@@ -88,7 +90,7 @@ class IsoChangeRequest(models.Model):
     final_approver_id = fields.Many2one("res.users", "Final approver", tracking=True)
     final_deadline = fields.Date("Final approval deadline")
     final_state = fields.Selection(
-        [("pending", "Pending"), ("approved", "Approved"), ("rejected", "Rejected")], copy=False, tracking=True
+        [("pending", "Pending"), ("approved", "Approved"), ("rejected", "Rejected")], copy=False, tracking=True,
     )
     final_comments = fields.Text(copy=False)
     final_date = fields.Datetime(copy=False)
@@ -126,15 +128,9 @@ class IsoChangeRequest(models.Model):
                 r.next_step = self.env._("Rejected.")
 
     # ---------------------------------------------------------------- helpers
-    def _is_iso_admin(self):
-        return self.env.user.has_group("iso_sgc.group_iso_admin")
-
     def _is_creator_or_admin(self):
         self.ensure_one()
         return self._is_iso_admin() or self.env.user == self.creator_id
-
-    def _transition(self, vals):
-        return self.sudo().with_context(iso_transition=True).write(vals)
 
     @api.model
     def _expand_states(self, states, domain=None, order=None):
@@ -191,15 +187,14 @@ class IsoChangeRequest(models.Model):
                             },
                         )
                         for a in areas
-                    ]
-                }
+                    ],
+                },
             )
         return requests
 
     def write(self, vals):
+        self._check_protected(vals, PROTECTED_FIELDS)
         if not self.env.context.get("iso_transition") and not self._is_iso_admin():
-            if PROTECTED_FIELDS & set(vals):
-                raise AccessError(self.env._("Workflow fields can only be changed through the workflow buttons."))
             if (DEFINITION_FIELDS | {"final_approver_id", "final_deadline"}) & set(vals):
                 for r in self:
                     if not r._is_creator_or_admin():
@@ -213,6 +208,7 @@ class IsoChangeRequest(models.Model):
         return super().write(vals)
 
     def unlink(self):
+        self.check_access("unlink")  # before the cascade, which runs with elevated rights
         self.linked_finding_ids.sudo().unlink()
         return super().unlink()
 
@@ -229,7 +225,7 @@ class IsoChangeRequest(models.Model):
             missing = active.filtered(lambda v: not v.user_id)
             if missing:
                 raise ValidationError(
-                    self.env._("Select the reviewer of: %s.", ", ".join(missing.mapped("area_id.name")))
+                    self.env._("Select the reviewer of: %s.", ", ".join(missing.mapped("area_id.name"))),
                 )
             if not r.review_deadline:
                 raise ValidationError(self.env._("Set the review deadline."))
@@ -255,7 +251,7 @@ class IsoChangeRequest(models.Model):
     def _after_review_decision(self):
         self.ensure_one()
         new = change_request_status_after_review(
-            self.state, [(v.applies, v.state) for v in self.review_ids]
+            self.state, [(v.applies, v.state) for v in self.review_ids],
         )
         if new == self.state:
             return
@@ -314,17 +310,15 @@ class IsoChangeRequest(models.Model):
                 "final_comments": comments,
                 "final_date": fields.Datetime.now(),
                 "state": "approved" if approve else "rejected",
-            }
+            },
         )
         self.sudo().activity_feedback(["mail.mail_activity_data_todo"])
         # Stage 4: communicate the decision to everybody involved.
         involved = (self.creator_id | self.final_approver_id | self.review_ids.filtered("applies").user_id)
         label = self.env._("APPROVED") if approve else self.env._("REJECTED")
         self.sudo().message_post(
-            body=self.env._(
-                "Final decision on %s (%s): %s. Final approver: %s.<br/>Comments: %s",
-                self.name, self.title, label, self.env.user.name, comments or self.env._("No comments."),
-            ),
+            body=Markup(self.env._("Final decision on %s (%s): %s. Final approver: %s.<br/>Comments: %s"))
+            % (self.name, self.title, label, self.env.user.name, comments or self.env._("No comments.")),
             partner_ids=involved.partner_id.ids,
             subtype_xmlid="mail.mt_comment",
         )
@@ -333,9 +327,9 @@ class IsoChangeRequest(models.Model):
                 "communication_sent": True,
                 "communication_date": fields.Datetime.now(),
                 "communication_notes": self.env._(
-                    "Notification sent to %s people: %s", len(involved), ", ".join(involved.mapped("name"))
+                    "Notification sent to %s people: %s", len(involved), ", ".join(involved.mapped("name")),
                 ),
-            }
+            },
         )
         return True
 
@@ -348,6 +342,7 @@ class IsoChangeRequest(models.Model):
 
 class IsoChangeReview(models.Model):
     _name = "iso.change.review"
+    _inherit = ["iso.workflow.mixin"]
     _description = "ISO change request sector review"
     _order = "request_id, area_id"
 
@@ -377,12 +372,6 @@ class IsoChangeReview(models.Model):
         for v in self:
             v.display_name = f"{v.request_id.name} · {v.area_id.name}"
 
-    def _is_iso_admin(self):
-        return self.env.user.has_group("iso_sgc.group_iso_admin")
-
-    def _transition(self, vals):
-        return self.sudo().with_context(iso_transition=True).write(vals)
-
     @api.depends_context("uid")
     @api.depends("state", "applies", "user_id", "request_id.state")
     def _compute_can_decide(self):
@@ -398,30 +387,16 @@ class IsoChangeReview(models.Model):
     def _compute_progress(self):
         for v in self:
             v.unanswered_count = len(
-                v.line_ids.filtered(lambda ln: not ln.applies or (ln.applies == "yes" and not ln.requires_action))
+                v.line_ids.filtered(lambda ln: not ln.applies or (ln.applies == "yes" and not ln.requires_action)),
             )
             v.action_missing_count = len(
-                v.line_ids.filtered(lambda ln: ln.applies == "yes" and ln.requires_action == "yes" and not ln.finding_id)
+                v.line_ids.filtered(lambda ln: ln.applies == "yes" and ln.requires_action == "yes" and not ln.finding_id),
             )
 
     def write(self, vals):
-        if not self.env.context.get("iso_transition") and not self._is_iso_admin():
-            keys = set(vals)
-            if {"state", "action_date", "area_id", "request_id", "date_deadline"} & keys:
-                raise AccessError(self.env._("Reviews can only be changed through the workflow buttons."))
-            if {"applies", "user_id"} & keys:
-                for v in self:
-                    if v.request_id.state != "draft" or not v.request_id._is_creator_or_admin():
-                        raise AccessError(self.env._("Areas and reviewers can only be set by the creator, in draft."))
-            if "comments" in keys:
-                for v in self:
-                    if self.env.user != v.user_id or v.request_id.state != "pending_review" or v.state != "pending":
-                        raise AccessError(self.env._("Only the assigned reviewer can comment while the review is open."))
-        elif self._is_iso_admin() and not self.env.context.get("iso_transition") and "user_id" in vals:
-            # Admin escape hatch (not in the legacy app): reassign an absent reviewer of an open review.
-            for v in self:
-                if v.request_id.state not in ("draft", "pending_review") or (v.request_id.state != "draft" and v.state != "pending"):
-                    raise UserError(self.env._("Only the reviewer of an open review can be reassigned."))
+        self._check_protected(vals, {"state", "action_date", "area_id", "request_id", "date_deadline"})
+        if not self.env.context.get("iso_transition"):
+            self._check_edit_rights(set(vals))
         old = {v.id: v.user_id for v in self}
         res = super().write(vals)
         if "user_id" in vals and not self.env.context.get("iso_transition"):
@@ -435,6 +410,25 @@ class IsoChangeReview(models.Model):
                         summary=self.env._("Review %s for %s", v.area_id.name, v.request_id.name),
                     )
         return res
+
+    def _check_edit_rights(self, keys):
+        """Who may change which field of a review (see docs/BEHAVIOR.md, "Change requests")."""
+        if self._is_iso_admin():
+            if "user_id" in keys:
+                # Admin escape hatch (not in the legacy app): reassign the reviewer of an open review.
+                for v in self:
+                    state = v.request_id.state
+                    if state not in ("draft", "pending_review") or (state != "draft" and v.state != "pending"):
+                        raise UserError(self.env._("Only the reviewer of an open review can be reassigned."))
+            return
+        if {"applies", "user_id"} & keys:
+            for v in self:
+                if v.request_id.state != "draft" or not v.request_id._is_creator_or_admin():
+                    raise AccessError(self.env._("Areas and reviewers can only be set by the creator, in draft."))
+        if "comments" in keys:
+            for v in self:
+                if self.env.user != v.user_id or v.request_id.state != "pending_review" or v.state != "pending":
+                    raise AccessError(self.env._("Only the assigned reviewer can comment while the review is open."))
 
     # ---------------------------------------------------------------- decisions
     def action_decide(self, approve, comments=None):
@@ -451,14 +445,14 @@ class IsoChangeReview(models.Model):
                 raise ValidationError(self.env._('Answer "Requires action" for every applicable question before approving.'))
             if self.action_missing_count:
                 raise ValidationError(
-                    self.env._("Some questions require an action that has not been created yet. Create each one before approving.")
+                    self.env._("Some questions require an action that has not been created yet. Create each one before approving."),
                 )
         self._transition(
             {
                 "state": "approved" if approve else "rejected",
                 "comments": comments if comments is not None else self.comments,
                 "action_date": fields.Datetime.now(),
-            }
+            },
         )
         req.sudo().activity_feedback(["mail.mail_activity_data_todo"], user_id=self.user_id.id)
         req._after_review_decision()
@@ -473,6 +467,7 @@ class IsoChangeReview(models.Model):
 
 class IsoChangeReviewLine(models.Model):
     _name = "iso.change.review.line"
+    _inherit = ["iso.workflow.mixin"]
     _description = "ISO change request questionnaire line"
     _order = "review_id, sequence, id"
 
@@ -484,15 +479,12 @@ class IsoChangeReviewLine(models.Model):
     finding_id = fields.Many2one("iso.finding", "Action", readonly=True, copy=False)
     can_link = fields.Boolean(compute="_compute_can_link")
 
-    def _is_iso_admin(self):
-        return self.env.user.has_group("iso_sgc.group_iso_admin")
-
     @api.depends_context("uid")
     @api.depends("applies", "requires_action", "finding_id", "review_id.can_decide")
     def _compute_can_link(self):
         for ln in self:
             ln.can_link = bool(
-                ln.id and ln.review_id.can_decide and ln.applies == "yes" and ln.requires_action == "yes" and not ln.finding_id
+                ln.id and ln.review_id.can_decide and ln.applies == "yes" and ln.requires_action == "yes" and not ln.finding_id,
             )
 
     def write(self, vals):

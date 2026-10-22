@@ -49,5 +49,5 @@ class ResCompany(models.Model):
     _inherit = "res.company"
 
     iso_audit_scope = fields.Text(
-        "ISO audit scope", help="Default scope text of the internal audit reports of this company."
+        "ISO audit scope", help="Default scope text of the internal audit reports of this company.",
     )

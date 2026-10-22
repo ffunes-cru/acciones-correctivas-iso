@@ -1,9 +1,14 @@
-from . import iso_finding
-from . import iso_finding_action
-from . import iso_special_release
-from . import iso_special_release_approval
-from . import iso_special_release_wizard
-from . import iso_audit_process
-from . import iso_calendar
-from . import iso_calendar_wizard
-from . import iso_change_request
+# Odoo builds models in import order and ruff sorts these imports alphabetically: the abstract mixin
+# is named "iso_abstract_*" on purpose so that it always comes first.
+from . import (
+    iso_abstract_workflow,
+    iso_audit_process,
+    iso_calendar,
+    iso_calendar_wizard,
+    iso_change_request,
+    iso_finding,
+    iso_finding_action,
+    iso_special_release,
+    iso_special_release_approval,
+    iso_special_release_wizard,
+)

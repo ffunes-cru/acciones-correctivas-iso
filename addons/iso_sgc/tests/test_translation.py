@@ -8,12 +8,10 @@ Workflow when you add or change a user-visible string:
 
 import io
 import re
-from datetime import timedelta
 from pathlib import Path
 
 import polib
 
-from odoo import fields
 from odoo.exceptions import ValidationError
 from odoo.tests import TransactionCase, tagged
 from odoo.tools.translate import trans_export
@@ -52,7 +50,7 @@ class TestTranslation(TransactionCase):
         self.env["ir.module.module"]._load_module_terms(["iso_sgc"], ["es_AR"], overwrite=True)
         owner = self.env["res.users"].with_context(no_reset_password=True).create(
             {"name": "u", "login": "u", "email": "u@example.com", "lang": "es_AR",
-             "group_ids": [(6, 0, self.env.ref("iso_sgc.group_iso_user").ids)]}
+             "group_ids": [(6, 0, self.env.ref("iso_sgc.group_iso_user").ids)]},
         )
         F = self.env["iso.finding"].with_user(owner).with_context(lang="es_AR")
         # selection labels

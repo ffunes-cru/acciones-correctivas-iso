@@ -28,7 +28,7 @@ class TestChangeRequest(TransactionCase):
 
         def mk(login, group=user_g):
             return cls.env["res.users"].with_context(no_reset_password=True).create(
-                {"name": login, "login": login, "email": f"{login}@example.com", "group_ids": [(6, 0, group.ids)]}
+                {"name": login, "login": login, "email": f"{login}@example.com", "group_ids": [(6, 0, group.ids)]},
             )
 
         cls.creator, cls.eng, cls.qua, cls.final, cls.other, cls.exec = (
@@ -239,7 +239,7 @@ class TestChangeRequest(TransactionCase):
         self.assertEqual(rv.action_missing_count, 0)
 
     def test_action_rules(self):
-        cr, rv, ln = self._needs_action()
+        _cr, rv, ln = self._needs_action()
         with self.assertRaises(AccessError):
             ln.with_user(self.other).action_link_action("x", self.exec, self.today)
         with self.assertRaises(ValidationError):
@@ -254,18 +254,18 @@ class TestChangeRequest(TransactionCase):
             ln.with_user(self.qua).applies = "no"  # remove the action first
 
     def test_wizard_and_approval_with_actions(self):
-        cr, rv, ln = self._needs_action()
+        _cr, rv, ln = self._needs_action()
         for other in rv.line_ids - ln:
             other.with_user(self.qua).applies = "no"
         w = self.env["iso.change.line.action.wizard"].with_user(self.qua).create(
-            {"line_id": ln.id, "description": "Hacer", "user_id": self.exec.id, "date_deadline": self.today}
+            {"line_id": ln.id, "description": "Hacer", "user_id": self.exec.id, "date_deadline": self.today},
         )
         w.action_confirm()
         rv.with_user(self.qua).action_approve()
         self.assertEqual(rv.state, "approved")
 
     def test_removing_an_action_is_for_creator_or_admin(self):
-        cr, rv, ln = self._needs_action()
+        _cr, _rv, ln = self._needs_action()
         f = ln.with_user(self.qua).action_link_action("x", self.exec, self.today)
         with self.assertRaises(AccessError):
             ln.with_user(self.other).action_remove_action()
@@ -326,7 +326,7 @@ class TestChangeRequest(TransactionCase):
 
     # ------------------------------------------------------------ deletion
     def test_delete_is_admin_only_and_removes_linked_actions(self):
-        cr, rv, ln = self._needs_action()
+        cr, _rv, ln = self._needs_action()
         f = ln.with_user(self.qua).action_link_action("x", self.exec, self.today)
         with self.assertRaises(AccessError):
             cr.with_user(self.creator).unlink()

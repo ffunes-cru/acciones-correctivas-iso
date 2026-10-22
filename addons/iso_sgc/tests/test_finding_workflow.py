@@ -15,7 +15,7 @@ class TestFindingWorkflow(TransactionCase):
 
         def mkuser(login, groups):
             return cls.env["res.users"].with_context(no_reset_password=True).create(
-                {"name": login, "login": login, "email": f"{login}@example.com", "group_ids": [(6, 0, groups.ids)]}
+                {"name": login, "login": login, "email": f"{login}@example.com", "group_ids": [(6, 0, groups.ids)]},
             )
 
         cls.owner = mkuser("owner", group)
@@ -48,7 +48,7 @@ class TestFindingWorkflow(TransactionCase):
 
     def _add(self, f, user, who=None, deadline=None):
         return self.env["iso.finding.action"].with_user(who or self.analyst).create(
-            {"finding_id": f.id, "name": "Hacer algo", "user_id": user.id, "date_deadline": deadline or self.tomorrow}
+            {"finding_id": f.id, "name": "Hacer algo", "user_id": user.id, "date_deadline": deadline or self.tomorrow},
         )
 
     # -------------------------------------------------------------- creation
@@ -173,7 +173,7 @@ class TestFindingWorkflow(TransactionCase):
         return f, actions
 
     def test_only_owner_verifies(self):
-        f, (a1, _a2) = self._finished()
+        _f, (a1, _a2) = self._finished()
         for who in (self.other, self.analyst, self.resp1):
             with self.assertRaises(AccessError):
                 a1.with_user(who).action_verify(True)
@@ -198,7 +198,7 @@ class TestFindingWorkflow(TransactionCase):
         self.assertFalse(f.is_verified)
 
     def test_cannot_verify_twice_or_unfinished(self):
-        f, (a1, _a2) = self._finished()
+        _f, (a1, _a2) = self._finished()
         a1.with_user(self.owner).action_verify(True)
         with self.assertRaises(UserError):
             a1.with_user(self.owner).action_verify(True)

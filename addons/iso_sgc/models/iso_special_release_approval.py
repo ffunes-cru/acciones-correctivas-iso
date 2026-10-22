@@ -12,6 +12,7 @@ AREAS = [
 
 class IsoSpecialReleaseApproval(models.Model):
     _name = "iso.special.release.approval"
+    _inherit = ["iso.workflow.mixin"]
     _description = "ISO special release signature"
     _order = "release_id, id"
 
@@ -37,9 +38,6 @@ class IsoSpecialReleaseApproval(models.Model):
         for a in self:
             a.display_name = f"{a.release_id.name} · {a._area_label()}"
 
-    def _is_iso_admin(self):
-        return self.env.user.has_group("iso_sgc.group_iso_admin")
-
     def _area_label(self):
         """Area name in the user's language (the module-level AREAS list is the untranslated source)."""
         return dict(self._fields["area"]._description_selection(self.env)).get(self.area, self.area)
@@ -63,9 +61,8 @@ class IsoSpecialReleaseApproval(models.Model):
 
     # ---------------------------------------------------------------- ORM
     def write(self, vals):
+        self._check_protected(vals, PROTECTED_FIELDS)
         if not self.env.context.get("iso_transition") and not self._is_iso_admin():
-            if PROTECTED_FIELDS & set(vals):
-                raise AccessError(self.env._("Signatures can only be changed through the workflow buttons."))
             if {"user_id", "excluded"} & set(vals):
                 for a in self:
                     if a.release_id.state != "draft" or not a.release_id._is_creator_or_admin():
@@ -94,7 +91,7 @@ class IsoSpecialReleaseApproval(models.Model):
         if status == "rejected" and not (comments or "").strip():
             raise ValidationError(self.env._("Comments are required when rejecting."))
         self.sudo().with_context(iso_transition=True).write(
-            {"state": status, "comments": comments, "action_date": fields.Datetime.now()}
+            {"state": status, "comments": comments, "action_date": fields.Datetime.now()},
         )
         release.sudo().activity_feedback(["mail.mail_activity_data_todo"], user_id=self.user_id.id)
         release._recompute_state()
@@ -119,7 +116,7 @@ class IsoSpecialReleaseApproval(models.Model):
         if status == "rejected" and not (comments or "").strip():
             raise ValidationError(self.env._("Comments are required when rejecting."))
         self.sudo().with_context(iso_transition=True).write(
-            {"state": status, "comments": comments, "action_date": False if status == "pending" else fields.Datetime.now()}
+            {"state": status, "comments": comments, "action_date": False if status == "pending" else fields.Datetime.now()},
         )
         self.release_id._recompute_state()
         return True

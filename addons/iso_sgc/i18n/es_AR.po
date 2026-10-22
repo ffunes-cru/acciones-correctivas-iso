@@ -980,6 +980,7 @@ msgstr "Descripción del desvío"
 #: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__display_name
 #: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_action_wizard__display_name
 #: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_approval__display_name
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_workflow_mixin__display_name
 #: model:ir.model.fields,field_description:iso_sgc.field_res_company__display_name
 msgid "Display Name"
 msgstr "Nombre para mostrar"
@@ -1232,6 +1233,7 @@ msgstr "Tiene mensaje"
 #: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release__id
 #: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_action_wizard__id
 #: model:ir.model.fields,field_description:iso_sgc.field_iso_special_release_approval__id
+#: model:ir.model.fields,field_description:iso_sgc.field_iso_workflow_mixin__id
 #: model:ir.model.fields,field_description:iso_sgc.field_res_company__id
 msgid "ID"
 msgstr "ID"
@@ -1328,6 +1330,11 @@ msgstr "Liberación especial ISO"
 #: model:ir.model,name:iso_sgc.model_iso_special_release_approval
 msgid "ISO special release signature"
 msgstr "Firma de liberación especial ISO"
+
+#. module: iso_sgc
+#: model:ir.model,name:iso_sgc.model_iso_workflow_mixin
+msgid "ISO workflow helpers"
+msgstr "Utilidades del flujo ISO"
 
 #. module: iso_sgc
 #: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_task__activity_exception_icon
@@ -1991,6 +1998,12 @@ msgstr "Solo el dueño del hallazgo puede verificar las acciones."
 #. module: iso_sgc
 #. odoo-python
 #: code:addons/iso_sgc/models/iso_finding_action.py:0
+msgid "Only the planner can change what, who or when of an action."
+msgstr "Solo quien planifica puede cambiar qué, quién o cuándo de una acción."
+
+#. module: iso_sgc
+#. odoo-python
+#: code:addons/iso_sgc/models/iso_finding_action.py:0
 msgid "Only the responsible can report this action."
 msgstr "Solo el responsable puede reportar esta acción."
 
@@ -2381,12 +2394,6 @@ msgid "Reviewer"
 msgstr "Revisor"
 
 #. module: iso_sgc
-#. odoo-python
-#: code:addons/iso_sgc/models/iso_change_request.py:0
-msgid "Reviews can only be changed through the workflow buttons."
-msgstr "Las revisiones solo pueden cambiarse mediante los botones del flujo."
-
-#. module: iso_sgc
 #: model:ir.actions.act_window,name:iso_sgc.action_iso_activity_template
 #: model:ir.model.fields,field_description:iso_sgc.field_iso_calendar_wizard__activity_line_ids
 #: model:ir.ui.menu,name:iso_sgc.menu_iso_config_activities
@@ -2561,12 +2568,6 @@ msgstr "Se requiere su firma (%s): %s"
 #: model_terms:ir.ui.view,arch_db:iso_sgc.view_iso_special_release_form
 msgid "Signatures"
 msgstr "Firmas"
-
-#. module: iso_sgc
-#. odoo-python
-#: code:addons/iso_sgc/models/iso_special_release_approval.py:0
-msgid "Signatures can only be changed through the workflow buttons."
-msgstr "Las firmas solo pueden cambiarse mediante los botones del flujo."
 
 #. module: iso_sgc
 #. odoo-python
@@ -2961,10 +2962,7 @@ msgstr "Asistente"
 
 #. module: iso_sgc
 #. odoo-python
-#: code:addons/iso_sgc/models/iso_change_request.py:0
-#: code:addons/iso_sgc/models/iso_finding.py:0
-#: code:addons/iso_sgc/models/iso_finding_action.py:0
-#: code:addons/iso_sgc/models/iso_special_release.py:0
+#: code:addons/iso_sgc/models/iso_abstract_workflow.py:0
 msgid "Workflow fields can only be changed through the workflow buttons."
 msgstr ""
 "Los campos del flujo solo pueden cambiarse mediante los botones del flujo."

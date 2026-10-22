@@ -1,11 +1,13 @@
 import re
 from datetime import date
 
+from markupsafe import Markup
+
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, ValidationError
 
-from ..tools import calendar_rules
 from .iso_calendar import FREQUENCIES
+from odoo.addons.iso_sgc.tools import calendar_rules
 
 QUARTERS = [("T1", "T1"), ("T2", "T2"), ("T3", "T3"), ("T4", "T4")]
 QUARTER_DATES = {q: (m, d) for q, m, d in calendar_rules.AUDIT_QUARTERS}
@@ -81,7 +83,7 @@ class IsoCalendarWizard(models.TransientModel):
             {
                 "name": self.name, "year": self.year, "company_id": self.company_id.id,
                 "description": self.description,
-            }
+            },
         )
         vals_list = []
         for ln in self.audit_line_ids:
@@ -96,7 +98,7 @@ class IsoCalendarWizard(models.TransientModel):
                     "date_deadline": ln.date,
                     "is_audit": True,
                     "audit_process_id": ln.process_id.id,
-                }
+                },
             )
         for ln in self.activity_line_ids:
             for label, planned in calendar_rules.frequency_instances(ln.frequency, self.year):
@@ -110,16 +112,17 @@ class IsoCalendarWizard(models.TransientModel):
                         "user_id": ln.user_id.id,
                         "date_deadline": planned,
                         "is_audit": False,
-                    }
+                    },
                 )
         tasks = self.env["iso.calendar.task"].create(vals_list)
         # One digest per responsible (replaces the legacy per-user mail) and a summary for the administrators.
         for user in tasks.user_id:
             mine = tasks.filtered(lambda t: t.user_id == user)
-            lines = "".join(f"<li>{t.name} ({t.date_deadline})</li>" for t in mine)
+            # Markup only for our own tags: names and dates are escaped when interpolated.
+            items = Markup("").join(Markup("<li>%s (%s)</li>") % (t.name, t.date_deadline) for t in mine)
             calendar.message_post(
-                body=self.env._("%s, you were assigned %s tasks in %s:", user.name, len(mine), calendar.name)
-                + f"<ul>{lines}</ul>",
+                body=Markup("%s<ul>%s</ul>")
+                % (self.env._("%s, you were assigned %s tasks in %s:", user.name, len(mine), calendar.name), items),
                 partner_ids=user.partner_id.ids,
                 subtype_xmlid="mail.mt_comment",
             )
@@ -180,10 +183,11 @@ class IsoCalendarShareWizard(models.TransientModel):
             raise ValidationError(self.env._("Select at least one recipient."))
         if task.is_audit and self.user_ids:
             task._transition({"shared_user_ids": [(4, u.id) for u in self.user_ids]})
-        body = self.env._("Internal audit report shared: %s.", task.name) + (f"<br/>{self.message}" if self.message else "")
+        text = self.env._("Internal audit report shared: %s.", task.name)
+        body = Markup("%s<br/>%s") % (text, self.message) if self.message else Markup("%s") % text
         task.sudo().message_post(body=body, partner_ids=self.user_ids.partner_id.ids, subtype_xmlid="mail.mt_comment")
         if emails:
             self.env["mail.mail"].sudo().create(
-                {"subject": task.name, "body_html": body, "email_to": ",".join(emails), "auto_delete": True}
+                {"subject": task.name, "body_html": body, "email_to": ",".join(emails), "auto_delete": True},
             )
         return {"type": "ir.actions.act_window_close"}

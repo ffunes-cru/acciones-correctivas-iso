@@ -26,7 +26,7 @@ class TestScreens(HttpCase):
     def _mk(self, login, group):
         return self.env["res.users"].with_context(no_reset_password=True).create(
             {"name": login.capitalize(), "login": login, "password": login, "email": f"{login}@example.com",
-             "group_ids": [(6, 0, group.ids)], "lang": self.LANG}
+             "group_ids": [(6, 0, group.ids)], "lang": self.LANG},
         )
 
     def _data(self):
@@ -57,7 +57,7 @@ class TestScreens(HttpCase):
         self.f1, self.f2, self.a1, self.f3 = f1, f2, a1, f3
         rel = self.env["iso.special.release"].with_user(self.owner).create(
             {"release_type": "raw_material", "deviation_description": "Chapa de 2 mm con espesor 1,9 mm.",
-             "client_impact": "Sin impacto en el cliente.", "purchase_order_number": "OC-4471", "vendor": "Aceros SA"}
+             "client_impact": "Sin impacto en el cliente.", "purchase_order_number": "OC-4471", "vendor": "Aceros SA"},
         )
         users = {"calidad": self.analyst, "ingenieria": self.resp, "comercial": self.approver, "operaciones": self.owner}
         for a in rel.approval_ids:
@@ -69,12 +69,12 @@ class TestScreens(HttpCase):
         cr = self.env["iso.change.request"].with_user(self.owner).create(
             {"title": "Nueva plantilla de soldado en línea Fertec", "description": "Reemplazar la plantilla actual.",
              "objective": "Reducir retrabajos.", "current_situation": "Plantilla manual.",
-             "proposed_situation": "Plantilla con topes fijos.", "impact_analysis": "Bajo."}
+             "proposed_situation": "Plantilla con topes fijos.", "impact_analysis": "Bajo."},
         )
         self.cr_draft = cr
         cr2 = self.env["iso.change.request"].with_user(self.owner).create(
             {"title": "Cambio de proveedor de tornillería", "description": "d", "objective": "o",
-             "current_situation": "a", "proposed_situation": "b", "impact_analysis": "i"}
+             "current_situation": "a", "proposed_situation": "b", "impact_analysis": "i"},
         )
         for code, u in (("calidad", self.analyst), ("supply_chain", self.resp)):
             cr2.review_ids.filtered(lambda v: v.area_id.code == code).with_user(self.owner).write(
@@ -117,7 +117,11 @@ class TestScreens(HttpCase):
             atexit.callback(self._wait_remaining_requests)
             atexit.enter_context(browser.cleanup)
             if "bus.bus" in self.env.registry:
-                from odoo.addons.bus.websocket import CloseCode, WebsocketConnectionHandler, _kick_all  # noqa: PLC0415
+                from odoo.addons.bus.websocket import (  # noqa: PLC0415
+                    CloseCode,
+                    WebsocketConnectionHandler,
+                    _kick_all,
+                )
                 atexit.callback(_kick_all, CloseCode.KILL_NOW)
                 atexit.enter_context(patch.object(WebsocketConnectionHandler, "websocket_allowed", return_value=True))
             current = None

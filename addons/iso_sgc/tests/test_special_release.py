@@ -41,7 +41,7 @@ class TestSpecialRelease(TransactionCase):
 
         def mk(login, group=user_g):
             return cls.env["res.users"].with_context(no_reset_password=True).create(
-                {"name": login, "login": login, "email": f"{login}@example.com", "group_ids": [(6, 0, group.ids)]}
+                {"name": login, "login": login, "email": f"{login}@example.com", "group_ids": [(6, 0, group.ids)]},
             )
 
         cls.creator, cls.q, cls.e, cls.c, cls.o, cls.pv, cls.other = (
@@ -237,7 +237,7 @@ class TestSpecialRelease(TransactionCase):
     def test_wizard(self):
         r = self._release()
         w = self.env["iso.special.release.action.wizard"].with_user(self.creator).create(
-            {"release_id": r.id, "description": "Hacer", "user_id": self.o.id, "date_deadline": self.today}
+            {"release_id": r.id, "description": "Hacer", "user_id": self.o.id, "date_deadline": self.today},
         )
         w.action_confirm()
         self.assertEqual(len(r.linked_finding_ids), 1)

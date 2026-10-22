@@ -17,13 +17,13 @@ class IsoFinding(models.Model):
 
     _name = "iso.finding"
     _description = "ISO finding"
-    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _inherit = ["mail.thread", "mail.activity.mixin", "iso.workflow.mixin"]
     _order = "id desc"
     _mail_post_access = "read"  # anyone who can read a finding may comment on it
 
     name = fields.Char("Number", readonly=True, copy=False, default="New")
     company_id = fields.Many2one(
-        "res.company", required=True, default=lambda s: s.env.company, index=True
+        "res.company", required=True, default=lambda s: s.env.company, index=True,
     )
     category = fields.Selection(
         [("corrective", "Corrective"), ("improvement", "Improvement")],
@@ -36,7 +36,7 @@ class IsoFinding(models.Model):
     process = fields.Char()
     description = fields.Text(required=True)
     owner_id = fields.Many2one(
-        "res.users", "Owner", required=True, default=lambda s: s.env.user, tracking=True
+        "res.users", "Owner", required=True, default=lambda s: s.env.user, tracking=True,
     )
     analysis_user_id = fields.Many2one("res.users", "Analysis responsible", tracking=True)
     analysis_deadline = fields.Date(tracking=True)
@@ -78,9 +78,6 @@ class IsoFinding(models.Model):
         return [k for k, _label in self._fields["state"].selection if k in always or k in states]
 
     # ---------------------------------------------------------------- helpers
-    def _is_iso_admin(self):
-        return self.env.user.has_group("iso_sgc.group_iso_admin")
-
     def _planner(self):
         """Who may add actions: the analyst (corrective) or the owner (improvement)."""
         self.ensure_one()
@@ -136,7 +133,7 @@ class IsoFinding(models.Model):
         for f in self:
             if len(f.description or "") > MAX_DESCRIPTION:
                 raise ValidationError(
-                    self.env._("The description cannot exceed %s characters.", MAX_DESCRIPTION)
+                    self.env._("The description cannot exceed %s characters.", MAX_DESCRIPTION),
                 )
 
     @api.constrains("category", "type", "process")
@@ -162,8 +159,7 @@ class IsoFinding(models.Model):
         return findings
 
     def write(self, vals):
-        if PROTECTED_FIELDS & set(vals) and not self.env.context.get("iso_transition") and not self._is_iso_admin():
-            raise AccessError(self.env._("Workflow fields can only be changed through the workflow buttons."))
+        self._check_protected(vals, PROTECTED_FIELDS)
         res = super().write(vals)
         if "analysis_user_id" in vals or "analysis_deadline" in vals:
             for f in self.filtered(lambda r: r.state == "pending_analysis"):
@@ -181,9 +177,6 @@ class IsoFinding(models.Model):
                 summary=self.env._("Cause analysis for %s", self.name),
             )
 
-    def _transition(self, vals):
-        return self.sudo().with_context(iso_transition=True).write(vals)
-
     @api.model
     def _create_with_action(self, vals, action_name, user, deadline):
         """Background corrective finding that skips the analysis (born pending_action) with its single action.
@@ -193,7 +186,7 @@ class IsoFinding(models.Model):
         """
         finding = self.create({**vals, "category": "corrective", "state": "pending_action"})
         self.env["iso.finding.action"].create(
-            {"finding_id": finding.id, "name": action_name, "user_id": user.id, "date_deadline": deadline}
+            {"finding_id": finding.id, "name": action_name, "user_id": user.id, "date_deadline": deadline},
         )
         return finding
 
@@ -246,5 +239,5 @@ class IsoFinding(models.Model):
                 "state": "completed" if ok else "cancelled",
                 "is_verified": ok,
                 "verification_date": fields.Datetime.now(),
-            }
+            },
         )

@@ -15,7 +15,7 @@ class TestCalendar(TransactionCase):
 
         def mk(login, group=user_g):
             return cls.env["res.users"].with_context(no_reset_password=True).create(
-                {"name": login, "login": login, "email": f"{login}@example.com", "group_ids": [(6, 0, group.ids)]}
+                {"name": login, "login": login, "email": f"{login}@example.com", "group_ids": [(6, 0, group.ids)]},
             )
 
         cls.admin, cls.admin2 = mk("isoadmin", admin_g), mk("isoadmin2", admin_g)
@@ -24,7 +24,7 @@ class TestCalendar(TransactionCase):
         cls.company.iso_audit_scope = "Alcance de prueba"
         cls.today = fields.Date.context_today(cls.env["iso.calendar"])
         cls.calendar = cls.env["iso.calendar"].with_user(cls.admin).create(
-            {"name": "Planificación test", "year": cls.today.year + 1}
+            {"name": "Planificación test", "year": cls.today.year + 1},
         )
 
     def _task(self, **kw):
@@ -96,7 +96,7 @@ class TestCalendar(TransactionCase):
     def test_adhoc_defaults(self):
         t = self.env["iso.calendar.task"].with_user(self.admin).create(
             {"calendar_id": self.calendar.id, "name": "Auditoría especial", "user_id": self.resp.id,
-             "date_deadline": self.today}
+             "date_deadline": self.today},
         )
         self.assertTrue(t.is_audit)
         self.assertEqual(t.label, "Ad-hoc")
@@ -111,7 +111,7 @@ class TestCalendar(TransactionCase):
     def test_only_admin_creates_tasks_and_calendars(self):
         with self.assertRaises(AccessError):
             self.env["iso.calendar.task"].with_user(self.resp).create(
-                {"calendar_id": self.calendar.id, "name": "x", "user_id": self.resp.id, "date_deadline": self.today}
+                {"calendar_id": self.calendar.id, "name": "x", "user_id": self.resp.id, "date_deadline": self.today},
             )
         with self.assertRaises(AccessError):
             self.env["iso.calendar"].with_user(self.resp).create({"name": "x", "year": 2030})

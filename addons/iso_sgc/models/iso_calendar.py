@@ -1,9 +1,8 @@
-from datetime import timedelta  # noqa: F401  (used by dashboards later)
 
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, UserError, ValidationError
 
-from ..tools import calendar_rules
+from odoo.addons.iso_sgc.tools import calendar_rules
 
 TASK_STATES = [("not_started", "Not started"), ("in_progress", "In progress"), ("done", "Done")]
 FREQUENCIES = [("annual", "Annual"), ("semester", "Semester"), ("quarterly", "Quarterly"), ("monthly", "Monthly")]
@@ -41,7 +40,7 @@ class IsoCalendar(models.Model):
 class IsoCalendarTask(models.Model):
     _name = "iso.calendar.task"
     _description = "ISO calendar task"
-    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _inherit = ["mail.thread", "mail.activity.mixin", "iso.workflow.mixin"]
     _order = "date_deadline, id"
     _mail_post_access = "read"
 
@@ -72,9 +71,6 @@ class IsoCalendarTask(models.Model):
     is_overdue = fields.Boolean(compute="_compute_is_overdue")
 
     # ---------------------------------------------------------------- helpers
-    def _is_iso_admin(self):
-        return self.env.user.has_group("iso_sgc.group_iso_admin")
-
     def _is_locked(self):
         """A finished audit can only be changed by administrators."""
         self.ensure_one()
@@ -96,9 +92,6 @@ class IsoCalendarTask(models.Model):
         today = fields.Date.context_today(self)
         for t in self:
             t.is_overdue = bool(t.state != "done" and t.date_deadline and t.date_deadline < today)
-
-    def _transition(self, vals):
-        return self.sudo().with_context(iso_transition=True).write(vals)
 
     def _admin_partners(self):
         group = self.env.ref("iso_sgc.group_iso_admin")
@@ -178,7 +171,7 @@ class IsoCalendarTask(models.Model):
                 raise ValidationError(self.env._("A comment / audit conclusion is required to finish the task."))
             if t.is_audit and calendar_rules.has_template_placeholders(t.comments):
                 raise ValidationError(
-                    self.env._("Adapt the conclusion template (replace the [bracketed] placeholders) before finishing.")
+                    self.env._("Adapt the conclusion template (replace the [bracketed] placeholders) before finishing."),
                 )
             if t.is_audit and not (t.audited_personnel or "").strip():
                 raise ValidationError(self.env._("The audited personnel is required to finish an internal audit."))
@@ -239,7 +232,7 @@ class IsoAuditLine(models.Model):
         for ln in self:
             t = ln.task_id
             ln.can_confirm = bool(
-                not ln.finding_id and ln.id and (t._is_iso_admin() or self.env.user == t.user_id) and not t._is_locked()
+                not ln.finding_id and ln.id and (t._is_iso_admin() or self.env.user == t.user_id) and not t._is_locked(),
             )
 
     def _check_task_editable(self):
@@ -299,12 +292,12 @@ class IsoAuditLine(models.Model):
                         "type": "Mejora",
                         "process": "Mejora",
                         "description": self.env._(
-                            "Improvement opportunities detected during the internal audit (%s)", t.name
+                            "Improvement opportunities detected during the internal audit (%s)", t.name,
                         ),
-                    }
+                    },
                 )
                 self.env["iso.finding.action"].create(
-                    {"finding_id": finding.id, "name": ln.text, "user_id": ln.user_id.id, "date_deadline": ln.date_deadline}
+                    {"finding_id": finding.id, "name": ln.text, "user_id": ln.user_id.id, "date_deadline": ln.date_deadline},
                 )
             else:
                 label = self.env._("Minor nonconformities") if ln.kind == "minor" else self.env._("Major nonconformities")
@@ -315,11 +308,11 @@ class IsoAuditLine(models.Model):
                         "type": "No conformidad menor" if ln.kind == "minor" else "No conformidad mayor",
                         "process": ln.process,
                         "description": self.env._(
-                            "%s detected during the internal audit (%s) - Detail: %s", label, t.name, ln.text
+                            "%s detected during the internal audit (%s) - Detail: %s", label, t.name, ln.text,
                         ),
                         "analysis_user_id": ln.user_id.id,
                         "analysis_deadline": ln.date_deadline,
-                    }
+                    },
                 )
             ln.sudo().with_context(iso_transition=True).write({"finding_id": finding.id})
         return True

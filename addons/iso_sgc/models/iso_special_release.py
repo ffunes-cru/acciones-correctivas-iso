@@ -1,7 +1,10 @@
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, UserError, ValidationError
 
-from ..tools.approvals import SPECIAL_RELEASE_AREAS, special_release_status
+from odoo.addons.iso_sgc.tools.approvals import (
+    SPECIAL_RELEASE_AREAS,
+    special_release_status,
+)
 
 PROTECTED_FIELDS = {"state", "creator_id", "posventa_confirmed", "posventa_confirmed_date"}
 BUSINESS_FIELDS = {
@@ -19,14 +22,14 @@ class IsoSpecialRelease(models.Model):
 
     _name = "iso.special.release"
     _description = "ISO special release"
-    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _inherit = ["mail.thread", "mail.activity.mixin", "iso.workflow.mixin"]
     _order = "id desc"
     _mail_post_access = "read"
 
     name = fields.Char("Number", readonly=True, copy=False, default="New")
     company_id = fields.Many2one("res.company", required=True, default=lambda s: s.env.company, index=True)
     release_type = fields.Selection(
-        [("raw_material", "Raw material"), ("finished_product", "Finished product")], required=True
+        [("raw_material", "Raw material"), ("finished_product", "Finished product")], required=True,
     )
     date = fields.Date(required=True, default=fields.Date.context_today)
     deviation_description = fields.Text(required=True)
@@ -117,9 +120,6 @@ class IsoSpecialRelease(models.Model):
                 r.next_step = self.env._("Rejected.")
 
     # ---------------------------------------------------------------- helpers
-    def _is_iso_admin(self):
-        return self.env.user.has_group("iso_sgc.group_iso_admin")
-
     def _is_creator_or_admin(self):
         self.ensure_one()
         return self._is_iso_admin() or self.env.user == self.creator_id
@@ -134,9 +134,6 @@ class IsoSpecialRelease(models.Model):
                 and (r._is_iso_admin() or self.env.user == r.posventa_user_id)
             )
 
-    def _transition(self, vals):
-        return self.sudo().with_context(iso_transition=True).write(vals)
-
     # ---------------------------------------------------------------- ORM
     @api.model_create_multi
     def create(self, vals_list):
@@ -147,15 +144,13 @@ class IsoSpecialRelease(models.Model):
         for r in releases:
             existing = r.approval_ids.mapped("area")
             r.sudo().write(
-                {"approval_ids": [(0, 0, {"area": a}) for a in SPECIAL_RELEASE_AREAS if a not in existing]}
+                {"approval_ids": [(0, 0, {"area": a}) for a in SPECIAL_RELEASE_AREAS if a not in existing]},
             )
         return releases
 
     def write(self, vals):
+        self._check_protected(vals, PROTECTED_FIELDS)
         if not self.env.context.get("iso_transition") and not self._is_iso_admin():
-            blocked = PROTECTED_FIELDS & set(vals)
-            if blocked:
-                raise AccessError(self.env._("Workflow fields can only be changed through the workflow buttons."))
             if BUSINESS_FIELDS & set(vals):
                 for r in self:
                     if r.state != "draft" or not r._is_creator_or_admin():
@@ -164,6 +159,7 @@ class IsoSpecialRelease(models.Model):
 
     def unlink(self):
         # Legacy: deleting a release also deletes the findings/actions created for it (admin only).
+        self.check_access("unlink")  # before the cascade, which runs with elevated rights
         self.linked_finding_ids.sudo().unlink()
         return super().unlink()
 
@@ -181,7 +177,7 @@ class IsoSpecialRelease(models.Model):
                     self.env._(
                         "Select the approvers for the active areas: %s.",
                         ", ".join(missing.mapped(lambda a: a._area_label())),
-                    )
+                    ),
                 )
             if not r.posventa_user_id:
                 raise ValidationError(self.env._("Select who is notified in Posventa before sending."))
@@ -212,7 +208,7 @@ class IsoSpecialRelease(models.Model):
                 raise AccessError(self.env._("You are not the designated Posventa person nor an administrator."))
             r._transition({"posventa_confirmed": True, "posventa_confirmed_date": fields.Datetime.now()})
             r.sudo().activity_feedback(
-                ["mail.mail_activity_data_todo"], user_id=r.posventa_user_id.id
+                ["mail.mail_activity_data_todo"], user_id=r.posventa_user_id.id,
             )
             r._recompute_state()
         return True
@@ -223,7 +219,7 @@ class IsoSpecialRelease(models.Model):
             if r.state == "draft":
                 continue
             new = special_release_status(
-                [(a.state, a.excluded) for a in r.approval_ids], r.posventa_confirmed
+                [(a.state, a.excluded) for a in r.approval_ids], r.posventa_confirmed,
             )
             if new != r.state:
                 r._transition({"state": new})
@@ -236,7 +232,7 @@ class IsoSpecialRelease(models.Model):
         recipients = (self.creator_id | self.approval_ids.user_id | self.posventa_user_id).partner_id
         self.sudo().message_post(
             body=self.env._(
-                "Final resolution of special release %s: %s. The signature circuit is complete.", self.name, label
+                "Final resolution of special release %s: %s. The signature circuit is complete.", self.name, label,
             ),
             partner_ids=recipients.ids,
             subtype_xmlid="mail.mt_comment",
@@ -250,7 +246,7 @@ class IsoSpecialRelease(models.Model):
         if not (description or "").strip():
             raise ValidationError(self.env._("The action description is required."))
         kind = self.env._("Raw material") if self.release_type == "raw_material" else self.env._("Finished product")
-        finding = self.env["iso.finding"]._create_with_action(
+        return self.env["iso.finding"]._create_with_action(
             {
                 "company_id": self.company_id.id,
                 "finding_date": self.date,
@@ -268,4 +264,3 @@ class IsoSpecialRelease(models.Model):
             },
             description, user, deadline,
         )
-        return finding

@@ -1,13 +1,14 @@
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, UserError, ValidationError
 
+PLANNING_FIELDS = {"name", "user_id", "date_deadline"}
 PROTECTED_FIELDS = {"state", "execution_date", "verification_state", "verification_date", "finding_id"}
 
 
 class IsoFindingAction(models.Model):
     _name = "iso.finding.action"
     _description = "ISO finding action"
-    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _inherit = ["mail.thread", "mail.activity.mixin", "iso.workflow.mixin"]
     _order = "date_deadline, id"
     _mail_post_access = "read"
 
@@ -40,9 +41,6 @@ class IsoFindingAction(models.Model):
     verification_comment = fields.Text()
     verification_date = fields.Datetime(readonly=True, copy=False)
 
-    def _is_iso_admin(self):
-        return self.env.user.has_group("iso_sgc.group_iso_admin")
-
     # ---------------------------------------------------------------- ORM
     @api.model_create_multi
     def create(self, vals_list):
@@ -56,7 +54,27 @@ class IsoFindingAction(models.Model):
             if deadline and deadline < today:
                 raise ValidationError(self.env._("The deadline of an action cannot be in the past."))
         actions = super().create(vals_list)
+        actions._schedule_todo()
         for a in actions:
+            a.finding_id.sudo().message_post(body=self.env._("Action assigned to %s: %s", a.user_id.name, a.name))
+        return actions
+
+    def write(self, vals):
+        self._check_protected(vals, PROTECTED_FIELDS)
+        if PLANNING_FIELDS & set(vals) and not self.env.context.get("iso_transition") and not self._is_iso_admin():
+            # The responsible reports an action; only the planner (or an admin) decides what, who and when.
+            for a in self:
+                if self.env.user != a.finding_id._planner():
+                    raise AccessError(self.env._("Only the planner can change what, who or when of an action."))
+        res = super().write(vals)
+        if {"user_id", "date_deadline"} & set(vals):
+            for a in self.filtered(lambda r: r.state == "pending"):
+                a.sudo().activity_unlink(["mail.mail_activity_data_todo"])
+                a._schedule_todo()
+        return res
+
+    def _schedule_todo(self):
+        for a in self:
             a.sudo().activity_schedule(
                 "mail.mail_activity_data_todo",
                 date_deadline=a.date_deadline,
@@ -64,13 +82,6 @@ class IsoFindingAction(models.Model):
                 summary=self.env._("Action for %s", a.finding_id.name),
                 note=a.name,
             )
-            a.finding_id.sudo().message_post(body=self.env._("Action assigned to %s: %s", a.user_id.name, a.name))
-        return actions
-
-    def write(self, vals):
-        if PROTECTED_FIELDS & set(vals) and not self.env.context.get("iso_transition") and not self._is_iso_admin():
-            raise AccessError(self.env._("Workflow fields can only be changed through the workflow buttons."))
-        return super().write(vals)
 
     # ---------------------------------------------------------------- workflow
     def action_execute(self, state, comment=None):
@@ -86,7 +97,7 @@ class IsoFindingAction(models.Model):
         if not (comment or "").strip():
             raise ValidationError(self.env._("The implementation report is required."))
         self.sudo().with_context(iso_transition=True).write(
-            {"state": state, "implementation_comment": comment, "execution_date": fields.Datetime.now()}
+            {"state": state, "implementation_comment": comment, "execution_date": fields.Datetime.now()},
         )
         self.sudo().activity_feedback(["mail.mail_activity_data_todo"])
         self.finding_id._after_action_executed()
@@ -114,7 +125,7 @@ class IsoFindingAction(models.Model):
                 "verification_state": "ok" if ok else "nok",
                 "verification_comment": comment if comment is not None else self.verification_comment,
                 "verification_date": fields.Datetime.now(),
-            }
+            },
         )
         finding._after_action_verified()
         return True

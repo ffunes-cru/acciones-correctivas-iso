@@ -15,13 +15,13 @@ class TestUI(TransactionCase):
 
         def mk(login):
             return cls.env["res.users"].with_context(no_reset_password=True).create(
-                {"name": login, "login": login, "email": f"{login}@example.com", "group_ids": [(6, 0, user_g.ids)]}
+                {"name": login, "login": login, "email": f"{login}@example.com", "group_ids": [(6, 0, user_g.ids)]},
             )
 
         cls.owner, cls.analyst, cls.other = mk("owner"), mk("analyst"), mk("other")
         cls.admin = cls.env["res.users"].with_context(no_reset_password=True).create(
             {"name": "isoadmin", "login": "isoadmin", "email": "isoadmin@example.com",
-             "group_ids": [(6, 0, cls.env.ref("iso_sgc.group_iso_admin").ids)]}
+             "group_ids": [(6, 0, cls.env.ref("iso_sgc.group_iso_admin").ids)]},
         )
         cls.today = fields.Date.context_today(cls.env["iso.finding"])
 
@@ -92,14 +92,14 @@ class TestUI(TransactionCase):
     # ------------------------------------------------------------ "what's next" guidance
     def test_next_step_follows_the_finding(self):
         f = self.env["iso.finding"].with_user(self.owner).create(
-            {"origin": "x", "type": "t", "process": "p", "description": "d", "analysis_user_id": self.analyst.id}
+            {"origin": "x", "type": "t", "process": "p", "description": "d", "analysis_user_id": self.analyst.id},
         )
         self.assertIn("cause analysis", f.next_step)
         f.analysis_summary = "ok"
         f.with_user(self.analyst).action_save_analysis()
         self.assertIn("add the actions", f.next_step)
         a = self.env["iso.finding.action"].with_user(self.analyst).create(
-            {"finding_id": f.id, "name": "x", "user_id": self.other.id, "date_deadline": self.today}
+            {"finding_id": f.id, "name": "x", "user_id": self.other.id, "date_deadline": self.today},
         )
         self.assertIn(self.other.name, f.next_step)
         a.with_user(self.other).action_execute("finished", "ok")
@@ -110,19 +110,19 @@ class TestUI(TransactionCase):
 
     def test_next_step_special_release_and_change_request(self):
         r = self.env["iso.special.release"].with_user(self.owner).create(
-            {"release_type": "raw_material", "deviation_description": "d", "client_impact": "i"}
+            {"release_type": "raw_material", "deviation_description": "d", "client_impact": "i"},
         )
         self.assertIn("send for approval", r.next_step)
         cr = self.env["iso.change.request"].with_user(self.owner).create(
             {"title": "t", "description": "d", "objective": "o", "current_situation": "a",
-             "proposed_situation": "b", "impact_analysis": "i"}
+             "proposed_situation": "b", "impact_analysis": "i"},
         )
         self.assertIn("send it to review", cr.next_step)
 
     # ------------------------------------------------------------ "My agenda"
     def test_my_agenda_shows_only_my_iso_todos(self):
         self.env["iso.finding"].with_user(self.owner).create(
-            {"origin": "x", "type": "t", "process": "p", "description": "d", "analysis_user_id": self.analyst.id}
+            {"origin": "x", "type": "t", "process": "p", "description": "d", "analysis_user_id": self.analyst.id},
         )
         # An unrelated activity of the same person must not show up.
         partner = self.env.ref("base.partner_admin")
@@ -134,7 +134,7 @@ class TestUI(TransactionCase):
         self.assertEqual(set(mine.mapped("res_model")), {"iso.finding"})
         self.assertEqual(mine.user_id, self.analyst)
         self.assertFalse(self.env["mail.activity"].with_user(self.owner).search(
-            safe_eval(action.domain, {"uid": self.owner.id})
+            safe_eval(action.domain, {"uid": self.owner.id}),
         ))
 
     # ------------------------------------------------------------ one-click actions and ordering
@@ -151,7 +151,7 @@ class TestUI(TransactionCase):
 
     def test_approver_signs_in_one_click(self):
         rel = self.env["iso.special.release"].with_user(self.owner).create(
-            {"release_type": "raw_material", "deviation_description": "d", "client_impact": "i"}
+            {"release_type": "raw_material", "deviation_description": "d", "client_impact": "i"},
         )
         users = {"calidad": self.analyst, "ingenieria": self.analyst, "comercial": self.other, "operaciones": self.owner}
         for a in rel.approval_ids:
@@ -169,7 +169,7 @@ class TestUI(TransactionCase):
 
     def test_reject_opens_the_signature_to_type_a_comment(self):
         rel = self.env["iso.special.release"].with_user(self.owner).create(
-            {"release_type": "raw_material", "deviation_description": "d", "client_impact": "i"}
+            {"release_type": "raw_material", "deviation_description": "d", "client_impact": "i"},
         )
         for a in rel.approval_ids:
             a.with_user(self.owner).user_id = self.analyst
@@ -182,7 +182,7 @@ class TestUI(TransactionCase):
     def test_reviewer_opens_their_questionnaire_in_one_click(self):
         cr = self.env["iso.change.request"].with_user(self.owner).create(
             {"title": "t", "description": "d", "objective": "o", "current_situation": "a",
-             "proposed_situation": "b", "impact_analysis": "i"}
+             "proposed_situation": "b", "impact_analysis": "i"},
         )
         review = cr.review_ids.filtered(lambda v: v.area_id.code == "calidad")
         review.with_user(self.owner).write({"applies": True, "user_id": self.analyst.id})
@@ -204,12 +204,12 @@ class TestUI(TransactionCase):
     def test_display_names_are_readable(self):
         cr = self.env["iso.change.request"].with_user(self.owner).create(
             {"title": "t", "description": "d", "objective": "o", "current_situation": "a",
-             "proposed_situation": "b", "impact_analysis": "i"}
+             "proposed_situation": "b", "impact_analysis": "i"},
         )
         review = cr.review_ids.filtered(lambda v: v.area_id.code == "calidad")
         self.assertEqual(review.display_name, f"{cr.name} · Calidad")
         rel = self.env["iso.special.release"].with_user(self.owner).create(
-            {"release_type": "raw_material", "deviation_description": "d", "client_impact": "i"}
+            {"release_type": "raw_material", "deviation_description": "d", "client_impact": "i"},
         )
         self.assertTrue(rel.approval_ids[0].display_name.startswith(f"{rel.name} · "))
 
