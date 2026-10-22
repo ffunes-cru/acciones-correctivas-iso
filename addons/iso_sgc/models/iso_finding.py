@@ -120,7 +120,9 @@ class IsoFinding(models.Model):
     def create(self, vals_list):
         for vals in vals_list:
             if vals.get("name", "New") == "New":
-                vals["name"] = self.env["ir.sequence"].next_by_code("iso.finding") or "New"
+                # Legacy numbers improvements and corrective findings independently.
+                code = "iso.finding.improvement" if vals.get("category") == "improvement" else "iso.finding"
+                vals["name"] = self.env["ir.sequence"].next_by_code(code) or "New"
             if vals.get("category") == "improvement" and "state" not in vals:
                 vals["state"] = "pending_action"
         findings = super().create(vals_list)

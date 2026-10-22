@@ -7,6 +7,13 @@
         <field name="padding">4</field>
         <field name="company_id" eval="False"/>
     </record>
+    <record id="seq_iso_finding_improvement" model="ir.sequence">
+        <field name="name">ISO improvement</field>
+        <field name="code">iso.finding.improvement</field>
+        <field name="prefix">M-</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
     <record id="seq_iso_special_release" model="ir.sequence">
         <field name="name">ISO special release</field>
         <field name="code">iso.special.release</field>

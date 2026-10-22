@@ -59,6 +59,9 @@ class TestFindingWorkflow(TransactionCase):
         self.assertEqual(f.pending_user_ids, self.analyst)
         imp = self._finding(category="improvement", type=False, process=False)
         self.assertEqual(imp.state, "pending_action")
+        # improvements are numbered independently of corrective findings (legacy behaviour)
+        self.assertRegex(imp.name, r"^M-\d{4,}$")
+        self.assertEqual(int(self._finding().name[2:]), int(f.name[2:]) + 1)
 
     def test_validation(self):
         with self.assertRaises(ValidationError):
