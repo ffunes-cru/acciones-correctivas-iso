@@ -1,11 +1,14 @@
 """Takes screenshots of the main screens with Odoo's own headless-Chrome test browser.
 
-Not part of the normal suite (tag `iso_screens`, not `iso_sgc`). Use scripts/screens.sh; images land in the
+Opt-in (skipped unless ISO_SCREENS=1, which scripts/screens.sh sets), because it needs Chrome and is slow.
+Use scripts/screens.sh; images land in the
 directory given to --screenshots. This is a development aid to review how simple the UI really looks.
 """
 
 import contextlib
+import os
 import time
+import unittest
 from datetime import timedelta
 from unittest.mock import patch
 from urllib.parse import urljoin
@@ -16,6 +19,7 @@ from odoo.tests.common import ChromeBrowser
 
 
 @tagged("post_install", "-at_install", "iso_screens")
+@unittest.skipUnless(os.environ.get("ISO_SCREENS"), "opt-in: run scripts/screens.sh")
 class TestScreens(HttpCase):
     def _mk(self, login, group):
         return self.env["res.users"].with_context(no_reset_password=True).create(
