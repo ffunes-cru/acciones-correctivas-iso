@@ -7,4 +7,11 @@
         <field name="padding">4</field>
         <field name="company_id" eval="False"/>
     </record>
+    <record id="seq_iso_special_release" model="ir.sequence">
+        <field name="name">ISO special release</field>
+        <field name="code">iso.special.release</field>
+        <field name="prefix">LE-</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
 </odoo>

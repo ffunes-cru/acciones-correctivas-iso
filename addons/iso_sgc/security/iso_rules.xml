@@ -54,4 +54,38 @@
         <field name="groups" eval="[(4, ref('group_iso_admin'))]"/>
         <field name="domain_force">[(1, '=', 1)]</field>
     </record>
+
+    <record id="rule_iso_special_release_company" model="ir.rule">
+        <field name="name">ISO special release: multi-company</field>
+        <field name="model_id" ref="model_iso_special_release"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_iso_special_release_write_creator" model="ir.rule">
+        <field name="name">ISO special release: write own</field>
+        <field name="model_id" ref="model_iso_special_release"/>
+        <field name="groups" eval="[(4, ref('group_iso_user'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="domain_force">[('creator_id', '=', user.id)]</field>
+    </record>
+    <record id="rule_iso_special_release_admin" model="ir.rule">
+        <field name="name">ISO special release: admin all</field>
+        <field name="model_id" ref="model_iso_special_release"/>
+        <field name="groups" eval="[(4, ref('group_iso_admin'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+    <record id="rule_iso_special_release_approval_write_creator" model="ir.rule">
+        <field name="name">ISO special release approval: write if release creator</field>
+        <field name="model_id" ref="model_iso_special_release_approval"/>
+        <field name="groups" eval="[(4, ref('group_iso_user'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="domain_force">[('release_id.creator_id', '=', user.id)]</field>
+    </record>
+    <record id="rule_iso_special_release_approval_admin" model="ir.rule">
+        <field name="name">ISO special release approval: admin all</field>
+        <field name="model_id" ref="model_iso_special_release_approval"/>
+        <field name="groups" eval="[(4, ref('group_iso_admin'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
 </odoo>

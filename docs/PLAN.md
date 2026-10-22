@@ -26,9 +26,9 @@ GitHub-Actions cron.
 
 | Module / task | State |
 |---|---|
-| M1 Findings + corrective actions (workflow, rules, chatter, activities, security, views) | **Done, 23 tests green** on Odoo 19.0 |
+| M1 Findings + corrective actions (workflow, rules, chatter, activities, security, views) | **Done** |
 | Reminder schedule (`tools/reminders.py`) | Done, tested; cron job not yet wired |
-| M2 Special releases (4 area approvals + Posventa confirmation) | Todo |
+| M2 Special releases (4 area approvals + Posventa confirmation, linked actions, admin amendments, delete cascade) | **Done** (**53 Odoo tests green** for M1+M2+security) |
 | M3 Change requests (8 area reviews + checklists, final approval, communication) | Todo |
 | M4 ISO calendar + tasks (frequency generation, audit-task visibility) | Todo (largest unknown: `ISOCalendarDetails.tsx`, 3,400 lines) |
 | M5 Reports: audit template/report as QWeb PDFs, XLSX exports, Sheets export (D3/D4) | Todo |
@@ -37,7 +37,7 @@ GitHub-Actions cron.
 | M8 UAT, cutover, decommission Firebase/Vercel/GitHub cron, delete legacy code | Todo |
 
 `domain/` (TypeScript rules + 40 vitest tests) is now only a **reference spec** for M2–M4 (approvals, ISO task
-access). Delete it once those are ported to Python tests. Finding and reminder rules are already ported.
+access). Delete it once those are ported to Python tests. Finding, special-release and reminder rules are already ported.
 
 ## 3. Module design notes (M1, already implemented)
 
@@ -93,7 +93,7 @@ Revisit if OCA ports `base_tier_validation` to 19.0 and M2/M3 prove clumsy.
 
 ## 8. Open questions
 
-- **Q1** Do TMC, Fertec, Metallo, Leaf and Fabril exist as companies in your Odoo (or should this live in a database of its own)?
-- **Q2** Where will production run: the existing `odoo_sv` instance or a new containerised one? (`compose.yaml` is for dev; it is untested here because the Docker daemon is not running.)
-- **Q3** Outgoing mail server configured in that Odoo (`ir.mail_server`)? Activity and chatter emails depend on it.
-- **Q4** Are the origin/type/process fields on a finding free text or fixed lists today? M1 keeps them as text; fixed lists should become configuration models.
+- ~~Q1~~ Answered: the five companies exist in the same database; `company_id` + multi-company record rules isolate them (tested).
+- ~~Q2~~ Answered: it will share an existing instance, so Odoo's own authentication is mandatory and our groups gate access (tested). `compose.yaml` stays as a dev convenience (untested: no Docker daemon here).
+- **Q3** The local server has **no outgoing mail**. Activities (to-dos in the Odoo UI/systray) work without it, but emailed notifications (assignments, final resolutions, reminders) need `ir.mail_server` in production. Tests do not depend on mail.
+- ~~Q4~~ Answered: origin/type/process stay free text for now.

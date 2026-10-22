@@ -21,10 +21,25 @@ Each row is a rule the current app enforces, where it comes from, and where it i
 ## Special releases
 | Rule | Legacy source | Test |
 |---|---|---|
-| Only the assigned approver (or admin) evaluates an area | `handleEvaluateApprover` | U `validateEvaluation`, A |
-| Rejection requires a comment | idem | U |
-| Any non-excluded rejection → `rejected`; all non-excluded evaluated **and** Posventa confirmed → `approved`; else `pending_approval` | idem | U `specialReleaseStatus` |
-| Resolution email to creator, approvers and Posventa, once, on the first transition into approved/rejected | idem | A |
+| Draft is edited only by the creator (or admin); approvers per area, Commercial can never be excluded; excluding an area clears its approver and signature | `handleUpdateApprover`, `handleToggleExcludeApprover` | O `test_only_creator_edits_draft`, `test_commercial_cannot_be_excluded`, `test_excluding_clears_approver_and_signature` |
+| Sending needs an approver for every active area and a Posventa person; only creator/admin; locks editing | `handleSendForApproval` | O `test_send_requires_approvers_and_posventa`, `test_excluded_areas_do_not_need_approvers`, `test_only_creator_sends`, `test_cannot_edit_after_sending` |
+| Each approver and Posventa get a to-do on sending (replaces the "FIRMA REQUERIDA" mails) | `onConfirmSend` | O `test_sending_creates_activities` |
+| Only the assigned approver (or admin) signs, once, only while pending approval; rejection needs a comment | `handleEvaluateApprover` | O `test_only_assigned_approver_or_admin_evaluates`, `test_rejection_needs_comment_and_rejects_release`, `test_cannot_evaluate_twice_or_in_draft` |
+| Any non-excluded rejection → `rejected`; all non-excluded signed **and** Posventa confirmed → `approved`; any order of signing/confirming | same | O `TestSpecialReleaseStatus`, `test_approved_needs_all_areas_and_posventa`, `test_posventa_first_then_areas` |
+| Only the designated Posventa person (or admin) confirms receipt | `handleConfirmPosventaNotification` | O `test_approved_needs_all_areas_and_posventa` |
+| Resolution message to creator, approvers and Posventa, once, on the transition into approved/rejected | idem | O `test_resolution_is_posted_once` (delivery needs an outgoing mail server, Q3) |
+| Admin can amend any signature after sending (rejection needs a comment); state follows | `handleAdminEditApproval` | O `test_admin_can_amend_signature_and_state_follows` |
+| Draft: creator/admin adds actions, each creating a background finding (corrective, origin "Muro/ Control de Calidad", type "Producto no conforme", process "Otros", owner = analyst = creator, already `pending_action`) with one action | `handleAddLinkedAction`, `NewSpecialRelease` | O `test_linked_action_*`, `test_wizard` |
+| Only admin deletes; deleting removes the linked findings/actions | `onConfirmDeleteRelease` | O `test_delete_is_admin_only_and_cascades` |
+| **Changed:** a non-admin cannot write workflow fields (state, Posventa confirmation) directly | rules (partly) | O `test_non_admin_cannot_force_state` |
+
+## Security in the shared Odoo instance (new)
+| Rule | Test |
+|---|---|
+| Companies are isolated: users see only records of their allowed companies | O `test_company_isolation_*` |
+| Users without an ISO group have no access to ISO models | O `test_users_without_iso_group_have_no_access` |
+| One numbering across companies | O `test_sequences_are_shared_across_companies` |
+| Odoo system admins are ISO admins | O `test_odoo_system_admins_are_iso_admins` |
 
 ## Change requests
 | Rule | Legacy source | Test |

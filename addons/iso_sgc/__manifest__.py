@@ -13,6 +13,7 @@
         "security/iso_rules.xml",
         "data/ir_sequence.xml",
         "views/iso_finding_views.xml",
+        "views/iso_special_release_views.xml",
         "views/iso_menus.xml",
     ],
     "installable": True,

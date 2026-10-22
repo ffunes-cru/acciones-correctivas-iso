@@ -3,3 +3,8 @@ access_iso_finding_user,iso.finding user,model_iso_finding,group_iso_user,1,1,1,
 access_iso_finding_admin,iso.finding admin,model_iso_finding,group_iso_admin,1,1,1,1
 access_iso_finding_action_user,iso.finding.action user,model_iso_finding_action,group_iso_user,1,1,1,1
 access_iso_finding_action_admin,iso.finding.action admin,model_iso_finding_action,group_iso_admin,1,1,1,1
+access_iso_special_release_user,iso.special.release user,model_iso_special_release,group_iso_user,1,1,1,0
+access_iso_special_release_admin,iso.special.release admin,model_iso_special_release,group_iso_admin,1,1,1,1
+access_iso_special_release_approval_user,iso.special.release.approval user,model_iso_special_release_approval,group_iso_user,1,1,0,0
+access_iso_special_release_approval_admin,iso.special.release.approval admin,model_iso_special_release_approval,group_iso_admin,1,1,1,1
+access_iso_special_release_action_wizard,iso.special.release.action.wizard,model_iso_special_release_action_wizard,group_iso_user,1,1,1,1

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_iso_special_release_action_wizard" model="ir.actions.act_window">
+        <field name="name">Add action</field>
+        <field name="res_model">iso.special.release.action.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_iso_special_release_list" model="ir.ui.view">
+        <field name="name">iso.special.release.list</field>
+        <field name="model">iso.special.release</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="state == 'rejected'" decoration-success="state == 'approved'" decoration-muted="state == 'draft'">
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="release_type"/>
+                <field name="date"/>
+                <field name="creator_id" widget="many2one_avatar_user"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_iso_special_release_form" model="ir.ui.view">
+        <field name="name">iso.special.release.form</field>
+        <field name="model">iso.special.release</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="can_confirm_posventa" invisible="1"/>
+                <header>
+                    <button name="action_send_for_approval" type="object" string="Send for approval" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_confirm_posventa" type="object" string="Confirm receipt (Posventa)" class="btn-primary"
+                            invisible="not can_confirm_posventa"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,pending_approval,approved"/>
+                </header>
+                <sheet>
+                    <h1><field name="name"/></h1>
+                    <group>
+                        <group>
+                            <field name="release_type"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="date"/>
+                            <field name="creator_id" widget="many2one_avatar_user"/>
+                        </group>
+                        <group invisible="release_type != 'raw_material'">
+                            <field name="purchase_order_number"/>
+                            <field name="code"/>
+                            <field name="material_description"/>
+                            <field name="vendor"/>
+                        </group>
+                        <group invisible="release_type != 'finished_product'">
+                            <field name="of_number"/>
+                            <field name="machine_model"/>
+                            <field name="client_dealer"/>
+                            <field name="sales_note_number"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="deviation_description"/>
+                        <field name="client_impact"/>
+                    </group>
+                    <notebook>
+                        <page string="Signatures">
+                            <field name="approval_ids" readonly="state != 'draft'">
+                                <list create="0" delete="0">
+                                    <field name="area"/>
+                                    <field name="user_id" widget="many2one_avatar_user"/>
+                                    <field name="excluded"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="action_date"/>
+                                </list>
+                            </field>
+                            <group>
+                                <field name="posventa_user_id" widget="many2one_avatar_user" readonly="state != 'draft'"/>
+                                <field name="posventa_confirmed"/>
+                                <field name="posventa_confirmed_date"/>
+                            </group>
+                        </page>
+                        <page string="Linked actions">
+                            <button name="%(action_iso_special_release_action_wizard)d" type="action" string="Add action"
+                                    class="btn-secondary" invisible="state != 'draft'"
+                                    context="{'default_release_id': id}"/>
+                            <field name="linked_finding_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="pending_user_ids" widget="many2many_tags"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_iso_special_release_approval_form" model="ir.ui.view">
+        <field name="name">iso.special.release.approval.form</field>
+        <field name="model">iso.special.release.approval</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="can_evaluate" invisible="1"/>
+                <field name="release_state" invisible="1"/>
+                <header>
+                    <button name="action_approve" type="object" string="Approve" class="btn-success" invisible="not can_evaluate"/>
+                    <button name="action_reject" type="object" string="Reject" class="btn-danger" invisible="not can_evaluate"/>
+                    <button name="action_admin_approve" type="object" string="Set approved (admin)" groups="iso_sgc.group_iso_admin"
+                            invisible="release_state in ('draft', False)"/>
+                    <button name="action_admin_reject" type="object" string="Set rejected (admin)" groups="iso_sgc.group_iso_admin"
+                            invisible="release_state in ('draft', False)"/>
+                    <button name="action_admin_reset" type="object" string="Reset (admin)" groups="iso_sgc.group_iso_admin"
+                            invisible="release_state in ('draft', False)"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <group>
+                    <field name="area"/>
+                    <field name="user_id" widget="many2one_avatar_user" readonly="release_state != 'draft'"/>
+                    <field name="excluded" readonly="release_state != 'draft' or area == 'comercial'"/>
+                    <field name="comments"/>
+                    <field name="action_date"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_iso_special_release_action_wizard_form" model="ir.ui.view">
+        <field name="name">iso.special.release.action.wizard.form</field>
+        <field name="model">iso.special.release.action.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="release_id" invisible="1"/>
+                    <field name="description"/>
+                    <field name="user_id" widget="many2one_avatar_user"/>
+                    <field name="date_deadline"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="Add action" class="btn-primary"/>
+                    <button special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_iso_special_release_search" model="ir.ui.view">
+        <field name="name">iso.special.release.search</field>
+        <field name="model">iso.special.release</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="deviation_description"/>
+                <filter name="mine" string="My releases" domain="[('creator_id', '=', uid)]"/>
+                <filter name="to_sign" string="Waiting for my signature"
+                        domain="[('state', '=', 'pending_approval'), ('approval_ids', 'any', [('user_id', '=', uid), ('state', '=', 'pending'), ('excluded', '=', False)])]"/>
+                <separator/>
+                <filter name="open" string="Open" domain="[('state', 'in', ('draft', 'pending_approval'))]"/>
+                <group>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_type" string="Type" context="{'group_by': 'release_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_iso_special_release" model="ir.actions.act_window">
+        <field name="name">Special releases</field>
+        <field name="res_model">iso.special.release</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_open': 1}</field>
+    </record>
+</odoo>

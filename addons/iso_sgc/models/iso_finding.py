@@ -58,6 +58,7 @@ class IsoFinding(models.Model):
     analysis_summary = fields.Text()
     contingency_actions = fields.Text()
     action_ids = fields.One2many("iso.finding.action", "finding_id", "Actions")
+    special_release_id = fields.Many2one("iso.special.release", "Special release", ondelete="cascade", copy=False)
     is_verified = fields.Boolean(readonly=True, copy=False)
     verification_date = fields.Datetime(readonly=True, copy=False)
     # Derived (the legacy app stored these as arrays and kept them in sync by hand).
