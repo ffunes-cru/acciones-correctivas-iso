@@ -8,3 +8,19 @@ access_iso_special_release_admin,iso.special.release admin,model_iso_special_rel
 access_iso_special_release_approval_user,iso.special.release.approval user,model_iso_special_release_approval,group_iso_user,1,1,0,0
 access_iso_special_release_approval_admin,iso.special.release.approval admin,model_iso_special_release_approval,group_iso_admin,1,1,1,1
 access_iso_special_release_action_wizard,iso.special.release.action.wizard,model_iso_special_release_action_wizard,group_iso_user,1,1,1,1
+access_iso_calendar_user,iso.calendar user,model_iso_calendar,group_iso_user,1,0,0,0
+access_iso_calendar_admin,iso.calendar admin,model_iso_calendar,group_iso_admin,1,1,1,1
+access_iso_calendar_task_user,iso.calendar.task user,model_iso_calendar_task,group_iso_user,1,1,0,0
+access_iso_calendar_task_admin,iso.calendar.task admin,model_iso_calendar_task,group_iso_admin,1,1,1,1
+access_iso_audit_line_user,iso.audit.line user,model_iso_audit_line,group_iso_user,1,1,1,1
+access_iso_audit_line_admin,iso.audit.line admin,model_iso_audit_line,group_iso_admin,1,1,1,1
+access_iso_audit_process_user,iso.audit.process user,model_iso_audit_process,group_iso_user,1,0,0,0
+access_iso_audit_process_admin,iso.audit.process admin,model_iso_audit_process,group_iso_admin,1,1,1,1
+access_iso_audit_process_deliverable_user,iso.audit.process.deliverable user,model_iso_audit_process_deliverable,group_iso_user,1,0,0,0
+access_iso_audit_process_deliverable_admin,iso.audit.process.deliverable admin,model_iso_audit_process_deliverable,group_iso_admin,1,1,1,1
+access_iso_activity_template_user,iso.activity.template user,model_iso_activity_template,group_iso_user,1,0,0,0
+access_iso_activity_template_admin,iso.activity.template admin,model_iso_activity_template,group_iso_admin,1,1,1,1
+access_iso_calendar_wizard_admin,iso.calendar.wizard admin,model_iso_calendar_wizard,group_iso_admin,1,1,1,1
+access_iso_calendar_wizard_audit_admin,iso.calendar.wizard.audit admin,model_iso_calendar_wizard_audit,group_iso_admin,1,1,1,1
+access_iso_calendar_wizard_activity_admin,iso.calendar.wizard.activity admin,model_iso_calendar_wizard_activity,group_iso_admin,1,1,1,1
+access_iso_calendar_share_wizard_user,iso.calendar.share.wizard user,model_iso_calendar_share_wizard,group_iso_user,1,1,1,1

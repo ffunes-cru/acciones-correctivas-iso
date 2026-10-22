@@ -31,7 +31,7 @@ class IsoSpecialRelease(models.Model):
     date = fields.Date(required=True, default=fields.Date.context_today)
     deviation_description = fields.Text(required=True)
     client_impact = fields.Text("Client impact / risks", required=True)
-    creator_id = fields.Many2one("res.users", "Created by", required=True, default=lambda s: s.env.user, tracking=True)
+    creator_id = fields.Many2one("res.users", "Creator", required=True, default=lambda s: s.env.user, tracking=True)
     state = fields.Selection(
         [("draft", "Draft"), ("pending_approval", "Pending approval"), ("approved", "Approved"), ("rejected", "Rejected")],
         default="draft",

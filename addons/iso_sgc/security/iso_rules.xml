@@ -88,4 +88,65 @@
         <field name="groups" eval="[(4, ref('group_iso_admin'))]"/>
         <field name="domain_force">[(1, '=', 1)]</field>
     </record>
+
+    <!-- ISO calendar -->
+    <record id="rule_iso_calendar_company" model="ir.rule">
+        <field name="name">ISO calendar: multi-company</field>
+        <field name="model_id" ref="model_iso_calendar"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_iso_calendar_task_company" model="ir.rule">
+        <field name="name">ISO calendar task: multi-company</field>
+        <field name="model_id" ref="model_iso_calendar_task"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <!-- Audit tasks are visible only to the responsible and the people the report was shared with. -->
+    <record id="rule_iso_calendar_task_read" model="ir.rule">
+        <field name="name">ISO calendar task: audits only for involved users</field>
+        <field name="model_id" ref="model_iso_calendar_task"/>
+        <field name="groups" eval="[(4, ref('group_iso_user'))]"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="domain_force">['|', ('is_audit', '=', False), '|', ('user_id', '=', user.id), ('shared_user_ids', 'in', [user.id])]</field>
+    </record>
+    <record id="rule_iso_calendar_task_write" model="ir.rule">
+        <field name="name">ISO calendar task: write own</field>
+        <field name="model_id" ref="model_iso_calendar_task"/>
+        <field name="groups" eval="[(4, ref('group_iso_user'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+    </record>
+    <record id="rule_iso_calendar_task_admin" model="ir.rule">
+        <field name="name">ISO calendar task: admin all</field>
+        <field name="model_id" ref="model_iso_calendar_task"/>
+        <field name="groups" eval="[(4, ref('group_iso_admin'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+    <record id="rule_iso_audit_line_read" model="ir.rule">
+        <field name="name">ISO audit line: only involved users</field>
+        <field name="model_id" ref="model_iso_audit_line"/>
+        <field name="groups" eval="[(4, ref('group_iso_user'))]"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="domain_force">['|', ('task_id.user_id', '=', user.id), ('task_id.shared_user_ids', 'in', [user.id])]</field>
+    </record>
+    <record id="rule_iso_audit_line_write" model="ir.rule">
+        <field name="name">ISO audit line: write own</field>
+        <field name="model_id" ref="model_iso_audit_line"/>
+        <field name="groups" eval="[(4, ref('group_iso_user'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="domain_force">[('task_id.user_id', '=', user.id)]</field>
+    </record>
+    <record id="rule_iso_audit_line_admin" model="ir.rule">
+        <field name="name">ISO audit line: admin all</field>
+        <field name="model_id" ref="model_iso_audit_line"/>
+        <field name="groups" eval="[(4, ref('group_iso_admin'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
 </odoo>

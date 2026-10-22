@@ -27,7 +27,7 @@ class IsoSpecialReleaseApproval(models.Model):
     )
     comments = fields.Text()
     action_date = fields.Datetime(readonly=True, copy=False)
-    release_state = fields.Selection(related="release_id.state")
+    release_state = fields.Selection(related="release_id.state", string="Release status")
     can_evaluate = fields.Boolean(compute="_compute_can_evaluate")
 
     _sql_constraints = [("area_unique", "unique(release_id, area)", "Each area signs only once per release.")]

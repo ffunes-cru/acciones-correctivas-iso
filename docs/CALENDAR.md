@@ -72,7 +72,7 @@ Reuse: findings creation via the M1 model, reminders via `tools/reminders.py`, s
 | Tests | ~500 |
 | **Custom code to maintain** (excl. generated data & tests) | **~1,700** vs ~6,500 legacy |
 
-## 6. Decisions I need / assumptions to confirm
+## 6. Decisions (confirmed by the product owner on 2026-10-22: 1, 2, 3 accepted)
 1. **Lock rule:** keep "only finished *audits* are locked" (legacy), or lock every finished task? (assumed: legacy)
 2. **Improvement numbering:** keep the separate `M-` series (done in M1) — matches legacy; the migration will keep both number ranges.
 3. **Admin notifications:** replace `psantilli@crucianelli.com` by the *ISO administrators* group. OK?
