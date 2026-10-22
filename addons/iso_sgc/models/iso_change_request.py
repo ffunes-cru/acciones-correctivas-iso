@@ -80,6 +80,7 @@ class IsoChangeRequest(models.Model):
         tracking=True,
         copy=False,
         index=True,
+        group_expand="_expand_states",
     )
     review_deadline = fields.Date("Review deadline")
     review_ids = fields.One2many("iso.change.review", "request_id", "Sector reviews")
@@ -99,7 +100,31 @@ class IsoChangeRequest(models.Model):
     can_edit_definition = fields.Boolean(compute="_compute_permissions")
     can_send_final = fields.Boolean(compute="_compute_permissions")
     can_decide_final = fields.Boolean(compute="_compute_permissions")
+    can_review = fields.Boolean(compute="_compute_permissions")
     pending_review_count = fields.Integer(compute="_compute_pending_review_count")
+
+    next_step = fields.Char("What's next", compute="_compute_next_step")
+
+    @api.depends("state", "final_state", "final_approver_id", "review_ids.state", "review_ids.applies", "review_ids.user_id")
+    def _compute_next_step(self):
+        for r in self:
+            t = self.env._
+            if r.state == "draft":
+                r.next_step = t("Complete the proposal, tick the areas that must review it, set the deadline and send it to review.")
+            elif r.state == "pending_review":
+                waiting = [
+                    f"{v.area_id.name} ({v.user_id.name})" for v in r.review_ids.filtered(lambda v: v.applies and v.state == "pending")
+                ]
+                r.next_step = t("Waiting for the review of: %s.", ", ".join(waiting))
+            elif r.state == "pending_approval":
+                if r.final_state == "pending":
+                    r.next_step = t("Waiting for the final decision of %s.", r.final_approver_id.name)
+                else:
+                    r.next_step = t("All reviews are approved. %s has to choose the final approver.", r.creator_id.name)
+            elif r.state == "approved":
+                r.next_step = t("Approved. The decision was communicated to everyone involved.")
+            else:
+                r.next_step = t("Rejected.")
 
     # ---------------------------------------------------------------- helpers
     def _is_iso_admin(self):
@@ -112,8 +137,25 @@ class IsoChangeRequest(models.Model):
     def _transition(self, vals):
         return self.sudo().with_context(iso_transition=True).write(vals)
 
+    @api.model
+    def _expand_states(self, states, domain=None, order=None):
+        always = ("draft", "pending_review", "pending_approval")
+        return [k for k, _label in self._fields["state"].selection if k in always or k in states]
+
+    def action_open_my_review(self):
+        """One click for a reviewer: open the questionnaire assigned to the current user."""
+        self.ensure_one()
+        mine = self.review_ids.filtered("can_decide")
+        if not mine:
+            raise UserError(self.env._("You have no open review on this request."))
+        return {
+            "type": "ir.actions.act_window", "res_model": "iso.change.review", "res_id": mine[0].id,
+            "view_mode": "form", "target": "current",
+        }
+
     @api.depends_context("uid")
-    @api.depends("state", "creator_id", "final_state", "final_approver_id")
+    @api.depends("state", "creator_id", "final_state", "final_approver_id", "review_ids.state", "review_ids.user_id",
+                 "review_ids.applies")
     def _compute_permissions(self):
         for r in self:
             mine = r._is_iso_admin() or self.env.user == r.creator_id
@@ -122,6 +164,7 @@ class IsoChangeRequest(models.Model):
             r.can_decide_final = (
                 r.state == "pending_approval" and r.final_state == "pending" and self.env.user == r.final_approver_id
             )
+            r.can_review = any(v.can_decide for v in r.review_ids)
 
     @api.depends("review_ids.state", "review_ids.applies")
     def _compute_pending_review_count(self):
@@ -329,6 +372,11 @@ class IsoChangeReview(models.Model):
     action_missing_count = fields.Integer(compute="_compute_progress")
 
     _sql_constraints = [("area_unique", "unique(request_id, area_id)", "One review per area.")]
+
+    @api.depends("request_id.name", "area_id.name")
+    def _compute_display_name(self):
+        for v in self:
+            v.display_name = f"{v.request_id.name} · {v.area_id.name}"
 
     def _is_iso_admin(self):
         return self.env.user.has_group("iso_sgc.group_iso_admin")

@@ -18,6 +18,7 @@
         "views/iso_special_release_views.xml",
         "views/iso_calendar_views.xml",
         "views/iso_change_request_views.xml",
+        "views/iso_ui_views.xml",
         "views/iso_menus.xml",
     ],
     "installable": True,

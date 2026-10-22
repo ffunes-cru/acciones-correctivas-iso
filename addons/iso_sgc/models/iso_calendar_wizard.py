@@ -20,6 +20,12 @@ class IsoCalendarWizard(models.TransientModel):
     year = fields.Integer(required=True, default=lambda s: fields.Date.context_today(s).year + 1)
     company_id = fields.Many2one("res.company", required=True, default=lambda s: s.env.company)
     name = fields.Char(required=True)
+
+    @api.depends("year")
+    def _compute_display_name(self):
+        for w in self:
+            w.display_name = self.env._("Annual planning %s", w.year)
+
     description = fields.Text()
     global_auditor_id = fields.Many2one("res.users", "Apply this auditor to all audits")
     global_responsible_id = fields.Many2one("res.users", "Apply this responsible to all routine activities")

@@ -69,7 +69,7 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name"/>
-                <field name="year"/>
+                <field name="year" options="{'format': false}"/>
                 <field name="company_id" groups="base.group_multi_company"/>
                 <field name="task_count"/>
                 <field name="done_count"/>
@@ -87,7 +87,7 @@
                         <group>
                             <field name="name" groups="iso_sgc.group_iso_admin"/>
                             <field name="name" groups="!iso_sgc.group_iso_admin" readonly="1"/>
-                            <field name="year" readonly="id"/>
+                            <field name="year" readonly="id" options="{'format': false}"/>
                             <field name="company_id" groups="base.group_multi_company" readonly="id"/>
                         </group>
                         <group>
@@ -237,9 +237,9 @@
         </field>
     </record>
     <record id="action_iso_calendar_task_mine" model="ir.actions.act_window">
-        <field name="name">My calendar tasks</field>
+        <field name="name">My planned tasks</field>
         <field name="res_model">iso.calendar.task</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">list,calendar,form</field>
         <field name="context">{'search_default_mine': 1, 'search_default_open': 1}</field>
     </record>
 
@@ -251,13 +251,13 @@
             <form>
                 <group>
                     <group>
-                        <field name="year"/>
+                        <field name="year" options="{'format': false}"/>
                         <field name="company_id" groups="base.group_multi_company"/>
                         <field name="name"/>
                     </group>
                     <group>
-                        <field name="global_auditor_id" widget="many2one_avatar_user"/>
-                        <field name="global_responsible_id" widget="many2one_avatar_user"/>
+                        <field name="global_auditor_id"/>
+                        <field name="global_responsible_id"/>
                     </group>
                 </group>
                 <field name="description" placeholder="Description (optional)"/>
@@ -268,7 +268,7 @@
                                 <field name="process_id" readonly="1" force_save="1"/>
                                 <field name="quarter" readonly="1" force_save="1"/>
                                 <field name="date"/>
-                                <field name="user_id" widget="many2one_avatar_user"/>
+                                <field name="user_id"/>
                             </list>
                         </field>
                     </page>
@@ -277,7 +277,7 @@
                             <list editable="bottom">
                                 <field name="name"/>
                                 <field name="frequency"/>
-                                <field name="user_id" widget="many2one_avatar_user"/>
+                                <field name="user_id"/>
                             </list>
                         </field>
                     </page>

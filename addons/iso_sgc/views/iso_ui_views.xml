@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- =================== Kanban boards (read-only columns: transitions happen through buttons) =================== -->
+    <record id="view_iso_finding_kanban" model="ir.ui.view">
+        <field name="name">iso.finding.kanban</field>
+        <field name="model">iso.finding</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column" sample="1" records_draggable="0" quick_create="0"
+                    group_create="0" group_delete="0" group_edit="0">
+                <field name="category"/>
+                <templates>
+                    <t t-name="card">
+                        <main>
+                            <div class="d-flex align-items-start">
+                                <field name="name" class="fw-bold fs-5"/>
+                                <span t-if="record.category.raw_value == 'improvement'" class="badge text-bg-success ms-auto">Improvement</span>
+                            </div>
+                            <field name="description" class="text-muted text-truncate"/>
+                            <div class="text-muted small"><field name="origin"/></div>
+                            <footer class="pt-1">
+                                <field name="activity_ids" widget="kanban_activity"/>
+                                <div class="ms-auto d-flex align-items-center gap-1">
+                                    <span class="text-muted small">Pending on</span>
+                                    <field name="pending_user_ids" widget="many2many_avatar_user"/>
+                                </div>
+                            </footer>
+                        </main>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_iso_special_release_kanban" model="ir.ui.view">
+        <field name="name">iso.special.release.kanban</field>
+        <field name="model">iso.special.release</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column" sample="1" records_draggable="0" quick_create="0"
+                    group_create="0" group_delete="0" group_edit="0">
+                <templates>
+                    <t t-name="card">
+                        <main>
+                            <div class="d-flex align-items-start">
+                                <field name="name" class="fw-bold fs-5"/>
+                                <field name="release_type" class="ms-auto badge text-bg-light"/>
+                            </div>
+                            <field name="deviation_description" class="text-muted text-truncate"/>
+                            <footer class="pt-1">
+                                <field name="activity_ids" widget="kanban_activity"/>
+                                <div class="ms-auto"><field name="creator_id" widget="many2one_avatar_user"/></div>
+                            </footer>
+                        </main>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_iso_change_request_kanban" model="ir.ui.view">
+        <field name="name">iso.change.request.kanban</field>
+        <field name="model">iso.change.request</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column" sample="1" records_draggable="0" quick_create="0"
+                    group_create="0" group_delete="0" group_edit="0">
+                <templates>
+                    <t t-name="card">
+                        <main>
+                            <div class="d-flex align-items-start">
+                                <field name="name" class="fw-bold fs-5"/>
+                                <field name="mission" class="ms-auto badge text-bg-light"/>
+                            </div>
+                            <field name="title" class="text-muted"/>
+                            <footer class="pt-1">
+                                <field name="activity_ids" widget="kanban_activity"/>
+                                <div class="ms-auto"><field name="creator_id" widget="many2one_avatar_user"/></div>
+                            </footer>
+                        </main>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- =================== Calendars (deadlines) =================== -->
+    <record id="view_iso_calendar_task_calendar" model="ir.ui.view">
+        <field name="name">iso.calendar.task.calendar</field>
+        <field name="model">iso.calendar.task</field>
+        <field name="arch" type="xml">
+            <calendar string="Planning" date_start="date_deadline" color="state" mode="year" quick_create="0">
+                <field name="name"/>
+                <field name="user_id" avatar_field="avatar_128"/>
+                <field name="state" filters="1" invisible="1"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_iso_finding_action_calendar" model="ir.ui.view">
+        <field name="name">iso.finding.action.calendar</field>
+        <field name="model">iso.finding.action</field>
+        <field name="arch" type="xml">
+            <calendar string="Action deadlines" date_start="date_deadline" color="state" mode="month" quick_create="0">
+                <field name="finding_id"/>
+                <field name="name"/>
+                <field name="user_id" avatar_field="avatar_128"/>
+                <field name="state" filters="1" invisible="1"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- =================== Reports =================== -->
+    <record id="view_iso_finding_pivot" model="ir.ui.view">
+        <field name="name">iso.finding.pivot</field>
+        <field name="model">iso.finding</field>
+        <field name="arch" type="xml">
+            <pivot string="Findings analysis" sample="1">
+                <field name="state" type="row"/>
+                <field name="category" type="col"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="view_iso_finding_graph" model="ir.ui.view">
+        <field name="name">iso.finding.graph</field>
+        <field name="model">iso.finding</field>
+        <field name="arch" type="xml">
+            <graph string="Findings" type="bar" sample="1">
+                <field name="finding_date" interval="month"/>
+                <field name="category"/>
+            </graph>
+        </field>
+    </record>
+    <record id="view_iso_finding_action_pivot" model="ir.ui.view">
+        <field name="name">iso.finding.action.pivot</field>
+        <field name="model">iso.finding.action</field>
+        <field name="arch" type="xml">
+            <pivot string="Actions" sample="1">
+                <field name="user_id" type="row"/>
+                <field name="state" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_iso_findings_analysis" model="ir.actions.act_window">
+        <field name="name">Findings analysis</field>
+        <field name="res_model">iso.finding</field>
+        <field name="view_mode">pivot,graph,list</field>
+    </record>
+    <record id="action_iso_actions_analysis" model="ir.actions.act_window">
+        <field name="name">Actions analysis</field>
+        <field name="res_model">iso.finding.action</field>
+        <field name="view_mode">pivot,list</field>
+    </record>
+    <record id="action_iso_deadline_calendar" model="ir.actions.act_window">
+        <field name="name">Deadline calendar</field>
+        <field name="res_model">iso.calendar.task</field>
+        <field name="view_mode">calendar,list,form</field>
+        <field name="context">{'search_default_open': 1}</field>
+    </record>
+    <record id="action_iso_actions_calendar" model="ir.actions.act_window">
+        <field name="name">Action deadlines</field>
+        <field name="res_model">iso.finding.action</field>
+        <field name="view_mode">calendar,list,form</field>
+        <field name="domain">[('state', '=', 'pending')]</field>
+    </record>
+
+    <!-- =================== My agenda: one place for everything waiting for me =================== -->
+    <record id="view_iso_activity_search" model="ir.ui.view">
+        <field name="name">mail.activity.search.iso</field>
+        <field name="model">mail.activity</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="mail.mail_activity_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter name="iso_next_30" string="Overdue or due within 30 days"
+                        domain="[('date_deadline', '&lt;=', (context_today() + relativedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="action_iso_my_agenda" model="ir.actions.act_window">
+        <field name="name">My agenda</field>
+        <field name="res_model">mail.activity</field>
+        <field name="view_mode">list,calendar,kanban</field>
+        <field name="search_view_id" ref="view_iso_activity_search"/>
+        <field name="domain">[('user_id', '=', uid), ('res_model', 'in', ['iso.finding', 'iso.finding.action', 'iso.special.release', 'iso.calendar.task', 'iso.change.request'])]</field>
+        <field name="context">{'force_search_count': 1, 'search_default_iso_next_30': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nothing is waiting for you</p>
+            <p>Every analysis, action, signature, review and planned task assigned to you shows up here with its deadline.</p>
+        </field>
+    </record>
+    <record id="action_iso_my_agenda_list" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="act_window_id" ref="action_iso_my_agenda"/>
+        <field name="view_id" ref="mail.mail_activity_view_tree_open_target"/>
+    </record>
+    <record id="action_iso_my_agenda_calendar" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">calendar</field>
+        <field name="act_window_id" ref="action_iso_my_agenda"/>
+        <field name="view_id" ref="mail.mail_activity_view_calendar"/>
+    </record>
+    <record id="action_iso_my_agenda_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">kanban</field>
+        <field name="act_window_id" ref="action_iso_my_agenda"/>
+        <field name="view_id" ref="mail.mail_activity_view_kanban_open_target"/>
+    </record>
+</odoo>

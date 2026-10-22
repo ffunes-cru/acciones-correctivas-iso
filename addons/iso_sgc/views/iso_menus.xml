@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Root: the first leaf under it opens when the app is clicked -> "My agenda". -->
     <menuitem id="menu_iso_root" name="ISO SGC" sequence="60" web_icon="base,static/description/icon.png" groups="group_iso_user"/>
-    <menuitem id="menu_iso_findings" name="Findings" parent="menu_iso_root" action="action_iso_finding" sequence="10"/>
-    <menuitem id="menu_iso_my_actions" name="My actions" parent="menu_iso_root" action="action_iso_finding_action" sequence="20"/>
-    <menuitem id="menu_iso_special_releases" name="Special releases" parent="menu_iso_root" action="action_iso_special_release" sequence="30"/>
-    <menuitem id="menu_iso_calendars" name="Calendars" parent="menu_iso_root" action="action_iso_calendar" sequence="40"/>
-    <menuitem id="menu_iso_my_tasks" name="My calendar tasks" parent="menu_iso_root" action="action_iso_calendar_task_mine" sequence="45"/>
-    <menuitem id="menu_iso_new_planning" name="Create annual planning" parent="menu_iso_root" action="action_iso_calendar_wizard"
-              sequence="50" groups="group_iso_admin"/>
+
+    <menuitem id="menu_iso_my_agenda" name="My agenda" parent="menu_iso_root" action="action_iso_my_agenda" sequence="1"/>
+
+    <menuitem id="menu_iso_findings_section" name="Findings" parent="menu_iso_root" sequence="10"/>
+    <menuitem id="menu_iso_findings" name="Findings" parent="menu_iso_findings_section" action="action_iso_finding" sequence="10"/>
+    <menuitem id="menu_iso_my_actions" name="My actions" parent="menu_iso_findings_section" action="action_iso_finding_action" sequence="20"/>
+    <menuitem id="menu_iso_actions_calendar" name="Action deadlines" parent="menu_iso_findings_section" action="action_iso_actions_calendar" sequence="30"/>
+
+    <menuitem id="menu_iso_special_releases" name="Special releases" parent="menu_iso_root" action="action_iso_special_release" sequence="20"/>
+    <menuitem id="menu_iso_change_requests" name="Change requests" parent="menu_iso_root" action="action_iso_change_request" sequence="30"/>
+
+    <menuitem id="menu_iso_planning_section" name="Planning" parent="menu_iso_root" sequence="40"/>
+    <menuitem id="menu_iso_my_tasks" name="My planned tasks" parent="menu_iso_planning_section" action="action_iso_calendar_task_mine" sequence="10"/>
+    <menuitem id="menu_iso_deadline_calendar" name="Deadline calendar" parent="menu_iso_planning_section" action="action_iso_deadline_calendar" sequence="20"/>
+    <menuitem id="menu_iso_calendars" name="Annual plannings" parent="menu_iso_planning_section" action="action_iso_calendar" sequence="30"/>
+    <menuitem id="menu_iso_new_planning" name="Create annual planning" parent="menu_iso_planning_section" action="action_iso_calendar_wizard"
+              sequence="40" groups="group_iso_admin"/>
+
+    <menuitem id="menu_iso_reports" name="Reports" parent="menu_iso_root" sequence="50"/>
+    <menuitem id="menu_iso_report_findings" name="Findings analysis" parent="menu_iso_reports" action="action_iso_findings_analysis" sequence="10"/>
+    <menuitem id="menu_iso_report_actions" name="Actions analysis" parent="menu_iso_reports" action="action_iso_actions_analysis" sequence="20"/>
+
     <menuitem id="menu_iso_config" name="Configuration" parent="menu_iso_root" sequence="90" groups="group_iso_admin"/>
-    <menuitem id="menu_iso_change_requests" name="Change requests" parent="menu_iso_root" action="action_iso_change_request" sequence="35"/>
-    <menuitem id="menu_iso_config_change_areas" name="Change request areas" parent="menu_iso_config" action="action_iso_change_area" sequence="30"/>
     <menuitem id="menu_iso_config_processes" name="Audit processes" parent="menu_iso_config" action="action_iso_audit_process" sequence="10"/>
     <menuitem id="menu_iso_config_activities" name="Routine activities" parent="menu_iso_config" action="action_iso_activity_template" sequence="20"/>
+    <menuitem id="menu_iso_config_change_areas" name="Change request areas" parent="menu_iso_config" action="action_iso_change_area" sequence="30"/>
 </odoo>

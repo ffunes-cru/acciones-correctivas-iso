@@ -32,6 +32,11 @@ class IsoSpecialReleaseApproval(models.Model):
 
     _sql_constraints = [("area_unique", "unique(release_id, area)", "Each area signs only once per release.")]
 
+    @api.depends("release_id.name", "area")
+    def _compute_display_name(self):
+        for a in self:
+            a.display_name = f"{a.release_id.name} · {a._area_label()}"
+
     def _is_iso_admin(self):
         return self.env.user.has_group("iso_sgc.group_iso_admin")
 

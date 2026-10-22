@@ -54,6 +54,7 @@ class IsoFinding(models.Model):
         tracking=True,
         copy=False,
         index=True,
+        group_expand="_expand_states",
     )
     analysis_summary = fields.Text()
     contingency_actions = fields.Text()
@@ -69,6 +70,12 @@ class IsoFinding(models.Model):
         compute="_compute_pending_user_ids",
         store=True,
     )
+
+    @api.model
+    def _expand_states(self, states, domain=None, order=None):
+        """Kanban columns in workflow order; the three open steps are always shown."""
+        always = ("pending_analysis", "pending_action", "pending_verification")
+        return [k for k, _label in self._fields["state"].selection if k in always or k in states]
 
     # ---------------------------------------------------------------- helpers
     def _is_iso_admin(self):
@@ -101,6 +108,29 @@ class IsoFinding(models.Model):
                 users = f.owner_id
             f.pending_user_ids = users
 
+    next_step = fields.Char("What's next", compute="_compute_next_step")
+
+    @api.depends("state", "category", "owner_id", "analysis_user_id", "action_ids.state", "action_ids.user_id")
+    def _compute_next_step(self):
+        for f in self:
+            t = self.env._
+            if f.state == "pending_analysis":
+                f.next_step = t("%s has to record the cause analysis.", f.analysis_user_id.name or t("An analyst"))
+            elif f.state == "pending_action":
+                pending = f.action_ids.filtered(lambda a: a.state == "pending")
+                if pending:
+                    f.next_step = t("Waiting for the actions of: %s.", ", ".join(pending.user_id.mapped("name")))
+                else:
+                    f.next_step = t("%s has to add the actions.", f._planner().name or t("The planner"))
+            elif f.state == "pending_verification":
+                f.next_step = t("%s has to verify that each finished action was effective.", f.owner_id.name)
+            elif f.state == "completed":
+                f.next_step = t("Closed: all actions were effective.")
+            elif f.state == "cancelled":
+                f.next_step = t("Closed: an action was not effective or nothing was carried out.")
+            else:
+                f.next_step = t("Closed: an action was rejected.")
+
     # ---------------------------------------------------------------- constraints
     @api.constrains("description")
     def _check_description_length(self):
@@ -124,7 +154,8 @@ class IsoFinding(models.Model):
                 # Legacy numbers improvements and corrective findings independently.
                 code = "iso.finding.improvement" if vals.get("category") == "improvement" else "iso.finding"
                 vals["name"] = self.env["ir.sequence"].next_by_code(code) or "New"
-            if vals.get("category") == "improvement" and "state" not in vals:
+            # The web form always sends its default state, so test for "still the default" rather than "absent".
+            if vals.get("category") == "improvement" and vals.get("state", "pending_analysis") == "pending_analysis":
                 vals["state"] = "pending_action"
         findings = super().create(vals_list)
         for f in findings:

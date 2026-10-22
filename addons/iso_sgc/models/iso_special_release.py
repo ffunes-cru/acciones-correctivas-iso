@@ -39,6 +39,7 @@ class IsoSpecialRelease(models.Model):
         tracking=True,
         copy=False,
         index=True,
+        group_expand="_expand_states",
     )
     # raw material
     purchase_order_number = fields.Char()
@@ -57,6 +58,64 @@ class IsoSpecialRelease(models.Model):
     posventa_confirmed_date = fields.Datetime(readonly=True, copy=False)
     linked_finding_ids = fields.One2many("iso.finding", "special_release_id", "Linked findings")
     can_confirm_posventa = fields.Boolean(compute="_compute_can_confirm_posventa")
+    can_sign = fields.Boolean(compute="_compute_can_sign")
+
+    @api.model
+    def _expand_states(self, states, domain=None, order=None):
+        always = ("draft", "pending_approval")
+        return [k for k, _label in self._fields["state"].selection if k in always or k in states]
+
+    def _my_pending_rows(self):
+        self.ensure_one()
+        return self.approval_ids.filtered(lambda a: a.can_evaluate and a.user_id == self.env.user)
+
+    @api.depends_context("uid")
+    @api.depends("state", "approval_ids.state", "approval_ids.user_id", "approval_ids.excluded")
+    def _compute_can_sign(self):
+        for r in self:
+            r.can_sign = bool(r._my_pending_rows())
+
+    def action_sign_approve(self):
+        """One click for the approver: approve every area still pending that is assigned to the current user."""
+        for r in self:
+            rows = r._my_pending_rows()
+            if not rows:
+                raise UserError(self.env._("You have no pending signature on this release."))
+            for a in rows:
+                a.action_evaluate("approved")
+        return True
+
+    def action_sign_reject(self):
+        """Rejecting needs a comment, so open the signature of the current user."""
+        self.ensure_one()
+        rows = self._my_pending_rows()
+        if not rows:
+            raise UserError(self.env._("You have no pending signature on this release."))
+        return {
+            "type": "ir.actions.act_window", "res_model": "iso.special.release.approval", "res_id": rows[0].id,
+            "view_mode": "form", "target": "new",
+        }
+
+    next_step = fields.Char("What's next", compute="_compute_next_step")
+
+    @api.depends("state", "posventa_confirmed", "posventa_user_id", "approval_ids.state", "approval_ids.excluded", "approval_ids.user_id")
+    def _compute_next_step(self):
+        for r in self:
+            t = self.env._
+            if r.state == "draft":
+                r.next_step = t("Pick an approver for each area and the Posventa person, add any actions, then send for approval.")
+            elif r.state == "pending_approval":
+                waiting = [
+                    f"{a._area_label()} ({a.user_id.name})"
+                    for a in r.approval_ids.filtered(lambda a: not a.excluded and a.state == "pending")
+                ]
+                if not r.posventa_confirmed:
+                    waiting.append(t("Posventa confirmation (%s)", r.posventa_user_id.name))
+                r.next_step = t("Waiting for: %s.", ", ".join(waiting))
+            elif r.state == "approved":
+                r.next_step = t("Approved by all areas; Posventa confirmed.")
+            else:
+                r.next_step = t("Rejected.")
 
     # ---------------------------------------------------------------- helpers
     def _is_iso_admin(self):
