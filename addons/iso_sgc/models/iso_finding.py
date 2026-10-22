@@ -59,6 +59,7 @@ class IsoFinding(models.Model):
     contingency_actions = fields.Text()
     action_ids = fields.One2many("iso.finding.action", "finding_id", "Actions")
     special_release_id = fields.Many2one("iso.special.release", "Special release", ondelete="cascade", copy=False)
+    change_request_id = fields.Many2one("iso.change.request", "Change request", ondelete="cascade", copy=False)
     is_verified = fields.Boolean(readonly=True, copy=False)
     verification_date = fields.Datetime(readonly=True, copy=False)
     # Derived (the legacy app stored these as arrays and kept them in sync by hand).
@@ -152,6 +153,19 @@ class IsoFinding(models.Model):
 
     def _transition(self, vals):
         return self.sudo().with_context(iso_transition=True).write(vals)
+
+    @api.model
+    def _create_with_action(self, vals, action_name, user, deadline):
+        """Background corrective finding that skips the analysis (born pending_action) with its single action.
+
+        Used when another process (special release, change request) needs somebody to do something.
+        The current user must be the planner (analyst) or an administrator, as for any other action.
+        """
+        finding = self.create({**vals, "category": "corrective", "state": "pending_action"})
+        self.env["iso.finding.action"].create(
+            {"finding_id": finding.id, "name": action_name, "user_id": user.id, "date_deadline": deadline}
+        )
+        return finding
 
     # ---------------------------------------------------------------- workflow
     def action_save_analysis(self):

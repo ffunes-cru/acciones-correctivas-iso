@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from the legacy NewChangeRequest.tsx. Editable by ISO administrators; existing requests keep their own copy of the questions. -->
+<odoo noupdate="1">
+    <record id="change_area_ingenieria_procesos" model="iso.change.area">
+        <field name="name">Ingeniería de Procesos</field>
+        <field name="code">ingenieria_procesos</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="change_q_ingenieria_procesos_01" model="iso.change.question">
+        <field name="area_id" ref="change_area_ingenieria_procesos"/>
+        <field name="sequence">10</field>
+        <field name="name">Planos</field>
+    </record>
+    <record id="change_q_ingenieria_procesos_02" model="iso.change.question">
+        <field name="area_id" ref="change_area_ingenieria_procesos"/>
+        <field name="sequence">20</field>
+        <field name="name">Esquemas de armado/montaje/instructivos</field>
+    </record>
+    <record id="change_q_ingenieria_procesos_03" model="iso.change.question">
+        <field name="area_id" ref="change_area_ingenieria_procesos"/>
+        <field name="sequence">30</field>
+        <field name="name">Layout</field>
+    </record>
+    <record id="change_q_ingenieria_procesos_04" model="iso.change.question">
+        <field name="area_id" ref="change_area_ingenieria_procesos"/>
+        <field name="sequence">40</field>
+        <field name="name">Matrices</field>
+    </record>
+    <record id="change_q_ingenieria_procesos_05" model="iso.change.question">
+        <field name="area_id" ref="change_area_ingenieria_procesos"/>
+        <field name="sequence">50</field>
+        <field name="name">Planes de mantenimiento de matricería</field>
+    </record>
+    <record id="change_q_ingenieria_procesos_06" model="iso.change.question">
+        <field name="area_id" ref="change_area_ingenieria_procesos"/>
+        <field name="sequence">60</field>
+        <field name="name">Planes de control</field>
+    </record>
+    <record id="change_q_ingenieria_procesos_07" model="iso.change.question">
+        <field name="area_id" ref="change_area_ingenieria_procesos"/>
+        <field name="sequence">70</field>
+        <field name="name">¿Es necesario comprar algún equipo, herramienta o pasa/no pasa?</field>
+    </record>
+    <record id="change_q_ingenieria_procesos_08" model="iso.change.question">
+        <field name="area_id" ref="change_area_ingenieria_procesos"/>
+        <field name="sequence">80</field>
+        <field name="name">¿Es necesario actualizar la estructura en TC/SAP?</field>
+    </record>
+    <record id="change_q_ingenieria_procesos_09" model="iso.change.question">
+        <field name="area_id" ref="change_area_ingenieria_procesos"/>
+        <field name="sequence">90</field>
+        <field name="name">¿Hay que agregar algún nuevo equipo o instrumento al listado de metrología?</field>
+    </record>
+    <record id="change_q_ingenieria_procesos_10" model="iso.change.question">
+        <field name="area_id" ref="change_area_ingenieria_procesos"/>
+        <field name="sequence">100</field>
+        <field name="name">¿Es necesario actualizar takt time?</field>
+    </record>
+    <record id="change_q_ingenieria_procesos_11" model="iso.change.question">
+        <field name="area_id" ref="change_area_ingenieria_procesos"/>
+        <field name="sequence">110</field>
+        <field name="name">¿Se necesita capacitar al personal?</field>
+    </record>
+    <record id="change_q_ingenieria_procesos_12" model="iso.change.question">
+        <field name="area_id" ref="change_area_ingenieria_procesos"/>
+        <field name="sequence">120</field>
+        <field name="name">¿Es necesario definir nuevos medios de abastecimiento?</field>
+    </record>
+    <record id="change_q_ingenieria_procesos_13" model="iso.change.question">
+        <field name="area_id" ref="change_area_ingenieria_procesos"/>
+        <field name="sequence">130</field>
+        <field name="name">¿Es necesario crear/actualizar tarjetas Kanban?</field>
+    </record>
+    <record id="change_area_produccion" model="iso.change.area">
+        <field name="name">Producción</field>
+        <field name="code">produccion</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="change_q_produccion_01" model="iso.change.question">
+        <field name="area_id" ref="change_area_produccion"/>
+        <field name="sequence">10</field>
+        <field name="name">¿La capacidad de la planta se ve afectada?</field>
+    </record>
+    <record id="change_q_produccion_02" model="iso.change.question">
+        <field name="area_id" ref="change_area_produccion"/>
+        <field name="sequence">20</field>
+        <field name="name">¿Hay limitaciones de cantidad de operadores?</field>
+    </record>
+    <record id="change_q_produccion_03" model="iso.change.question">
+        <field name="area_id" ref="change_area_produccion"/>
+        <field name="sequence">30</field>
+        <field name="name">¿El personal está capacitado para este cambio?</field>
+    </record>
+    <record id="change_q_produccion_04" model="iso.change.question">
+        <field name="area_id" ref="change_area_produccion"/>
+        <field name="sequence">40</field>
+        <field name="name">¿Hay alguna planilla de control de procesos que debería implementarse/actualizarse?</field>
+    </record>
+    <record id="change_q_produccion_05" model="iso.change.question">
+        <field name="area_id" ref="change_area_produccion"/>
+        <field name="sequence">50</field>
+        <field name="name">¿El flujo de trabajo se ve afectado?</field>
+    </record>
+    <record id="change_q_produccion_06" model="iso.change.question">
+        <field name="area_id" ref="change_area_produccion"/>
+        <field name="sequence">60</field>
+        <field name="name">¿Hay algún KPI que necesite crearse o actualizarse?</field>
+    </record>
+    <record id="change_q_produccion_07" model="iso.change.question">
+        <field name="area_id" ref="change_area_produccion"/>
+        <field name="sequence">70</field>
+        <field name="name">¿Hay algún cambio en la forma de declarar producción?</field>
+    </record>
+    <record id="change_q_produccion_08" model="iso.change.question">
+        <field name="area_id" ref="change_area_produccion"/>
+        <field name="sequence">80</field>
+        <field name="name">¿Hay algún cambio en el mix semanal?</field>
+    </record>
+    <record id="change_q_produccion_09" model="iso.change.question">
+        <field name="area_id" ref="change_area_produccion"/>
+        <field name="sequence">90</field>
+        <field name="name">¿Impacta en la forma de planificar la producción?</field>
+    </record>
+    <record id="change_area_mantenimiento" model="iso.change.area">
+        <field name="name">Mantenimiento</field>
+        <field name="code">mantenimiento</field>
+        <field name="sequence">30</field>
+    </record>
+    <record id="change_q_mantenimiento_01" model="iso.change.question">
+        <field name="area_id" ref="change_area_mantenimiento"/>
+        <field name="sequence">10</field>
+        <field name="name">¿Es necesario crear nuevos tag de equipos?</field>
+    </record>
+    <record id="change_q_mantenimiento_02" model="iso.change.question">
+        <field name="area_id" ref="change_area_mantenimiento"/>
+        <field name="sequence">20</field>
+        <field name="name">¿Es necesario crear/actualizar nuevos planes de mantenimiento preventivo?</field>
+    </record>
+    <record id="change_q_mantenimiento_03" model="iso.change.question">
+        <field name="area_id" ref="change_area_mantenimiento"/>
+        <field name="sequence">30</field>
+        <field name="name">¿Es necesario comprar repuestos para nuevos equipos?</field>
+    </record>
+    <record id="change_q_mantenimiento_04" model="iso.change.question">
+        <field name="area_id" ref="change_area_mantenimiento"/>
+        <field name="sequence">40</field>
+        <field name="name">¿Es necesario disponer de manual de usuario y/o de reparaciones?</field>
+    </record>
+    <record id="change_q_mantenimiento_05" model="iso.change.question">
+        <field name="area_id" ref="change_area_mantenimiento"/>
+        <field name="sequence">50</field>
+        <field name="name">¿Es necesario capacitar al personal para atender algún nuevo equipo/instrumento?</field>
+    </record>
+    <record id="change_q_mantenimiento_06" model="iso.change.question">
+        <field name="area_id" ref="change_area_mantenimiento"/>
+        <field name="sequence">60</field>
+        <field name="name">¿Hay algún nuevo instrumento que tenga que ser agregado al programa de calibración?</field>
+    </record>
+    <record id="change_q_mantenimiento_07" model="iso.change.question">
+        <field name="area_id" ref="change_area_mantenimiento"/>
+        <field name="sequence">70</field>
+        <field name="name">¿Es necesario actualizar algún otro documento asociado?</field>
+    </record>
+    <record id="change_q_mantenimiento_08" model="iso.change.question">
+        <field name="area_id" ref="change_area_mantenimiento"/>
+        <field name="sequence">80</field>
+        <field name="name">¿Es necesario realizar alguna modificación de las utilidades?</field>
+    </record>
+    <record id="change_q_mantenimiento_09" model="iso.change.question">
+        <field name="area_id" ref="change_area_mantenimiento"/>
+        <field name="sequence">90</field>
+        <field name="name">¿Es necesario instalar algún nuevo equipo?</field>
+    </record>
+    <record id="change_area_calidad" model="iso.change.area">
+        <field name="name">Calidad</field>
+        <field name="code">calidad</field>
+        <field name="sequence">40</field>
+    </record>
+    <record id="change_q_calidad_01" model="iso.change.question">
+        <field name="area_id" ref="change_area_calidad"/>
+        <field name="sequence">10</field>
+        <field name="name">¿El cambio involucra la inclusión de un nuevo proveedor?</field>
+    </record>
+    <record id="change_q_calidad_02" model="iso.change.question">
+        <field name="area_id" ref="change_area_calidad"/>
+        <field name="sequence">20</field>
+        <field name="name">¿Es necesario agregar/actualizar un plan de control especial para materias primas?</field>
+    </record>
+    <record id="change_q_calidad_03" model="iso.change.question">
+        <field name="area_id" ref="change_area_calidad"/>
+        <field name="sequence">30</field>
+        <field name="name">¿Es necesario actualizar el procedimiento de control de muro intermedio?</field>
+    </record>
+    <record id="change_q_calidad_04" model="iso.change.question">
+        <field name="area_id" ref="change_area_calidad"/>
+        <field name="sequence">40</field>
+        <field name="name">¿Es necesario actualizar el procedimiento de control de muro final?</field>
+    </record>
+    <record id="change_q_calidad_05" model="iso.change.question">
+        <field name="area_id" ref="change_area_calidad"/>
+        <field name="sequence">50</field>
+        <field name="name">¿Hay algún nuevo instrumento de medición requerido?</field>
+    </record>
+    <record id="change_q_calidad_06" model="iso.change.question">
+        <field name="area_id" ref="change_area_calidad"/>
+        <field name="sequence">60</field>
+        <field name="name">¿Es necesario actualizar el plan de calibraciones?</field>
+    </record>
+    <record id="change_q_calidad_07" model="iso.change.question">
+        <field name="area_id" ref="change_area_calidad"/>
+        <field name="sequence">70</field>
+        <field name="name">¿Es necesario actualizar algún otro documento asociado?</field>
+    </record>
+    <record id="change_q_calidad_08" model="iso.change.question">
+        <field name="area_id" ref="change_area_calidad"/>
+        <field name="sequence">80</field>
+        <field name="name">¿Se prevén nuevos desvíos o no conformidades?</field>
+    </record>
+    <record id="change_area_supply_chain" model="iso.change.area">
+        <field name="name">Supply Chain</field>
+        <field name="code">supply_chain</field>
+        <field name="sequence">50</field>
+    </record>
+    <record id="change_q_supply_chain_01" model="iso.change.question">
+        <field name="area_id" ref="change_area_supply_chain"/>
+        <field name="sequence">10</field>
+        <field name="name">¿Necesitan crearse nuevos códigos?</field>
+    </record>
+    <record id="change_q_supply_chain_02" model="iso.change.question">
+        <field name="area_id" ref="change_area_supply_chain"/>
+        <field name="sequence">20</field>
+        <field name="name">¿Hay que actualizar contrato marco?</field>
+    </record>
+    <record id="change_q_supply_chain_03" model="iso.change.question">
+        <field name="area_id" ref="change_area_supply_chain"/>
+        <field name="sequence">30</field>
+        <field name="name">¿Está definida la forma de abastecimiento?</field>
+    </record>
+    <record id="change_q_supply_chain_04" model="iso.change.question">
+        <field name="area_id" ref="change_area_supply_chain"/>
+        <field name="sequence">40</field>
+        <field name="name">¿Hay que actualizar datos en el maestro de materiales de algún código en SAP?</field>
+    </record>
+    <record id="change_q_supply_chain_05" model="iso.change.question">
+        <field name="area_id" ref="change_area_supply_chain"/>
+        <field name="sequence">50</field>
+        <field name="name">¿Es necesario hacer una auditoría o enviar autoevaluación a algún proveedor?</field>
+    </record>
+    <record id="change_q_supply_chain_06" model="iso.change.question">
+        <field name="area_id" ref="change_area_supply_chain"/>
+        <field name="sequence">60</field>
+        <field name="name">¿Hay algún código que necesita ser borrado en SAP?</field>
+    </record>
+    <record id="change_q_supply_chain_07" model="iso.change.question">
+        <field name="area_id" ref="change_area_supply_chain"/>
+        <field name="sequence">70</field>
+        <field name="name">¿Hay impacto en costos?</field>
+    </record>
+    <record id="change_q_supply_chain_08" model="iso.change.question">
+        <field name="area_id" ref="change_area_supply_chain"/>
+        <field name="sequence">80</field>
+        <field name="name">¿Están listas las especificaciones para compra de nuevos materiales?</field>
+    </record>
+    <record id="change_q_supply_chain_09" model="iso.change.question">
+        <field name="area_id" ref="change_area_supply_chain"/>
+        <field name="sequence">90</field>
+        <field name="name">¿El cambio afecta las condiciones de almacenamiento / abastecimiento a planta?</field>
+    </record>
+    <record id="change_q_supply_chain_10" model="iso.change.question">
+        <field name="area_id" ref="change_area_supply_chain"/>
+        <field name="sequence">100</field>
+        <field name="name">¿Es necesario cambiar/actualizar el recorrido de abastecimiento en planta?</field>
+    </record>
+    <record id="change_q_supply_chain_11" model="iso.change.question">
+        <field name="area_id" ref="change_area_supply_chain"/>
+        <field name="sequence">110</field>
+        <field name="name">¿Es necesario actualizar el formulario de gestión de riesgos?</field>
+    </record>
+    <record id="change_area_hse" model="iso.change.area">
+        <field name="name">Salud, Seguridad y Medio Ambiente (HSE)</field>
+        <field name="code">hse</field>
+        <field name="sequence">60</field>
+    </record>
+    <record id="change_q_hse_01" model="iso.change.question">
+        <field name="area_id" ref="change_area_hse"/>
+        <field name="sequence">10</field>
+        <field name="name">¿El cambio introduce nuevos peligros (químicos, mecánicos, eléctricos, ergonómicos) o modifica el nivel de riesgo de peligros existentes?</field>
+    </record>
+    <record id="change_q_hse_02" model="iso.change.question">
+        <field name="area_id" ref="change_area_hse"/>
+        <field name="sequence">20</field>
+        <field name="name">¿Se requiere nuevo Equipo de Protección Personal (EPP) o la modificación/instalación de protecciones, sistemas LOTO (Bloqueo y Etiquetado) o paradas de emergencia?</field>
+    </record>
+    <record id="change_q_hse_03" model="iso.change.question">
+        <field name="area_id" ref="change_area_hse"/>
+        <field name="sequence">30</field>
+        <field name="name">¿El cambio modifica la generación/gestión de residuos (tipo, volumen), el consumo de energía/agua, las emisiones (aire) o los efluentes (agua)?</field>
+    </record>
+    <record id="change_q_hse_04" model="iso.change.question">
+        <field name="area_id" ref="change_area_hse"/>
+        <field name="sequence">40</field>
+        <field name="name">¿Este cambio impacta algún requisito legal o requiere actualizar permisos, licencias o estudios ante la autoridad competente?</field>
+    </record>
+    <record id="change_q_hse_05" model="iso.change.question">
+        <field name="area_id" ref="change_area_hse"/>
+        <field name="sequence">50</field>
+        <field name="name">¿Es necesario capacitar al personal?</field>
+    </record>
+    <record id="change_area_infraestructura" model="iso.change.area">
+        <field name="name">Infraestructura</field>
+        <field name="code">infraestructura</field>
+        <field name="sequence">70</field>
+    </record>
+    <record id="change_q_infraestructura_01" model="iso.change.question">
+        <field name="area_id" ref="change_area_infraestructura"/>
+        <field name="sequence">10</field>
+        <field name="name">¿Son necesarios nuevos escritorios?</field>
+    </record>
+    <record id="change_q_infraestructura_02" model="iso.change.question">
+        <field name="area_id" ref="change_area_infraestructura"/>
+        <field name="sequence">20</field>
+        <field name="name">¿Se necesita nuevo cableado de red/electricidad para los nuevos puestos?</field>
+    </record>
+    <record id="change_q_infraestructura_03" model="iso.change.question">
+        <field name="area_id" ref="change_area_infraestructura"/>
+        <field name="sequence">30</field>
+        <field name="name">¿Habrá nuevos puestos de trabajo en la planta?</field>
+    </record>
+    <record id="change_q_infraestructura_04" model="iso.change.question">
+        <field name="area_id" ref="change_area_infraestructura"/>
+        <field name="sequence">40</field>
+        <field name="name">¿Son necesarias nuevas PC tanto para planta como para puestos administrativos?</field>
+    </record>
+    <record id="change_q_infraestructura_05" model="iso.change.question">
+        <field name="area_id" ref="change_area_infraestructura"/>
+        <field name="sequence">50</field>
+        <field name="name">¿Es necesario trasladar equipamiento? ¿Hay espacio suficiente?</field>
+    </record>
+    <record id="change_q_infraestructura_06" model="iso.change.question">
+        <field name="area_id" ref="change_area_infraestructura"/>
+        <field name="sequence">60</field>
+        <field name="name">¿Se requieren elementos de izaje?</field>
+    </record>
+    <record id="change_area_recursos_humanos" model="iso.change.area">
+        <field name="name">Recursos Humanos</field>
+        <field name="code">recursos_humanos</field>
+        <field name="sequence">80</field>
+    </record>
+    <record id="change_q_recursos_humanos_01" model="iso.change.question">
+        <field name="area_id" ref="change_area_recursos_humanos"/>
+        <field name="sequence">10</field>
+        <field name="name">¿Es necesario actualizar el organigrama?</field>
+    </record>
+    <record id="change_q_recursos_humanos_02" model="iso.change.question">
+        <field name="area_id" ref="change_area_recursos_humanos"/>
+        <field name="sequence">20</field>
+        <field name="name">¿Es necesario actualizar perfiles de puesto?</field>
+    </record>
+    <record id="change_q_recursos_humanos_03" model="iso.change.question">
+        <field name="area_id" ref="change_area_recursos_humanos"/>
+        <field name="sequence">30</field>
+        <field name="name">¿Hay que hacer evaluación de competencias?</field>
+    </record>
+    <record id="change_q_recursos_humanos_04" model="iso.change.question">
+        <field name="area_id" ref="change_area_recursos_humanos"/>
+        <field name="sequence">40</field>
+        <field name="name">¿Es necesario actualizar sistema de fichaje?</field>
+    </record>
+    <record id="change_q_recursos_humanos_05" model="iso.change.question">
+        <field name="area_id" ref="change_area_recursos_humanos"/>
+        <field name="sequence">50</field>
+        <field name="name">¿Es necesario actualizar base de datos de personal?</field>
+    </record>
+    <record id="change_q_recursos_humanos_06" model="iso.change.question">
+        <field name="area_id" ref="change_area_recursos_humanos"/>
+        <field name="sequence">60</field>
+        <field name="name">¿Es necesario hacer ajuste salarial?</field>
+    </record>
+    <record id="change_q_recursos_humanos_07" model="iso.change.question">
+        <field name="area_id" ref="change_area_recursos_humanos"/>
+        <field name="sequence">70</field>
+        <field name="name">¿Es necesario adecuar el plan de capacitación?</field>
+    </record>
+    <record id="change_q_recursos_humanos_08" model="iso.change.question">
+        <field name="area_id" ref="change_area_recursos_humanos"/>
+        <field name="sequence">80</field>
+        <field name="name">¿Hay que actualizar matriz de polivalencia?</field>
+    </record>
+    <record id="change_q_recursos_humanos_09" model="iso.change.question">
+        <field name="area_id" ref="change_area_recursos_humanos"/>
+        <field name="sequence">90</field>
+        <field name="name">¿Es necesario realizar alguna comunicación especial: ej. desvinculación, cambio de puestos, etc.?</field>
+    </record>
+    <record id="change_q_recursos_humanos_10" model="iso.change.question">
+        <field name="area_id" ref="change_area_recursos_humanos"/>
+        <field name="sequence">100</field>
+        <field name="name">¿Es necesario incorporar personal?</field>
+    </record>
+    <record id="change_q_recursos_humanos_11" model="iso.change.question">
+        <field name="area_id" ref="change_area_recursos_humanos"/>
+        <field name="sequence">110</field>
+        <field name="name">¿El cambio tiene algún impacto legal?</field>
+    </record>
+    <record id="change_q_recursos_humanos_12" model="iso.change.question">
+        <field name="area_id" ref="change_area_recursos_humanos"/>
+        <field name="sequence">120</field>
+        <field name="name">¿El cambio tiene algún impacto en el convenio colectivo de trabajo?</field>
+    </record>
+    <record id="change_q_recursos_humanos_13" model="iso.change.question">
+        <field name="area_id" ref="change_area_recursos_humanos"/>
+        <field name="sequence">130</field>
+        <field name="name">¿Es necesaria alguna comunicación especial al sindicato?</field>
+    </record>
+</odoo>

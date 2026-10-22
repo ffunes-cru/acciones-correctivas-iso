@@ -9,6 +9,8 @@
     <menuitem id="menu_iso_new_planning" name="Create annual planning" parent="menu_iso_root" action="action_iso_calendar_wizard"
               sequence="50" groups="group_iso_admin"/>
     <menuitem id="menu_iso_config" name="Configuration" parent="menu_iso_root" sequence="90" groups="group_iso_admin"/>
+    <menuitem id="menu_iso_change_requests" name="Change requests" parent="menu_iso_root" action="action_iso_change_request" sequence="35"/>
+    <menuitem id="menu_iso_config_change_areas" name="Change request areas" parent="menu_iso_config" action="action_iso_change_area" sequence="30"/>
     <menuitem id="menu_iso_config_processes" name="Audit processes" parent="menu_iso_config" action="action_iso_audit_process" sequence="10"/>
     <menuitem id="menu_iso_config_activities" name="Routine activities" parent="menu_iso_config" action="action_iso_activity_template" sequence="20"/>
 </odoo>

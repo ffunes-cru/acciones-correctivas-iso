@@ -24,3 +24,14 @@ access_iso_calendar_wizard_admin,iso.calendar.wizard admin,model_iso_calendar_wi
 access_iso_calendar_wizard_audit_admin,iso.calendar.wizard.audit admin,model_iso_calendar_wizard_audit,group_iso_admin,1,1,1,1
 access_iso_calendar_wizard_activity_admin,iso.calendar.wizard.activity admin,model_iso_calendar_wizard_activity,group_iso_admin,1,1,1,1
 access_iso_calendar_share_wizard_user,iso.calendar.share.wizard user,model_iso_calendar_share_wizard,group_iso_user,1,1,1,1
+access_iso_change_area_user,iso.change.area user,model_iso_change_area,group_iso_user,1,0,0,0
+access_iso_change_area_admin,iso.change.area admin,model_iso_change_area,group_iso_admin,1,1,1,1
+access_iso_change_question_user,iso.change.question user,model_iso_change_question,group_iso_user,1,0,0,0
+access_iso_change_question_admin,iso.change.question admin,model_iso_change_question,group_iso_admin,1,1,1,1
+access_iso_change_request_user,iso.change.request user,model_iso_change_request,group_iso_user,1,1,1,0
+access_iso_change_request_admin,iso.change.request admin,model_iso_change_request,group_iso_admin,1,1,1,1
+access_iso_change_review_user,iso.change.review user,model_iso_change_review,group_iso_user,1,1,0,0
+access_iso_change_review_admin,iso.change.review admin,model_iso_change_review,group_iso_admin,1,1,1,1
+access_iso_change_review_line_user,iso.change.review.line user,model_iso_change_review_line,group_iso_user,1,1,0,0
+access_iso_change_review_line_admin,iso.change.review.line admin,model_iso_change_review_line,group_iso_admin,1,1,1,1
+access_iso_change_line_action_wizard,iso.change.line.action.wizard user,model_iso_change_line_action_wizard,group_iso_user,1,1,1,1

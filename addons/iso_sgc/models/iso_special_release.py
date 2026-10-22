@@ -192,9 +192,8 @@ class IsoSpecialRelease(models.Model):
         if not (description or "").strip():
             raise ValidationError(self.env._("The action description is required."))
         kind = self.env._("Raw material") if self.release_type == "raw_material" else self.env._("Finished product")
-        finding = self.env["iso.finding"].create(
+        finding = self.env["iso.finding"]._create_with_action(
             {
-                "category": "corrective",
                 "company_id": self.company_id.id,
                 "finding_date": self.date,
                 "origin": "Muro/ Control de Calidad",
@@ -207,11 +206,8 @@ class IsoSpecialRelease(models.Model):
                 "owner_id": self.creator_id.id,
                 "analysis_user_id": self.creator_id.id,
                 "analysis_deadline": self.date,
-                "state": "pending_action",  # the analysis step is skipped
                 "special_release_id": self.id,
-            }
-        )
-        self.env["iso.finding.action"].create(
-            {"finding_id": finding.id, "name": description, "user_id": user.id, "date_deadline": deadline}
+            },
+            description, user, deadline,
         )
         return finding

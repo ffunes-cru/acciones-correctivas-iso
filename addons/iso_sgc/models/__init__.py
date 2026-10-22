@@ -6,3 +6,4 @@ from . import iso_special_release_wizard
 from . import iso_audit_process
 from . import iso_calendar
 from . import iso_calendar_wizard
+from . import iso_change_request

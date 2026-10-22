@@ -15,3 +15,17 @@ def special_release_status(rows, posventa_confirmed):
     if all(state != "pending" for state in active) and posventa_confirmed:
         return "approved"
     return "pending_approval"
+
+
+def change_request_status_after_review(current, reviews):
+    """reviews: iterable of (applies, state). Any applicable rejection rejects; all applicable approved
+    advances to final approval. With no applicable review the status is kept (the legacy `every()` on an
+    empty list advanced it; sending requires at least one applicable area anyway)."""
+    active = [state for applies, state in reviews if applies]
+    if not active:
+        return current
+    if any(state == "rejected" for state in active):
+        return "rejected"
+    if all(state == "approved" for state in active):
+        return "pending_approval"
+    return current

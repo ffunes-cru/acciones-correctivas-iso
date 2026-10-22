@@ -41,12 +41,22 @@ Each row is a rule the current app enforces, where it comes from, and where it i
 | One numbering across companies | O `test_sequences_are_shared_across_companies` |
 | Odoo system admins are ISO admins | O `test_odoo_system_admins_are_iso_admins` |
 
-## Change requests
+## Change requests (SC-)
 | Rule | Legacy source | Test |
 |---|---|---|
-| Any applicable area rejected → `rejected`; all applicable approved → `pending_approval` | review handler | U `changeRequestStatusAfterReview` |
-| **Changed:** no applicable areas no longer auto-advances (legacy bug: vacuous truth) | | U |
-| Review requires all checklist questions answered | review handler | A / UI |
+| Created in draft with title, company, mission, proposal, objective, current/proposed comparison, impact analysis (all required); 8 area reviews with their questionnaires (74 questions) **copied** into the request | `NewChangeRequest` | O `test_creation_copies_the_questionnaires` |
+| Definition editable only by the creator (or admin), only in draft | `handleSaveDefinition` | O `test_definition_editable_only_by_creator_in_draft`, `test_workflow_fields_are_protected` |
+| Sending to review: ≥1 applicable area, a reviewer for each, one review deadline; creator/admin only; non-applicable areas are auto-approved; reviewers get a to-do; applicability locked afterwards | `handleSendToReview` | O `test_send_needs_*`, `test_sending_sets_up_the_reviews`, `test_applicability_is_locked_after_sending` |
+| Only the assigned reviewer answers the questionnaire and decides (**not even an admin**, as in the legacy app) | `handleReviewAction`, `handleUpdateChecklistQuestion` | O `test_only_the_assigned_reviewer_*` |
+| Answering anything but "Applies: yes" clears "Requires action" | `handleUpdateChecklistQuestion` | O `test_answering_no_clears_requires_action` |
+| Approving needs every question answered, "requires action" answered where applicable, and an action created for each that requires one; rejecting needs nothing | `handleReviewAction` | O `test_approval_needs_a_complete_questionnaire`, `test_na_and_no_answers_are_enough`, `test_rejection_needs_*` |
+| Any applicable rejection → request rejected (creator told); all applicable approved → final approval (creator told, to-do to assign the approver) | `handleReviewAction` | O `TestChangeRequestStatus`, `test_all_approved_moves_to_final_approval` |
+| The action a question requires is a background corrective finding (origin "Gestión de Cambios", type "Procedimiento / Documentación", process "Otros", `pending_action`, owner = analyst = the reviewer, company = the request's) linked to the question and the request; only the reviewer creates it, once; the answer can't change while it exists | `handleCreateLinkedAction` | O `test_action_creates_a_background_finding`, `test_action_rules`, `test_wizard_and_approval_with_actions` |
+| Creator or admin can remove a linked action (deletes the background finding) | `handleConfirmDeleteAction` | O `test_removing_an_action_is_for_creator_or_admin` |
+| Final approver assigned by the creator (or admin) with a deadline; only that person decides; decision final | `handleSendToFinalApproval`, `handleFinalApprovalDecision` | O `test_final_approver_assignment`, `test_final_decision_*`, `test_final_rejection` |
+| The final decision is communicated to creator, final approver and the applicable reviewers, and recorded (sent, date, notes) | stage 4 | O `test_final_decision_is_communicated_to_everybody_involved` |
+| **Added:** an admin can reassign the reviewer of an open review (absent person), moving their to-do | — | O `test_admin_can_reassign_an_absent_reviewer` |
+| **Changed:** the creator **or an admin** assigns the final approver (legacy: creator only); deleting a request (admin only) removes its linked actions | — | O `test_delete_is_admin_only_and_removes_linked_actions` |
 
 ## ISO calendar (details and decisions in `docs/CALENDAR.md`)
 | Rule | Legacy source | Test |

@@ -4,3 +4,4 @@ from . import test_special_release
 from . import test_security
 from . import test_calendar_rules
 from . import test_calendar
+from . import test_change_request
