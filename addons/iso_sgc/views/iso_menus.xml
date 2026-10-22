@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_iso_root" name="ISO SGC" sequence="60" web_icon="base,static/description/icon.png" groups="group_iso_user"/>
+    <menuitem id="menu_iso_findings" name="Findings" parent="menu_iso_root" action="action_iso_finding" sequence="10"/>
+    <menuitem id="menu_iso_my_actions" name="My actions" parent="menu_iso_root" action="action_iso_finding_action" sequence="20"/>
+</odoo>

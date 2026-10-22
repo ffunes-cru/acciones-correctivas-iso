@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_iso_finding_user,iso.finding user,model_iso_finding,group_iso_user,1,1,1,1
+access_iso_finding_admin,iso.finding admin,model_iso_finding,group_iso_admin,1,1,1,1
+access_iso_finding_action_user,iso.finding.action user,model_iso_finding_action,group_iso_user,1,1,1,1
+access_iso_finding_action_admin,iso.finding.action admin,model_iso_finding_action,group_iso_admin,1,1,1,1

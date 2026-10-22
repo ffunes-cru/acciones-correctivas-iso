@@ -8,3 +8,6 @@ coverage/
 !.env.example
 
 domain/node_modules/
+.deps/
+__pycache__/
+*.pyc

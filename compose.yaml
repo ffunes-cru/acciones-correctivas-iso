@@ -1,81 +1,25 @@
-# Production: SQL Server is the company's existing instance (set DB_* in .env).
-# Dev/PoC:    docker compose --profile dev up -d   (adds a throwaway SQL Server)
+# Dev / PoC. Production: use the company's existing Odoo + PostgreSQL and mount ./addons.
 services:
-  directus:
-    build:
-      context: .
-      target: directus
-    restart: unless-stopped
-    ports:
-      - "8055:8055"
+  odoo:
+    build: .
+    depends_on: [db]
+    ports: ["8069:8069"]
     environment:
-      DB_CLIENT: mssql
-      DB_HOST: ${DB_HOST:?set DB_HOST}
-      DB_PORT: ${DB_PORT:-1433}
-      DB_DATABASE: ${DB_DATABASE:-acciones_iso}
-      DB_USER: ${DB_USER:?set DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD}
-      KEY: ${DIRECTUS_KEY:?set DIRECTUS_KEY}
-      SECRET: ${DIRECTUS_SECRET:?set DIRECTUS_SECRET}
-      ADMIN_EMAIL: ${ADMIN_EMAIL:?set ADMIN_EMAIL}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?set ADMIN_PASSWORD}
-      # Must be an absolute URL (Directus 12 licensing binds to it; relative values are rejected).
-      PUBLIC_URL: ${PUBLIC_URL:?set PUBLIC_URL (absolute, e.g. https://calidad.example.local)}
-      # Mail (replaces the Google Apps Script webhook)
-      EMAIL_TRANSPORT: smtp
-      EMAIL_FROM: ${EMAIL_FROM:-calidad@example.com}
-      EMAIL_SMTP_HOST: ${EMAIL_SMTP_HOST:-}
-      EMAIL_SMTP_PORT: ${EMAIL_SMTP_PORT:-25}
-      # Local users + passwords (decision D2). Password reset goes through the SMTP settings above.
-      # Google Sheets export (decision D3), service account, server side only:
-      GOOGLE_SERVICE_ACCOUNT_EMAIL: ${GOOGLE_SERVICE_ACCOUNT_EMAIL:-}
-      GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY: ${GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY:-}
-      GOOGLE_SHEETS_SPREADSHEET_ID: ${GOOGLE_SHEETS_SPREADSHEET_ID:-}
+      HOST: db
+      USER: odoo
+      PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
     volumes:
-      - uploads:/directus/uploads
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:8055/server/health"]
-      interval: 15s
-      timeout: 5s
-      retries: 10
-
-  web:
-    build:
-      context: .
-      target: web
+      - odoo-data:/var/lib/odoo
     restart: unless-stopped
-    profiles: ["full"]   # enabled once ui/ exists (phase 3)
-    depends_on: [directus]
-    ports:
-      - "8080:80"
-
-  # ---- dev / PoC only ----
-  mssql:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    profiles: ["dev"]
+  db:
+    image: postgres:16
     environment:
-      ACCEPT_EULA: "Y"
-      MSSQL_SA_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD}
-    ports:
-      - "1433:1433"
+      POSTGRES_DB: postgres
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
     volumes:
-      - mssql-data:/var/opt/mssql
-    healthcheck:
-      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -Q 'SELECT 1' || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 20
-
-  mssql-init:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    profiles: ["dev"]
-    depends_on:
-      mssql: { condition: service_healthy }
-    restart: "no"
-    entrypoint: ["/bin/bash", "-c"]
-    command:
-      - /opt/mssql-tools18/bin/sqlcmd -C -S mssql -U sa -P "${DB_PASSWORD}" -Q "IF DB_ID('${DB_DATABASE:-acciones_iso}') IS NULL CREATE DATABASE [${DB_DATABASE:-acciones_iso}]"
-
+      - pg-data:/var/lib/postgresql/data
+    restart: unless-stopped
 volumes:
-  uploads:
-  mssql-data:
+  odoo-data:
+  pg-data:

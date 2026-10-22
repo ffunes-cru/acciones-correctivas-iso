@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_iso_finding" model="ir.sequence">
+        <field name="name">ISO finding</field>
+        <field name="code">iso.finding</field>
+        <field name="prefix">H-</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

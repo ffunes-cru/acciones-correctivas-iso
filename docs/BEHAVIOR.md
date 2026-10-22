@@ -1,20 +1,22 @@
 # Behaviour inventory (source of truth for tests)
 
 Each row is a rule the current app enforces, where it comes from, and where it is/will be tested.
-`U` = unit test in `domain/` (exists). `A` = API integration test (phase 2, not yet written).
+`O:` = Odoo test in `addons/iso_sgc/tests/` (green). `U` = legacy TypeScript unit test in `domain/` (spec to port). `todo` = not ported yet.
 
 ## Findings
 | Rule | Legacy source | Test |
 |---|---|---|
-| Company ∈ {TMC, Fertec, Metallo, Leaf, Fabril}; description ≤ 2000 chars | rules `isValidFinding` | U `validateFinding`, A |
-| Saving analysis moves finding to `pending_action`; owner + analyst become pending | `handleAnalysisSubmit` | U `afterAnalysis` |
-| Analysis can be written by admin, owner or analyst only | rules `/analysis` | U `canSaveAnalysis`, A |
-| Corrective: only analyst adds actions; improvement: only owner | `handleAddAction` | U `canAddAction`, A |
-| Action deadline cannot be in the past | `handleAddAction` | U `validateActionDeadline` |
-| Only the action's responsible (or admin) executes it; comment mandatory | `handleActionExecution` | U `canExecuteAction`, `validateExecution` |
-| All actions done → `pending_verification`; any rejected → finding `rejected`, pending users cleared | `handleActionExecution` | U `afterActionExecution` |
-| Only owner (or admin) verifies an action | rules `/correctiveActions` | U `canVerifyAction`, A |
-| All verified OK → `completed`; any verified NOT OK → `cancelled` | `handleActionVerification` | U `afterActionVerification` |
+| Company ∈ the 5 group companies (now `res.company`); description ≤ 2000 chars | rules `isValidFinding` | O `test_validation` (company: Q1) |
+| Saving analysis moves finding to `pending_action` (summary required) | `handleAnalysisSubmit` | O `test_analysis_*` |
+| Analysis can be saved by admin, owner or analyst only | rules `/analysis` | O `test_analysis_permissions_and_transition` |
+| Corrective: only analyst (or admin) adds actions; improvement: only owner; only while `pending_action` | `handleAddAction` | O `test_who_can_add_actions_*`, `test_cannot_add_action_before_analysis` |
+| Action deadline cannot be in the past (today is fine) | `handleAddAction` | O `test_action_deadline_not_in_past` |
+| Only the action's responsible (or admin) reports it; comment mandatory; once | `handleActionExecution` | O `test_only_responsible_executes_and_comment_required` |
+| All actions done → `pending_verification`; any rejected → `rejected`; pending users follow the actions | `handleActionExecution` | O `test_pending_users_follow_the_actions`, `test_rejected_action_*` |
+| Only owner (or admin) verifies a finished action, once | rules `/correctiveActions` | O `test_only_owner_verifies`, `test_cannot_verify_twice_or_unfinished` |
+| All verified OK → `completed`; any NOT OK → `cancelled` | `handleActionVerification` | O `test_all_verified_ok_completes`, `test_any_failed_verification_cancels` |
+| **Changed:** cancelled actions don't need verification and don't block closing; all-cancelled finding → `cancelled` (legacy got stuck) | | O `test_cancelled_actions_do_not_block_closing`, `test_all_cancelled_cancels_finding` |
+| Direct edits of workflow fields are blocked for non-admins | rules (partly) | O `test_workflow_fields_cannot_be_written_directly` |
 
 ## Special releases
 | Rule | Legacy source | Test |
@@ -41,13 +43,13 @@ Each row is a rule the current app enforces, where it comes from, and where it i
 ## Notifications
 | Rule | Legacy source | Test |
 |---|---|---|
-| Milestones: `pre_30` (28–30 d), `pre_3`, `day_of`, `overdue_initial` (1–6 d, only if never notified), `overdue_week_N` | `server.ts` cron | U `reminderMilestone` |
+| Milestones: `pre_30` (28–30 d), `pre_3`, `day_of`, `overdue_initial` (1–6 d, only if never notified), `overdue_week_N` | `server.ts` cron | O `test_reminders` (cron wiring: todo) |
 | One mail per `itemId_milestone` | `notificationHistory` | U `historyId`, A (unique index) |
 
 ## Numbering
 | Rule | Test |
 |---|---|
-| Findings, special releases, change requests, calendars get unique sequential numbers (Firestore counter transaction → SQL `SEQUENCE`) | A (concurrent inserts) |
+| Findings get `H-0001…` (done); special releases, change requests, calendars get their own `ir.sequence` | O `test_creation_sequence_and_initial_state`; others todo |
 
 ## To inventory before phase 2 (not yet read in detail)
 - `ISOCalendarDetails.tsx` task generation by frequency (3,400 lines — largest unknown).

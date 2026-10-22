@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Everybody reads everything (as in the legacy app); multi-company applies. -->
+    <record id="rule_iso_finding_company" model="ir.rule">
+        <field name="name">ISO finding: multi-company</field>
+        <field name="model_id" ref="model_iso_finding"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <!-- Writing: only people involved in the finding. Transitions are further guarded in Python. -->
+    <record id="rule_iso_finding_write_involved" model="ir.rule">
+        <field name="name">ISO finding: write if involved</field>
+        <field name="model_id" ref="model_iso_finding"/>
+        <field name="groups" eval="[(4, ref('group_iso_user'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="domain_force">['|', '|', ('owner_id', '=', user.id), ('analysis_user_id', '=', user.id), ('action_ids.user_id', '=', user.id)]</field>
+    </record>
+    <record id="rule_iso_finding_unlink_owner" model="ir.rule">
+        <field name="name">ISO finding: delete own</field>
+        <field name="model_id" ref="model_iso_finding"/>
+        <field name="groups" eval="[(4, ref('group_iso_user'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_write" eval="False"/>
+        <field name="domain_force">[('owner_id', '=', user.id)]</field>
+    </record>
+    <record id="rule_iso_finding_admin" model="ir.rule">
+        <field name="name">ISO finding: admin all</field>
+        <field name="model_id" ref="model_iso_finding"/>
+        <field name="groups" eval="[(4, ref('group_iso_admin'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <record id="rule_iso_finding_action_company" model="ir.rule">
+        <field name="name">ISO action: multi-company</field>
+        <field name="model_id" ref="model_iso_finding_action"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_iso_finding_action_write" model="ir.rule">
+        <field name="name">ISO action: write if responsible or finding owner</field>
+        <field name="model_id" ref="model_iso_finding_action"/>
+        <field name="groups" eval="[(4, ref('group_iso_user'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="domain_force">['|', ('user_id', '=', user.id), ('finding_id.owner_id', '=', user.id)]</field>
+    </record>
+    <record id="rule_iso_finding_action_admin" model="ir.rule">
+        <field name="name">ISO action: admin all</field>
+        <field name="model_id" ref="model_iso_finding_action"/>
+        <field name="groups" eval="[(4, ref('group_iso_admin'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+</odoo>

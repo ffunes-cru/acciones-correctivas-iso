@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_iso_finding_list" model="ir.ui.view">
+        <field name="name">iso.finding.list</field>
+        <field name="model">iso.finding</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="state == 'rejected'" decoration-success="state == 'completed'" decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="category"/>
+                <field name="finding_date"/>
+                <field name="origin"/>
+                <field name="owner_id" widget="many2one_avatar_user"/>
+                <field name="analysis_user_id" widget="many2one_avatar_user" optional="show"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_iso_finding_form" model="ir.ui.view">
+        <field name="name">iso.finding.form</field>
+        <field name="model">iso.finding</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_save_analysis" type="object" string="Save analysis" class="btn-primary"
+                            invisible="state != 'pending_analysis'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="pending_analysis,pending_action,pending_verification,completed"/>
+                </header>
+                <sheet>
+                    <h1><field name="name"/></h1>
+                    <group>
+                        <group>
+                            <field name="category" readonly="state != 'pending_analysis' and id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="finding_date"/>
+                            <field name="origin"/>
+                            <field name="type" required="category == 'corrective'"/>
+                            <field name="process" required="category == 'corrective'"/>
+                        </group>
+                        <group>
+                            <field name="owner_id" widget="many2one_avatar_user"/>
+                            <field name="analysis_user_id" widget="many2one_avatar_user"
+                                   invisible="category == 'improvement'"/>
+                            <field name="analysis_deadline" invisible="category == 'improvement'"/>
+                            <field name="is_verified"/>
+                            <field name="verification_date"/>
+                        </group>
+                    </group>
+                    <field name="description" placeholder="Describe the finding…"/>
+                    <notebook>
+                        <page string="Analysis" invisible="category == 'improvement'">
+                            <group>
+                                <field name="analysis_summary" readonly="state != 'pending_analysis'"/>
+                                <field name="contingency_actions" readonly="state != 'pending_analysis'"/>
+                            </group>
+                        </page>
+                        <page string="Actions">
+                            <field name="action_ids" readonly="state != 'pending_action'">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="user_id" widget="many2one_avatar_user"/>
+                                    <field name="date_deadline"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="verification_state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_iso_finding_search" model="ir.ui.view">
+        <field name="name">iso.finding.search</field>
+        <field name="model">iso.finding</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="origin"/>
+                <filter name="mine_pending" string="Pending on me" domain="[('pending_user_ids', 'in', uid)]"/>
+                <filter name="open" string="Open" domain="[('state', 'in', ('pending_analysis', 'pending_action', 'pending_verification'))]"/>
+                <separator/>
+                <filter name="corrective" string="Corrective" domain="[('category', '=', 'corrective')]"/>
+                <filter name="improvement" string="Improvement" domain="[('category', '=', 'improvement')]"/>
+                <group>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_company" string="Company" context="{'group_by': 'company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_iso_finding_action_form" model="ir.ui.view">
+        <field name="name">iso.finding.action.form</field>
+        <field name="model">iso.finding.action</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_finish" type="object" string="Finish" class="btn-primary" invisible="state != 'pending'"/>
+                    <button name="action_cancel_action" type="object" string="Cancel" invisible="state != 'pending'"/>
+                    <button name="action_reject" type="object" string="Reject" invisible="state != 'pending'"/>
+                    <button name="action_verify_ok" type="object" string="Effective" class="btn-success"
+                            invisible="state != 'finished' or verification_state != 'unverified'"/>
+                    <button name="action_verify_nok" type="object" string="Not effective"
+                            invisible="state != 'finished' or verification_state != 'unverified'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="finding_id" readonly="id"/>
+                        <field name="name"/>
+                        <field name="user_id" widget="many2one_avatar_user"/>
+                        <field name="date_deadline"/>
+                    </group>
+                    <group string="Implementation report">
+                        <field name="implementation_comment" readonly="state != 'pending'"/>
+                        <field name="execution_date"/>
+                    </group>
+                    <group string="Verification" invisible="state != 'finished'">
+                        <field name="verification_state"/>
+                        <field name="verification_comment" readonly="verification_state != 'unverified'"/>
+                        <field name="verification_date"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_iso_finding_action_list" model="ir.ui.view">
+        <field name="name">iso.finding.action.list</field>
+        <field name="model">iso.finding.action</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="state == 'pending' and date_deadline &lt; context_today().strftime('%Y-%m-%d')">
+                <field name="finding_id"/>
+                <field name="name"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="date_deadline"/>
+                <field name="state" widget="badge"/>
+                <field name="verification_state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_iso_finding" model="ir.actions.act_window">
+        <field name="name">Findings</field>
+        <field name="res_model">iso.finding</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_open': 1}</field>
+    </record>
+    <record id="action_iso_finding_action" model="ir.actions.act_window">
+        <field name="name">My actions</field>
+        <field name="res_model">iso.finding.action</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('user_id', '=', uid)]</field>
+    </record>
+</odoo>
