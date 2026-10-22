@@ -198,8 +198,17 @@
                             </field>
                         </page>
                         <page string="Process checklist" invisible="not audit_process_id">
-                            <field name="audit_process_id" invisible="1"/>
-                            <group><field name="audit_process_id" readonly="1" string="Process"/></group>
+                            <group>
+                                <field name="process_objective"/>
+                                <field name="process_clauses"/>
+                            </group>
+                            <field name="process_deliverable_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="description"/>
+                                    <field name="evidence"/>
+                                </list>
+                            </field>
                         </page>
                     </notebook>
                 </sheet>

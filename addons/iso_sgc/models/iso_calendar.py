@@ -59,6 +59,9 @@ class IsoCalendarTask(models.Model):
     # audits
     is_audit = fields.Boolean("Internal audit", index=True)
     audit_process_id = fields.Many2one("iso.audit.process", "Audited process")
+    process_objective = fields.Text(related="audit_process_id.objective", string="Objective")
+    process_clauses = fields.Text(related="audit_process_id.clauses", string="Clauses")
+    process_deliverable_ids = fields.One2many(related="audit_process_id.deliverable_ids", string="Deliverables")
     audited_personnel = fields.Char()
     scope = fields.Text()
     criteria = fields.Text()
