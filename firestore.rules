@@ -1,0 +1,208 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isAdmin() {
+      let adminEmail = 'psantilli@crucianelli.com';
+      return isSignedIn() && (
+               (request.auth.token.email != null && request.auth.token.email.lower() == adminEmail) ||
+               (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && 
+                get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin')
+             );
+    }
+
+    function isRegisteredUser() {
+      return isSignedIn() && request.auth.token.email != null;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // --- Test Connection ---
+    match /test/connection {
+      allow read, write: if true;
+    }
+
+    match /test_connection/{document=**} {
+      allow read, write: if true;
+    }
+
+    // --- User Profiles ---
+    function isValidUser(data) {
+      return data.email is string && data.email.size() <= 200 &&
+             data.displayName is string && data.displayName.size() <= 100 &&
+             data.role in ['admin', 'user'];
+    }
+
+    match /users/{userId} {
+      allow get: if isSignedIn();
+      allow list: if isSignedIn();
+      allow create: if isSignedIn() && (
+        isAdmin() ||
+        (isOwner(userId) && 
+         incoming().email == request.auth.token.email &&
+         incoming().role == 'user' &&
+         incoming().isPlaceholder == false &&
+         (
+           request.auth.token.email.lower() == 'psantilli@crucianelli.com' ||
+           exists(/databases/$(database)/documents/users/$(request.auth.token.email.lower()))
+         )
+        )
+      );
+      allow update: if isSignedIn() && (
+        isAdmin() ||
+        (isOwner(userId) && 
+         incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'updatedAt', 'googleSheetsToken', 'googleSheetsTokenTime']) &&
+         incoming().role == existing().role &&
+         incoming().isPlaceholder == existing().isPlaceholder)
+      );
+      allow delete: if isAdmin() || (isSignedIn() && existing().email == request.auth.token.email);
+    }
+
+    // --- Findings ---
+    function isValidFinding(data) {
+      return data.findingNumber is int &&
+             data.company in ['TMC', 'Fertec', 'Metallo', 'Leaf', 'Fabril'] &&
+             data.origin is string &&
+             data.type is string &&
+             data.process is string &&
+             data.description is string && data.description.size() <= 2000 &&
+             data.ownerId is string &&
+             data.status in ['pending_analysis', 'pending_action', 'pending_verification', 'completed', 'cancelled'];
+    }
+
+    match /findings/{findingId} {
+      allow read: if isRegisteredUser();
+      allow create: if isRegisteredUser() && isValidFinding(incoming()) && 
+                    incoming().ownerId == request.auth.uid;
+      
+      allow update: if isRegisteredUser() && (
+        isAdmin() ||
+        (existing().ownerId == request.auth.uid && (
+          // Acción: Asignar Responsable de Análisis
+          (existing().status == 'pending_analysis' && 
+           incoming().diff(existing()).affectedKeys().hasAny(['analysisResponsibleId', 'analysisResponsibleEmail', 'analysisDeadline', 'updatedAt']) &&
+           incoming().ownerId == existing().ownerId) ||
+          // Acción: Verificar Cierre
+          (existing().status == 'pending_verification' && 
+           incoming().diff(existing()).affectedKeys().hasAny(['status', 'isVerified', 'verificationDate', 'updatedAt']) &&
+           incoming().ownerId == existing().ownerId)
+        )) ||
+        // Acción: El responsable del análisis marca que terminó su parte
+        (existing().analysisResponsibleId == request.auth.uid && 
+         existing().status == 'pending_analysis' && 
+         incoming().status == 'pending_action' &&
+         incoming().diff(existing()).affectedKeys().hasAny(['status', 'updatedAt'])) ||
+        // Acción: El sistema/usuario marca verificación cuando terminan las acciones 
+        // O simplemente actualiza usuarios pendientes
+        (existing().involvedUserIds.hasAny([request.auth.uid]) && 
+         incoming().diff(existing()).affectedKeys().hasAny(['status', 'pendingActionUserIds', 'updatedAt']))
+      );
+      allow delete: if isAdmin() || (isRegisteredUser() && existing().ownerId == request.auth.uid);
+    }
+
+    match /findings/{findingId}/analysis/{docId} {
+      allow read: if isRegisteredUser();
+      // Solo el administrador o el responsable asignado pueden escribir el análisis
+      allow write: if isRegisteredUser() && (
+        isAdmin() || 
+        get(/databases/$(database)/documents/findings/$(findingId)).data.analysisResponsibleId == request.auth.uid ||
+        get(/databases/$(database)/documents/findings/$(findingId)).data.ownerId == request.auth.uid
+      );
+      allow delete: if isAdmin() || (isRegisteredUser() && get(/databases/$(database)/documents/findings/$(findingId)).data.ownerId == request.auth.uid);
+    }
+
+    match /findings/{findingId}/correctiveActions/{actionId} {
+      allow read: if isRegisteredUser();
+      // Permitir la creación de acciones a cualquier usuario registrado
+      allow create: if isRegisteredUser();
+      // Actualización restringida por responsable o administrador o dueño
+      allow update: if isRegisteredUser() && (
+        isAdmin() || 
+        (existing().responsibleId == request.auth.uid && 
+         incoming().diff(existing()).affectedKeys().hasOnly(['status', 'implementationComment', 'executionDate', 'updatedAt'])) ||
+        (get(/databases/$(database)/documents/findings/$(findingId)).data.ownerId == request.auth.uid && 
+         incoming().diff(existing()).affectedKeys().hasOnly(['status', 'isVerified', 'verificationDate', 'updatedAt']))
+      );
+      allow delete: if isAdmin() || (isRegisteredUser() && get(/databases/$(database)/documents/findings/$(findingId)).data.ownerId == request.auth.uid);
+    }
+
+    match /config/counters {
+      allow read: if isRegisteredUser();
+      allow create, update: if isRegisteredUser(); 
+    }
+
+    match /notifications/{notifId} {
+      allow read: if isRegisteredUser();
+      allow create, update: if isRegisteredUser();
+    }
+
+    match /notificationHistory/{histId} {
+      allow read: if isRegisteredUser();
+      allow create: if isRegisteredUser();
+    }
+
+    // --- Special Releases ---
+    match /special_releases/{releaseId} {
+      allow read, write: if isRegisteredUser();
+    }
+
+    // --- Change Requests ---
+    match /change_requests/{changeId} {
+      allow read, write: if isRegisteredUser();
+    }
+
+    // --- Cron Debug ---
+    match /cron_debug/{debugId} {
+      allow read, write: if isRegisteredUser();
+    }
+
+    // --- ISO Calendars & Tasks (Granular Access Control) ---
+    function hasAuditAccess(task) {
+      let isAudit = (task.name != null && task.name.lower().matches('.*auditor.*')) || 
+                    (task.originalTaskName != null && task.originalTaskName.lower().matches('.*auditor.*'));
+      
+      let isAssignee = request.auth.token.email != null && 
+                       task.responsibleEmail != null && 
+                       request.auth.token.email.lower() == task.responsibleEmail.lower();
+                       
+      let isShared = request.auth.token.email != null && 
+                     task.sharedEmails != null && 
+                     request.auth.token.email.lower() in task.sharedEmails;
+                     
+      return !isAudit || isAdmin() || isAssignee || isShared;
+    }
+
+    match /iso_calendars/{calendarId} {
+      allow read: if isRegisteredUser();
+      allow create, update, delete: if isAdmin();
+
+      match /tasks/{taskId} {
+        allow read: if isRegisteredUser();
+        allow create: if isAdmin();
+        allow update: if isRegisteredUser() && (isAdmin() || hasAuditAccess(resource.data));
+        allow delete: if isAdmin();
+      }
+    }
+  }
+}

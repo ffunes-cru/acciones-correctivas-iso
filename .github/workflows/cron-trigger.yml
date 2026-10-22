@@ -1,0 +1,46 @@
+name: Trigger Vercel Cron
+
+on:
+  schedule:
+    # Se ejecuta cada 15 minutos
+    - cron: '*/15 * * * *'
+  # Permite ejecutarlo manualmente desde la pestaña Actions en GitHub
+  workflow_dispatch:
+
+jobs:
+  trigger-cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Cron Endpoint
+        run: |
+          if [ -z "${{ secrets.VERCEL_APP_URL }}" ]; then
+            echo "❌ Error: La variable de secreto VERCEL_APP_URL no está configurada."
+            exit 1
+          fi
+
+          # Normalizar URL (quitar barra diagonal "/" final si existe)
+          URL="${{ secrets.VERCEL_APP_URL }}"
+          URL="${URL%/}"
+
+          echo "Llamando a: $URL/api/cron/check"
+
+          # Realizar petición capturando el código de estado HTTP y el cuerpo
+          RESPONSE=$(curl -s -w "\n%{http_code}" "$URL/api/cron/check")
+
+          # Obtener código de estado (última línea) y el cuerpo de respuesta (todo menos la última línea)
+          HTTP_STATUS=$(echo "$RESPONSE" | tail -n 1)
+          HTTP_BODY=$(echo "$RESPONSE" | head -n -1)
+
+          echo "Código HTTP recibido: $HTTP_STATUS"
+
+          if [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
+            echo "❌ El cron job falló con código HTTP $HTTP_STATUS."
+            echo "--- INICIO DE RESPUESTA ---"
+            echo "$HTTP_BODY"
+            echo "--- FIN DE RESPUESTA ---"
+            exit 1
+          else
+            echo "✅ ¡Cron job completado con éxito!"
+            echo "Respuesta del servidor:"
+            echo "$HTTP_BODY"
+          fi

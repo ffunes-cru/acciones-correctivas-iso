@@ -1,0 +1,6 @@
+{
+  "name": "Gestión de Acciones Correctivas",
+  "description": "Herramienta para la gestión de hallazgos, no conformidades y acciones correctivas con flujo de trabajo por roles.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

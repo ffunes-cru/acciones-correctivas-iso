@@ -1,0 +1,151 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Global user profile and role",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "displayName", "role"]
+    },
+    "Finding": {
+      "title": "Finding",
+      "description": "A finding or non-conformity",
+      "type": "object",
+      "properties": {
+        "findingNumber": { "type": "integer" },
+        "company": { "type": "string" },
+        "findingDate": { "type": "string", "format": "date-time" },
+        "origin": { "type": "string" },
+        "type": { "type": "string" },
+        "process": { "type": "string" },
+        "description": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "ownerEmail": { "type": "string" },
+        "analysisResponsibleId": { "type": "string" },
+        "analysisResponsibleEmail": { "type": "string" },
+        "analysisDeadline": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["pending_analysis", "pending_action", "pending_verification", "completed", "cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "verificationDate": { "type": "string", "format": "date-time" },
+        "isVerified": { "type": "boolean" }
+      },
+      "required": ["findingNumber", "company", "findingDate", "origin", "type", "process", "description", "ownerId", "status"]
+    },
+    "Analysis": {
+      "title": "Cause Analysis",
+      "description": "Root cause analysis details",
+      "type": "object",
+      "properties": {
+        "summary": { "type": "string" },
+        "contingencyActions": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "CorrectiveAction": {
+      "title": "Corrective Action",
+      "description": "A specific corrective action tied to a finding",
+      "type": "object",
+      "properties": {
+        "description": { "type": "string" },
+        "responsibleId": { "type": "string" },
+        "responsibleEmail": { "type": "string" },
+        "deadline": { "type": "string", "format": "date-time" },
+        "implementationComment": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "finished", "cancelled"] },
+        "executionDate": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["description", "responsibleId", "deadline", "status"]
+    },
+    "Counter": {
+      "title": "Global Counters",
+      "description": "Used for auto-incrementing finding numbers",
+      "type": "object",
+      "properties": {
+        "lastFindingNumber": { "type": "integer" }
+      }
+    },
+    "Notification": {
+      "title": "Notification Log",
+      "description": "Log of emails/alerts sent",
+      "type": "object",
+      "properties": {
+        "to": { "type": "string" },
+        "subject": { "type": "string" },
+        "body": { "type": "string" },
+        "type": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "NotificationHistory": {
+      "title": "Notification History Tracker",
+      "description": "Tracks specific milestones to avoid duplicates",
+      "type": "object",
+      "properties": {
+        "itemId": { "type": "string" },
+        "milestone": { "type": "string" },
+        "dateKey": { "type": "string" },
+        "sentAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "SpecialRelease": {
+      "title": "Special Release",
+      "description": "Special release requests and approvals for quality assurance deviations",
+      "type": "object",
+      "properties": {
+        "releaseNumber": { "type": "integer" },
+        "type": { "type": "string", "enum": ["raw_material", "finished_product"] },
+        "company": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "deviationDescription": { "type": "string" },
+        "clientImpact": { "type": "string" },
+        "creatorId": { "type": "string" },
+        "creatorEmail": { "type": "string" },
+        "creatorName": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "pending_approval", "approved", "rejected"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["releaseNumber", "type", "company", "date", "deviationDescription", "clientImpact", "creatorId", "status"]
+    },
+    "ChangeRequest": {
+      "title": "Change Request",
+      "description": "Enterprise change requests, reviews, and tracking of stages",
+      "type": "object",
+      "properties": {
+        "changeNumber": { "type": "integer" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "objective": { "type": "string" },
+        "mission": { "type": "string" },
+        "currentSituation": { "type": "string" },
+        "proposedSituation": { "type": "string" },
+        "impactAnalysis": { "type": "string" },
+        "creatorId": { "type": "string" },
+        "creatorEmail": { "type": "string" },
+        "creatorName": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "pending_review", "pending_approval", "approved", "rejected"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["changeNumber", "title", "description", "objective", "mission", "currentSituation", "proposedSituation", "impactAnalysis", "creatorId", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": { "schema": "User", "description": "User profiles" },
+    "/findings/{findingId}": { "schema": "Finding", "description": "Main findings collection" },
+    "/findings/{findingId}/analysis/current": { "schema": "Analysis", "description": "Cause analysis for a finding" },
+    "/findings/{findingId}/correctiveActions/{actionId}": { "schema": "CorrectiveAction", "description": "Corrective actions for a finding" },
+    "/config/counters": { "schema": "Counter", "description": "Global counters for sequential IDs" },
+    "/notifications/{notifId}": { "schema": "Notification", "description": "History of notifications" },
+    "/notificationHistory/{histId}": { "schema": "NotificationHistory", "description": "Tracking of sent milestones" },
+    "/special_releases/{releaseId}": { "schema": "SpecialRelease", "description": "Special release authorization records" },
+    "/change_requests/{changeId}": { "schema": "ChangeRequest", "description": "Global change requests and evaluations" }
+  }
+}
