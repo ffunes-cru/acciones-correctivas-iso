@@ -1,0 +1,84 @@
+# Production: SQL Server is the company's existing instance (set DB_* in .env).
+# Dev/PoC:    docker compose --profile dev up -d   (adds a throwaway SQL Server)
+services:
+  directus:
+    build:
+      context: .
+      target: directus
+    restart: unless-stopped
+    ports:
+      - "8055:8055"
+    environment:
+      DB_CLIENT: mssql
+      DB_HOST: ${DB_HOST:?set DB_HOST}
+      DB_PORT: ${DB_PORT:-1433}
+      DB_DATABASE: ${DB_DATABASE:-acciones_iso}
+      DB_USER: ${DB_USER:?set DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD}
+      KEY: ${DIRECTUS_KEY:?set DIRECTUS_KEY}
+      SECRET: ${DIRECTUS_SECRET:?set DIRECTUS_SECRET}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:?set ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?set ADMIN_PASSWORD}
+      PUBLIC_URL: ${PUBLIC_URL:-http://localhost:8055}
+      # Mail (replaces the Google Apps Script webhook)
+      EMAIL_TRANSPORT: smtp
+      EMAIL_FROM: ${EMAIL_FROM:-calidad@example.com}
+      EMAIL_SMTP_HOST: ${EMAIL_SMTP_HOST:-}
+      EMAIL_SMTP_PORT: ${EMAIL_SMTP_PORT:-25}
+      # Active Directory login (phase 2). Uncomment and fill; see docs/PLAN.md.
+      # AUTH_PROVIDERS: ad
+      # AUTH_AD_DRIVER: ldap
+      # AUTH_AD_CLIENT_URL: ldaps://dc.example.local
+      # AUTH_AD_BIND_DN: ${LDAP_BIND_DN}
+      # AUTH_AD_BIND_PASSWORD: ${LDAP_BIND_PASSWORD}
+      # AUTH_AD_USER_DN: DC=example,DC=local
+      # AUTH_AD_USER_ATTRIBUTE: sAMAccountName
+      # AUTH_AD_MAIL_ATTRIBUTE: mail
+    volumes:
+      - uploads:/directus/uploads
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8055/server/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: .
+      target: web
+    restart: unless-stopped
+    profiles: ["full"]   # enabled once ui/ exists (phase 3)
+    depends_on: [directus]
+    ports:
+      - "8080:80"
+
+  # ---- dev / PoC only ----
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    profiles: ["dev"]
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD}
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  mssql-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    profiles: ["dev"]
+    depends_on:
+      mssql: { condition: service_healthy }
+    restart: "no"
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - /opt/mssql-tools18/bin/sqlcmd -C -S mssql -U sa -P "${DB_PASSWORD}" -Q "IF DB_ID('${DB_DATABASE:-acciones_iso}') IS NULL CREATE DATABASE [${DB_DATABASE:-acciones_iso}]"
+
+volumes:
+  uploads:
+  mssql-data:
