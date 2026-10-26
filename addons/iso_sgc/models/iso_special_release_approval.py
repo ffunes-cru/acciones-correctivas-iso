@@ -11,6 +11,7 @@ AREAS = [
 
 
 class IsoSpecialReleaseApproval(models.Model):
+    """The signature of one area (Quality, Engineering, Commercial, Operations) on a special release."""
     _name = "iso.special.release.approval"
     _inherit = ["iso.workflow.mixin"]
     _description = "ISO special release signature"
@@ -44,6 +45,7 @@ class IsoSpecialReleaseApproval(models.Model):
 
     @api.constrains("area", "excluded")
     def _check_commercial_not_excluded(self):
+        """The Commercial area must always sign."""
         for a in self:
             if a.area == "comercial" and a.excluded:
                 raise ValidationError(self.env._("The Commercial area cannot be excluded."))
@@ -61,6 +63,7 @@ class IsoSpecialReleaseApproval(models.Model):
 
     # ---------------------------------------------------------------- ORM
     def write(self, vals):
+        """Approvers are changed only by the creator in draft; excluding an area resets its signature."""
         self._check_protected(vals, PROTECTED_FIELDS)
         if not self.env.context.get("iso_transition") and not self._is_iso_admin():
             if {"user_id", "excluded"} & set(vals):
@@ -79,6 +82,10 @@ class IsoSpecialReleaseApproval(models.Model):
 
     # ---------------------------------------------------------------- workflow
     def action_evaluate(self, status, comments=None):
+        """The assigned approver (or an administrator) signs once, while the release is pending approval.
+
+        Rejecting needs a comment. Afterwards the release state is re-derived.
+        """
         self.ensure_one()
         release = self.release_id
         if status not in ("approved", "rejected"):
@@ -98,9 +105,11 @@ class IsoSpecialReleaseApproval(models.Model):
         return True
 
     def action_approve(self):
+        """Sign as approved (see `action_evaluate`)."""
         return self.action_evaluate("approved")
 
     def action_reject(self):
+        """Sign as rejected (see `action_evaluate`)."""
         return self.action_evaluate("rejected")
 
     def action_admin_set(self, status, comments=None):
@@ -122,10 +131,13 @@ class IsoSpecialReleaseApproval(models.Model):
         return True
 
     def action_admin_approve(self):
+        """Administrator amends the signature to approved (see `action_admin_set`)."""
         return self.action_admin_set("approved")
 
     def action_admin_reject(self):
+        """Administrator amends the signature to rejected (see `action_admin_set`)."""
         return self.action_admin_set("rejected")
 
     def action_admin_reset(self):
+        """Administrator resets the signature to pending (see `action_admin_set`)."""
         return self.action_admin_set("pending")

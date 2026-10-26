@@ -2,9 +2,12 @@
 
 from datetime import timedelta
 
+from psycopg2 import IntegrityError
+
 from odoo import fields
 from odoo.exceptions import AccessError
 from odoo.tests import TransactionCase, tagged
+from odoo.tools import mute_logger
 
 
 @tagged("post_install", "-at_install", "iso_sgc")
@@ -120,3 +123,18 @@ class TestReviewFindings(TransactionCase):
         self.assertEqual(a.activity_ids.user_id, self.other)
         self.assertEqual(a.activity_ids.date_deadline, self.today + timedelta(days=20))
         self.assertEqual(len(a.activity_ids), 1)
+
+    # --- uniqueness is enforced by the database (Odoo 19 silently ignored the old `_sql_constraints`) ----------
+    @mute_logger("odoo.sql_db")
+    def test_one_signature_and_one_review_per_area(self):
+        rel = self.env["iso.special.release"].create(
+            {"release_type": "raw_material", "deviation_description": "d", "client_impact": "i"},
+        )
+        with self.assertRaises(IntegrityError), self.cr.savepoint():
+            self.env["iso.special.release.approval"].create({"release_id": rel.id, "area": "calidad"})
+        cr = self.env["iso.change.request"].create(
+            {"title": "t", "description": "d", "objective": "o", "current_situation": "a",
+             "proposed_situation": "b", "impact_analysis": "i"},
+        )
+        with self.assertRaises(IntegrityError), self.cr.savepoint():
+            self.env["iso.change.review"].create({"request_id": cr.id, "area_id": cr.review_ids[0].area_id.id})

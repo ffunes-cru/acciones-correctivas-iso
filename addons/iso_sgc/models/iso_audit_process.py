@@ -17,6 +17,7 @@ class IsoAuditProcess(models.Model):
 
 
 class IsoAuditProcessDeliverable(models.Model):
+    """What the auditor checks in a process and the evidence that supports it."""
     _name = "iso.audit.process.deliverable"
     _description = "ISO audit process deliverable"
     _order = "sequence, id"
@@ -46,6 +47,7 @@ class IsoActivityTemplate(models.Model):
 
 
 class ResCompany(models.Model):
+    """Adds the default scope text used by the company's internal-audit reports."""
     _inherit = "res.company"
 
     iso_audit_scope = fields.Text(

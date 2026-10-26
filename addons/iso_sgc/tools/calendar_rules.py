@@ -43,10 +43,12 @@ def frequency_instances(frequency, year):
 
 
 def audit_task_name(process_name, quarter):
+    """Name of an audit task, e.g. "Auditoría Interna: Producción - T2"."""
     return f"Auditoría Interna: {process_name} - {quarter}"
 
 
 def routine_task_name(activity_name, label):
+    """Name of a routine-activity task, e.g. "Realizar Evaluación de proveedores - Semestre 1"."""
     return f"{activity_name} - {label}"
 
 
@@ -56,6 +58,7 @@ def guess_is_audit(name, activity=None):
 
 
 def conclusion_template(process_name):
+    """Standard audit conclusion for a process, with [bracketed] placeholders the auditor must replace."""
     return (
         f"La auditoría realizada al proceso {process_name} del Sistema de Gestión de la Calidad de la organización, "
         "bajo los criterios de ISO 9001:2015 y requisitos legales aplicables, permitió verificar que los procesos "

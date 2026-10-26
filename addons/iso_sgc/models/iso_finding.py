@@ -84,6 +84,7 @@ class IsoFinding(models.Model):
         return self.owner_id if self.category == "improvement" else self.analysis_user_id
 
     def _check_can_add_action(self):
+        """Raise unless the user is the planner (or an administrator) and the finding is pending action."""
         self.ensure_one()
         if self._is_iso_admin():
             pass
@@ -130,6 +131,7 @@ class IsoFinding(models.Model):
     # ---------------------------------------------------------------- constraints
     @api.constrains("description")
     def _check_description_length(self):
+        """The description is limited to 2000 characters (legacy rule)."""
         for f in self:
             if len(f.description or "") > MAX_DESCRIPTION:
                 raise ValidationError(
@@ -138,6 +140,7 @@ class IsoFinding(models.Model):
 
     @api.constrains("category", "type", "process")
     def _check_corrective_fields(self):
+        """Corrective findings need a type and a process."""
         for f in self:
             if f.category == "corrective" and not (f.type and f.process):
                 raise ValidationError(self.env._("Type and process are required for corrective findings."))
@@ -145,6 +148,7 @@ class IsoFinding(models.Model):
     # ---------------------------------------------------------------- ORM
     @api.model_create_multi
     def create(self, vals_list):
+        """Number the finding (H- or M- series); improvements skip the analysis and start pending action."""
         for vals in vals_list:
             if vals.get("name", "New") == "New":
                 # Legacy numbers improvements and corrective findings independently.
@@ -159,6 +163,7 @@ class IsoFinding(models.Model):
         return findings
 
     def write(self, vals):
+        """State-like fields can only change through the workflow; changing the analyst moves the analysis to-do."""
         self._check_protected(vals, PROTECTED_FIELDS)
         res = super().write(vals)
         if "analysis_user_id" in vals or "analysis_deadline" in vals:
@@ -168,6 +173,7 @@ class IsoFinding(models.Model):
         return res
 
     def _schedule_analysis_activity(self):
+        """Give the analyst a to-do for the cause analysis, due on its deadline."""
         self.ensure_one()
         if self.state == "pending_analysis" and self.analysis_user_id:
             self.sudo().activity_schedule(
@@ -226,6 +232,7 @@ class IsoFinding(models.Model):
             )
 
     def _after_action_verified(self):
+        """When every finished action is verified, close the finding: completed if all were effective, else cancelled."""
         self.ensure_one()
         if self.state != "pending_verification":
             return

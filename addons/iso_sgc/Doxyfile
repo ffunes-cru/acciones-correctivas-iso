@@ -1,0 +1,52 @@
+# Configuración de Doxygen: genera un sitio HTML navegable con los documentos de docs/, el código Python y
+# grafos de quién llama a quién. Ver docs/operacion.md#documentación-generada.
+#
+#   scripts/docs.sh html        (desde la raíz del repositorio; requiere doxygen y graphviz)
+#   → abrir docs/_doxygen/html/index.html
+#
+# Solo figuran las opciones que cambian el valor por defecto; `doxygen -x Doxyfile` las lista.
+
+# --- Proyecto ---
+PROJECT_NAME           = "ISO SGC"
+PROJECT_BRIEF          = "Módulo de Odoo 19: hallazgos, liberaciones especiales, solicitudes de cambio y planificación ISO"
+OUTPUT_DIRECTORY       = docs/_doxygen
+OUTPUT_LANGUAGE        = Spanish
+GENERATE_LATEX         = NO
+
+# --- Qué se lee ---
+# Los tests y las vistas XML quedan afuera para que los grafos muestren solo el código de producción.
+# Lo que Doxygen no ve (botones de vistas, menús) está en docs/referencia.md.
+INPUT                  = README.md docs models tools
+FILE_PATTERNS          = *.py *.md
+RECURSIVE              = YES
+EXCLUDE                = docs/_doxygen
+EXCLUDE_PATTERNS       = */__pycache__/*
+FILTER_PATTERNS        = *.py=scripts/doxygen_filtro.sh
+USE_MDFILE_AS_MAINPAGE = README.md
+MARKDOWN_ID_STYLE      = GITHUB
+
+# --- Qué se documenta ---
+# Todo, aunque no tenga docstring, incluidos los métodos `_privados`, que en Odoo son la mayoría.
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+HIDE_SCOPE_NAMES       = YES
+# Atributos del ORM que Doxygen confunde con campos propios de algunas clases.
+EXCLUDE_SYMBOLS        = env id ids
+
+# --- Código fuente y referencias cruzadas ---
+SOURCE_BROWSER         = YES
+REFERENCED_BY_RELATION = YES
+
+# --- Grafos (graphviz) ---
+HAVE_DOT               = YES
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+CLASS_GRAPH            = NO
+COLLABORATION_GRAPH    = NO
+DOT_IMAGE_FORMAT       = svg
+INTERACTIVE_SVG        = YES
+
+# --- Mensajes ---
+QUIET                  = YES
+WARN_LOGFILE           = docs/_doxygen/advertencias.log

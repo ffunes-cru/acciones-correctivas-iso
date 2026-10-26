@@ -6,6 +6,7 @@ PROTECTED_FIELDS = {"state", "execution_date", "verification_state", "verificati
 
 
 class IsoFindingAction(models.Model):
+    """An action of a finding: reported by its responsible and verified by the finding's owner."""
     _name = "iso.finding.action"
     _description = "ISO finding action"
     _inherit = ["mail.thread", "mail.activity.mixin", "iso.workflow.mixin"]
@@ -44,6 +45,7 @@ class IsoFindingAction(models.Model):
     # ---------------------------------------------------------------- ORM
     @api.model_create_multi
     def create(self, vals_list):
+        """Actions can only be added by the planner while the finding is pending action, with a future deadline."""
         today = fields.Date.context_today(self)
         for vals in vals_list:
             finding = self.env["iso.finding"].browse(vals.get("finding_id"))
@@ -60,6 +62,10 @@ class IsoFindingAction(models.Model):
         return actions
 
     def write(self, vals):
+        """Only the planner (or an administrator) changes what, who or when; workflow fields only through the workflow.
+
+        Re-planning an open action moves its to-do.
+        """
         self._check_protected(vals, PROTECTED_FIELDS)
         if PLANNING_FIELDS & set(vals) and not self.env.context.get("iso_transition") and not self._is_iso_admin():
             # The responsible reports an action; only the planner (or an admin) decides what, who and when.
@@ -74,6 +80,7 @@ class IsoFindingAction(models.Model):
         return res
 
     def _schedule_todo(self):
+        """Give the responsible a to-do on the action, due on its deadline."""
         for a in self:
             a.sudo().activity_schedule(
                 "mail.mail_activity_data_todo",
@@ -104,12 +111,15 @@ class IsoFindingAction(models.Model):
         return True
 
     def action_finish(self):
+        """Report the action as finished (see `action_execute`)."""
         return self.action_execute("finished")
 
     def action_cancel_action(self):
+        """Report the action as cancelled (see `action_execute`)."""
         return self.action_execute("cancelled")
 
     def action_reject(self):
+        """Report the action as rejected (see `action_execute`)."""
         return self.action_execute("rejected")
 
     def action_verify(self, ok, comment=None):
@@ -131,7 +141,9 @@ class IsoFindingAction(models.Model):
         return True
 
     def action_verify_ok(self):
+        """The owner verifies the action as effective (see `action_verify`)."""
         return self.action_verify(True)
 
     def action_verify_nok(self):
+        """The owner verifies the action as not effective (see `action_verify`)."""
         return self.action_verify(False)

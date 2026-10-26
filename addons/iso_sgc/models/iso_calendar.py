@@ -13,6 +13,7 @@ BUSINESS_FIELDS = {"comments", "date_completed", "audited_personnel", "scope", "
 
 
 class IsoCalendar(models.Model):
+    """One year of planning (e.g. "ISO planning TMC 2027") that groups its tasks. Only administrators create or edit it."""
     _name = "iso.calendar"
     _description = "ISO annual planning"
     _inherit = ["mail.thread"]
@@ -38,6 +39,11 @@ class IsoCalendar(models.Model):
 
 
 class IsoCalendarTask(models.Model):
+    """One planned occurrence: an internal audit of a process in a quarter, or a routine SGC activity.
+
+    The responsible executes it. A finished audit is locked for non-administrators, and audits are visible
+    only to the people involved (see `security/iso_rules.xml`).
+    """
     _name = "iso.calendar.task"
     _description = "ISO calendar task"
     _inherit = ["mail.thread", "mail.activity.mixin", "iso.workflow.mixin"]
@@ -77,6 +83,7 @@ class IsoCalendarTask(models.Model):
         return self.is_audit and self.state == "done" and not self._is_iso_admin()
 
     def _check_actor(self):
+        """Raise unless the current user is the task's responsible or an administrator."""
         self.ensure_one()
         if not (self._is_iso_admin() or self.env.user == self.user_id):
             raise AccessError(self.env._("Only the responsible or an administrator can do this."))
@@ -94,10 +101,12 @@ class IsoCalendarTask(models.Model):
             t.is_overdue = bool(t.state != "done" and t.date_deadline and t.date_deadline < today)
 
     def _admin_partners(self):
+        """Contacts of every ISO administrator (recipients of completion notices)."""
         group = self.env.ref("iso_sgc.group_iso_admin")
         return self.env["res.users"].sudo().search([("all_group_ids", "in", group.id)]).partner_id
 
     def _schedule_activity(self):
+        """Give the responsible a to-do on the task, due on the task's deadline."""
         for t in self:
             t.sudo().activity_schedule(
                 "mail.mail_activity_data_todo",
@@ -109,6 +118,7 @@ class IsoCalendarTask(models.Model):
     # ---------------------------------------------------------------- ORM
     @api.model_create_multi
     def create(self, vals_list):
+        """Fill what the legacy app derived from the name (audit flag, label, scope, criteria) and schedule the to-do."""
         for vals in vals_list:
             if "is_audit" not in vals:
                 vals["is_audit"] = calendar_rules.guess_is_audit(vals.get("name"), vals.get("activity"))
@@ -125,6 +135,11 @@ class IsoCalendarTask(models.Model):
         return tasks
 
     def write(self, vals):
+        """Enforce who may change what.
+
+        Administrators plan (responsible, deadline, name); the responsible edits the execution fields unless the audit
+        is locked; a finished task cannot be re-planned. Re-planning moves the to-do and notifies the new responsible.
+        """
         keys = set(vals)
         if not self.env.context.get("iso_transition"):
             if not self._is_iso_admin():
@@ -155,6 +170,7 @@ class IsoCalendarTask(models.Model):
 
     # ---------------------------------------------------------------- workflow
     def action_start(self):
+        """Mark a task that has not started as in progress (responsible or administrator)."""
         for t in self:
             t._check_actor()
             if t.state != "not_started":
@@ -163,6 +179,11 @@ class IsoCalendarTask(models.Model):
         return True
 
     def action_finish(self):
+        """Finish the task (responsible or administrator).
+
+        Needs a comment; an audit also needs the audited personnel and a conclusion without template placeholders.
+        Closes the to-do and, when the responsible finished it, notifies the administrators.
+        """
         for t in self:
             t._check_actor()
             if t.state == "done":
@@ -186,6 +207,7 @@ class IsoCalendarTask(models.Model):
         return True
 
     def action_reopen(self):
+        """Reopen a finished task (an audit: administrators only) and give the responsible a to-do again."""
         for t in self:
             t._check_actor()
             if t.state != "done":
@@ -236,6 +258,7 @@ class IsoAuditLine(models.Model):
             )
 
     def _check_task_editable(self):
+        """Raise unless the user may edit the task's audit lines (responsible or admin, task not locked)."""
         for ln in self:
             t = ln.task_id
             if not self.env.context.get("iso_transition") and not t._is_iso_admin():
@@ -245,17 +268,20 @@ class IsoAuditLine(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+        """Create lines only on a task the user may edit."""
         lines = super().create(vals_list)
         lines._check_task_editable()
         return lines
 
     def write(self, vals):
+        """Edit lines only on an editable task; a line linked to a finding is frozen."""
         self._check_task_editable()
         if not self.env.context.get("iso_transition") and any(ln.finding_id for ln in self):
             raise UserError(self.env._("A confirmed item is linked to a finding and can no longer be edited."))
         return super().write(vals)
 
     def unlink(self):
+        """Delete lines only on an editable task; a line linked to a finding cannot be deleted."""
         self._check_task_editable()
         if any(ln.finding_id for ln in self):
             raise UserError(self.env._("A confirmed item is linked to a finding and cannot be deleted."))

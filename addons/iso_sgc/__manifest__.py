@@ -2,6 +2,7 @@
     "name": "ISO SGC - Findings, actions and approvals",
     "summary": "ISO quality system: findings, corrective actions, special releases, "
     "change requests and audit calendar.",
+    "description": "ISO quality management system. See README.md and docs/ in the module.",
     "version": "19.0.1.0.0",
     "category": "Quality",
     "author": "Franco Funes",

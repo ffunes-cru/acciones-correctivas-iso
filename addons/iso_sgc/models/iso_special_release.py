@@ -69,6 +69,7 @@ class IsoSpecialRelease(models.Model):
         return [k for k, _label in self._fields["state"].selection if k in always or k in states]
 
     def _my_pending_rows(self):
+        """The signatures still pending that are assigned to the current user."""
         self.ensure_one()
         return self.approval_ids.filtered(lambda a: a.can_evaluate and a.user_id == self.env.user)
 
@@ -121,6 +122,7 @@ class IsoSpecialRelease(models.Model):
 
     # ---------------------------------------------------------------- helpers
     def _is_creator_or_admin(self):
+        """True for the creator of the release and for administrators."""
         self.ensure_one()
         return self._is_iso_admin() or self.env.user == self.creator_id
 
@@ -137,6 +139,7 @@ class IsoSpecialRelease(models.Model):
     # ---------------------------------------------------------------- ORM
     @api.model_create_multi
     def create(self, vals_list):
+        """Number the release and create its four signature rows."""
         for vals in vals_list:
             if vals.get("name", "New") == "New":
                 vals["name"] = self.env["ir.sequence"].next_by_code("iso.special.release") or "New"
@@ -149,6 +152,7 @@ class IsoSpecialRelease(models.Model):
         return releases
 
     def write(self, vals):
+        """Only the creator edits the content, and only in draft; state and confirmation only through the workflow."""
         self._check_protected(vals, PROTECTED_FIELDS)
         if not self.env.context.get("iso_transition") and not self._is_iso_admin():
             if BUSINESS_FIELDS & set(vals):
@@ -159,12 +163,17 @@ class IsoSpecialRelease(models.Model):
 
     def unlink(self):
         # Legacy: deleting a release also deletes the findings/actions created for it (admin only).
+        """Delete the release (administrators) together with the findings created for it."""
         self.check_access("unlink")  # before the cascade, which runs with elevated rights
         self.linked_finding_ids.sudo().unlink()
         return super().unlink()
 
     # ---------------------------------------------------------------- workflow
     def action_send_for_approval(self):
+        """Send the draft for approval (creator or administrator).
+
+        Needs an approver for every active area and a Posventa person. Each approver and Posventa get a to-do.
+        """
         for r in self:
             if r.state != "draft":
                 raise UserError(self.env._("Only a draft can be sent for approval."))
@@ -201,6 +210,7 @@ class IsoSpecialRelease(models.Model):
         return True
 
     def action_confirm_posventa(self):
+        """Posventa confirms receipt (the designated person or an administrator); may complete the approval."""
         for r in self:
             if r.state != "pending_approval" or r.posventa_confirmed:
                 raise UserError(self.env._("Nothing to confirm."))
@@ -227,6 +237,7 @@ class IsoSpecialRelease(models.Model):
                     r._notify_resolution(new)
 
     def _notify_resolution(self, state):
+        """Tell the creator, approvers and Posventa the final resolution (once, on the transition)."""
         self.ensure_one()
         label = self.env._("APPROVED") if state == "approved" else self.env._("REJECTED")
         recipients = (self.creator_id | self.approval_ids.user_id | self.posventa_user_id).partner_id

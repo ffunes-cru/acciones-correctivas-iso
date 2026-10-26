@@ -2,6 +2,7 @@ from odoo import fields, models
 
 
 class IsoSpecialReleaseActionWizard(models.TransientModel):
+    """Dialog to add an action (a background finding) to a special release in draft."""
     _name = "iso.special.release.action.wizard"
     _description = "Add an action to a special release"
 
@@ -11,6 +12,7 @@ class IsoSpecialReleaseActionWizard(models.TransientModel):
     date_deadline = fields.Date("Deadline", required=True)
 
     def action_confirm(self):
+        """Create the finding and its action for the release."""
         self.ensure_one()
         self.release_id.action_add_linked_action(self.description, self.user_id, self.date_deadline)
         return {"type": "ir.actions.act_window_close"}

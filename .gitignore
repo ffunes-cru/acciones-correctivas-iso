@@ -12,3 +12,5 @@ domain/node_modules/
 __pycache__/
 *.pyc
 screens/
+docs/_doxygen/
+addons/iso_sgc/docs/_doxygen/

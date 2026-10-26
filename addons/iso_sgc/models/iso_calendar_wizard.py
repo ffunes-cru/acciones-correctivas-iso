@@ -36,6 +36,7 @@ class IsoCalendarWizard(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
+        """Prefill the 12 processes x 4 quarters and the routine-activity templates."""
         res = super().default_get(fields_list)
         year = res.get("year") or fields.Date.context_today(self).year + 1
         company = self.env["res.company"].browse(res.get("company_id") or self.env.company.id)
@@ -52,6 +53,7 @@ class IsoCalendarWizard(models.TransientModel):
 
     @api.onchange("year")
     def _onchange_year(self):
+        """Move the quarter dates to the chosen year and refresh the proposed name."""
         for ln in self.audit_line_ids:
             m, d = QUARTER_DATES[ln.quarter]
             ln.date = date(self.year, m, d)
@@ -59,19 +61,26 @@ class IsoCalendarWizard(models.TransientModel):
 
     @api.onchange("company_id")
     def _onchange_company(self):
+        """Refresh the proposed name."""
         self.name = self.env._("ISO planning %s %s", self.company_id.name, self.year)
 
     @api.onchange("global_auditor_id")
     def _onchange_global_auditor(self):
+        """Copy the chosen auditor to every audit line."""
         if self.global_auditor_id:
             self.audit_line_ids.user_id = self.global_auditor_id
 
     @api.onchange("global_responsible_id")
     def _onchange_global_responsible(self):
+        """Copy the chosen responsible to every routine activity."""
         if self.global_responsible_id:
             self.activity_line_ids.user_id = self.global_responsible_id
 
     def action_create(self):
+        """Create the calendar and its tasks (administrators only).
+
+        Sends one digest per responsible and a summary to the administrators.
+        """
         self.ensure_one()
         if not self.env.user.has_group("iso_sgc.group_iso_admin"):
             raise AccessError(self.env._("Only administrators can create the annual planning."))
@@ -138,6 +147,7 @@ class IsoCalendarWizard(models.TransientModel):
 
 
 class IsoCalendarWizardAudit(models.TransientModel):
+    """One audit instance (process x quarter) in the planning wizard."""
     _name = "iso.calendar.wizard.audit"
     _description = "Planning wizard: audit instance"
     _order = "id"
@@ -150,6 +160,7 @@ class IsoCalendarWizardAudit(models.TransientModel):
 
 
 class IsoCalendarWizardActivity(models.TransientModel):
+    """One routine activity, with its frequency, in the planning wizard."""
     _name = "iso.calendar.wizard.activity"
     _description = "Planning wizard: routine activity"
     _order = "id"
@@ -172,6 +183,10 @@ class IsoCalendarShareWizard(models.TransientModel):
     message = fields.Text()
 
     def action_send(self):
+        """Share an audit: grant access to the chosen users and notify them.
+
+        Addresses typed in `extra_emails` receive the notice only, never access.
+        """
         self.ensure_one()
         task = self.task_id
         task._check_actor()

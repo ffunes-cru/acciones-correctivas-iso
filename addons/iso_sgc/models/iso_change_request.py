@@ -37,6 +37,7 @@ class IsoChangeArea(models.Model):
 
 
 class IsoChangeQuestion(models.Model):
+    """A question of an area's impact questionnaire. It is a template: requests keep their own copy."""
     _name = "iso.change.question"
     _description = "ISO change request question"
     _order = "sequence, id"
@@ -129,6 +130,7 @@ class IsoChangeRequest(models.Model):
 
     # ---------------------------------------------------------------- helpers
     def _is_creator_or_admin(self):
+        """True for the creator of the request and for administrators."""
         self.ensure_one()
         return self._is_iso_admin() or self.env.user == self.creator_id
 
@@ -169,6 +171,7 @@ class IsoChangeRequest(models.Model):
     # ---------------------------------------------------------------- ORM
     @api.model_create_multi
     def create(self, vals_list):
+        """Create the request and give it its own copy of every area's questionnaire."""
         for vals in vals_list:
             if vals.get("name", "New") == "New":
                 vals["name"] = self.env["ir.sequence"].next_by_code("iso.change.request") or "New"
@@ -193,6 +196,7 @@ class IsoChangeRequest(models.Model):
         return requests
 
     def write(self, vals):
+        """Only the creator edits the definition, and only in draft; the final approver is set only at the final stage."""
         self._check_protected(vals, PROTECTED_FIELDS)
         if not self.env.context.get("iso_transition") and not self._is_iso_admin():
             if (DEFINITION_FIELDS | {"final_approver_id", "final_deadline"}) & set(vals):
@@ -208,12 +212,18 @@ class IsoChangeRequest(models.Model):
         return super().write(vals)
 
     def unlink(self):
+        """Delete the request (administrators) together with the actions raised for it."""
         self.check_access("unlink")  # before the cascade, which runs with elevated rights
         self.linked_finding_ids.sudo().unlink()
         return super().unlink()
 
     # ---------------------------------------------------------------- stage 1 -> 2
     def action_send_to_review(self):
+        """Send the draft to review (creator or administrator).
+
+        Needs at least one applicable area, a reviewer for each and the review deadline. Non-applicable areas are
+        approved automatically; each reviewer gets a to-do.
+        """
         for r in self:
             if r.state != "draft":
                 raise UserError(self.env._("Only a draft can be sent to review."))
@@ -249,6 +259,7 @@ class IsoChangeRequest(models.Model):
 
     # ---------------------------------------------------------------- stage 2 -> 3
     def _after_review_decision(self):
+        """Re-derive the request state from the reviews: any rejection rejects, all approved moves to final approval."""
         self.ensure_one()
         new = change_request_status_after_review(
             self.state, [(v.applies, v.state) for v in self.review_ids],
@@ -276,6 +287,7 @@ class IsoChangeRequest(models.Model):
             )
 
     def action_send_to_final_approval(self):
+        """Notify the chosen final approver (creator or administrator)."""
         for r in self:
             if r.state != "pending_approval" or r.final_state not in (False, "pending"):
                 raise UserError(self.env._("The request is not waiting for a final approver."))
@@ -298,6 +310,10 @@ class IsoChangeRequest(models.Model):
 
     # ---------------------------------------------------------------- stage 3 -> 4
     def action_final_decision(self, approve, comments=None):
+        """Record the final decision (only the assigned final approver).
+
+        Approves or rejects the request and communicates the outcome to the creator, the approver and the reviewers.
+        """
         self.ensure_one()
         if self.state != "pending_approval" or self.final_state != "pending":
             raise UserError(self.env._("This request is not waiting for the final decision."))
@@ -334,13 +350,16 @@ class IsoChangeRequest(models.Model):
         return True
 
     def action_final_approve(self):
+        """Final approval (see `action_final_decision`)."""
         return self.action_final_decision(True)
 
     def action_final_reject(self):
+        """Final rejection (see `action_final_decision`)."""
         return self.action_final_decision(False)
 
 
 class IsoChangeReview(models.Model):
+    """The review of one area of a change request: its questionnaire and the reviewer's decision."""
     _name = "iso.change.review"
     _inherit = ["iso.workflow.mixin"]
     _description = "ISO change request sector review"
@@ -394,6 +413,7 @@ class IsoChangeReview(models.Model):
             )
 
     def write(self, vals):
+        """Reviews change only through the workflow; see `_check_edit_rights` for who may edit which field."""
         self._check_protected(vals, {"state", "action_date", "area_id", "request_id", "date_deadline"})
         if not self.env.context.get("iso_transition"):
             self._check_edit_rights(set(vals))
@@ -432,6 +452,10 @@ class IsoChangeReview(models.Model):
 
     # ---------------------------------------------------------------- decisions
     def action_decide(self, approve, comments=None):
+        """The assigned reviewer approves or rejects the review (not even an administrator can).
+
+        Approving needs every question answered and an action created for each one that requires it.
+        """
         self.ensure_one()
         req = self.request_id
         if req.state != "pending_review" or not self.applies or self.state != "pending":
@@ -459,13 +483,16 @@ class IsoChangeReview(models.Model):
         return True
 
     def action_approve(self):
+        """Approve the review (see `action_decide`)."""
         return self.action_decide(True)
 
     def action_reject(self):
+        """Reject the review (see `action_decide`)."""
         return self.action_decide(False)
 
 
 class IsoChangeReviewLine(models.Model):
+    """One questionnaire row: whether it applies, whether it requires an action, and the action raised for it."""
     _name = "iso.change.review.line"
     _inherit = ["iso.workflow.mixin"]
     _description = "ISO change request questionnaire line"
@@ -488,6 +515,7 @@ class IsoChangeReviewLine(models.Model):
             )
 
     def write(self, vals):
+        """Only the assigned reviewer answers, while the review is open; the answer is locked once an action is linked."""
         if not self.env.context.get("iso_transition") and not self._is_iso_admin():
             if {"name", "review_id", "sequence", "finding_id"} & set(vals):
                 raise AccessError(self.env._("The questionnaire structure cannot be changed."))
@@ -548,6 +576,7 @@ class IsoChangeReviewLine(models.Model):
 
 
 class IsoChangeLineActionWizard(models.TransientModel):
+    """Dialog to create the action a questionnaire row requires."""
     _name = "iso.change.line.action.wizard"
     _description = "Create the action required by a change request question"
 
@@ -557,6 +586,7 @@ class IsoChangeLineActionWizard(models.TransientModel):
     date_deadline = fields.Date("Deadline", required=True)
 
     def action_confirm(self):
+        """Create the action (a background finding) for the questionnaire row."""
         self.ensure_one()
         self.line_id.action_link_action(self.description, self.user_id, self.date_deadline)
         return {"type": "ir.actions.act_window_close"}
