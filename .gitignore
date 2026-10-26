@@ -14,3 +14,8 @@ __pycache__/
 screens/
 docs/_doxygen/
 addons/iso_sgc/docs/_doxygen/
+
+# Firebase client config (contains an API key)
+firebase-applet-config.json
+.env
+.env.*
